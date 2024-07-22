@@ -1,0 +1,93 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-B7nmgIcs.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/images/apple.png": {
+    "file": "assets/apple-BQQ85xef.png",
+    "src": "resources/images/apple.png"
+  },
+  "resources/images/ban1.jpg": {
+    "file": "assets/ban1-D7E0mrwB.jpg",
+    "src": "resources/images/ban1.jpg"
+  },
+  "resources/images/ban2.jpg": {
+    "file": "assets/ban2-CH9wH48l.jpg",
+    "src": "resources/images/ban2.jpg"
+  },
+  "resources/images/ban3.png": {
+    "file": "assets/ban3-CsYCRXSq.png",
+    "src": "resources/images/ban3.png"
+  },
+  "resources/images/ban4.jpg": {
+    "file": "assets/ban4-XbjInMm_.jpg",
+    "src": "resources/images/ban4.jpg"
+  },
+  "resources/images/ban4s.jpg": {
+    "file": "assets/ban4s-Dk--gtDY.jpg",
+    "src": "resources/images/ban4s.jpg"
+  },
+  "resources/images/camera-mini.webp": {
+    "file": "assets/camera-mini-BrssyyXC.webp",
+    "src": "resources/images/camera-mini.webp"
+  },
+  "resources/images/cart-plus.svg": {
+    "file": "assets/cart-plus-D5F7zq1y.svg",
+    "src": "resources/images/cart-plus.svg"
+  },
+  "resources/images/cart.svg": {
+    "file": "assets/cart-CJBSIaaQ.svg",
+    "src": "resources/images/cart.svg"
+  },
+  "resources/images/laptop.png": {
+    "file": "assets/laptop-BpYwwdUT.png",
+    "src": "resources/images/laptop.png"
+  },
+  "resources/images/lenovo.png": {
+    "file": "assets/lenovo-C5NcdVAY.png",
+    "src": "resources/images/lenovo.png"
+  },
+  "resources/images/menu.svg": {
+    "file": "assets/menu-BhYoNCoL.svg",
+    "src": "resources/images/menu.svg"
+  },
+  "resources/images/mini-banner.webp": {
+    "file": "assets/mini-banner-D2SHF12Z.webp",
+    "src": "resources/images/mini-banner.webp"
+  },
+  "resources/images/mini-banner2.webp": {
+    "file": "assets/mini-banner2-CtW8HA-H.webp",
+    "src": "resources/images/mini-banner2.webp"
+  },
+  "resources/images/oppo.png": {
+    "file": "assets/oppo-BRrmKpDv.png",
+    "src": "resources/images/oppo.png"
+  },
+  "resources/images/right-arrow-white.svg": {
+    "file": "assets/right-arrow-white-aPUNc2F6.svg",
+    "src": "resources/images/right-arrow-white.svg"
+  },
+  "resources/images/right-arrow.svg": {
+    "file": "assets/right-arrow-D7mHR8XO.svg",
+    "src": "resources/images/right-arrow.svg"
+  },
+  "resources/images/samsung.png": {
+    "file": "assets/samsung-D9gdAZda.png",
+    "src": "resources/images/samsung.png"
+  },
+  "resources/images/screen.webp": {
+    "file": "assets/screen-D3XLc7ek.webp",
+    "src": "resources/images/screen.webp"
+  },
+  "resources/images/slim-banner.webp": {
+    "file": "assets/slim-banner-CLbyuPV-.webp",
+    "src": "resources/images/slim-banner.webp"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-C1-XIpUa.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
