@@ -84,10 +84,10 @@
     "file": "assets/slim-banner-CLbyuPV-.webp",
     "src": "resources/images/slim-banner.webp"
   },
-  "resources/js/app.js": {
-    "file": "assets/app-C1-XIpUa.js",
+  "resources/ts/app.ts": {
+    "file": "assets/app-RzHmCC6L.js",
     "name": "app",
-    "src": "resources/js/app.js",
+    "src": "resources/ts/app.ts",
     "isEntry": true
   }
 }

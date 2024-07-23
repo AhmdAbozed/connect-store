@@ -38,6 +38,3 @@
 
     </div>
 </div>
-@pushOnce('scripts')
-<script src="{{ Vite::asset('resources/js/img-scroll.ts') }}"></script>
-@endPushOnce

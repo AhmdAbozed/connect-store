@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css','resources/ts/app.ts'])
 </head>
 
 <body class="flex flex-col font-semibold">
@@ -164,7 +164,5 @@
         <div class=" text-gray-400 text-xs p-1 pt-0 mr-4">All Rights Reserved by Connect ©.</div>
     </footer>
 </body>
-<script src="{{ Vite::asset('resources/js/sidebar.ts') }}"></script>
-@stack('scripts')
-
+    
 </html>

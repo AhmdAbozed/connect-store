@@ -107,11 +107,4 @@
 
 
     </div>
-
-
-    @pushOnce('scripts')
-    <script src="{{ Vite::asset('resources/js/img-scroll.ts') }}"></script>
-    <script src="{{ Vite::asset('resources/js/scrollDots.ts') }}"></script>
-    @endPushOnce
-
 </div>

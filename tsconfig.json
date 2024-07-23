@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "strict": true,
+      "jsx": "preserve",
+      "sourceMap": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "lib": ["dom", "esnext"],
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["resources/ts/*"]
+      }
+    },
+    "include": ["resources/ts"],
+    "exclude": ["node_modules"]
+  }
