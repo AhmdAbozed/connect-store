@@ -1,11 +1,11 @@
 <div class="flex">
     <div class="flex-col flex relative col-span-2 w-11/12  sm:w-[44rem] mx-auto lg:mr-2 ">
-        <div class="h-full flex absolute z-10 scroll-arrow cursor-pointer left-arrow rotate-180">
+        <button class="h-full flex absolute z-10 scroll-arrow cursor-pointer left-arrow rotate-180">
             <img class="h-6 w-6 m-auto" src="{{ Vite::asset('resources/images/right-arrow.svg') }}" alt="">
-        </div>
-        <div class="h-full flex absolute z-10 scroll-arrow cursor-pointer right-arrow right-0">
+        </button>
+        <button class="h-full flex absolute z-10 scroll-arrow cursor-pointer right-arrow right-0">
             <img class="h-6 w-6 m-auto" src="{{ Vite::asset('resources/images/right-arrow.svg') }}" alt="">
-        </div>
+        </button>
 
         <div class="flex justify-center mt-4 space-x-2 absolute bottom-2 z-20 right-1/2 translate-x-[40%]">
             <span class="dot w-4 h-4 transition-all bg-blue-400 border-4 border-blue-400 rounded-full"></span>
@@ -38,3 +38,8 @@
 
     </div>
 </div>
+
+@pushOnce('scripts')
+<script src="{{ Vite::asset('resources/ts/imgScroll.ts') }}"></script>
+<script src="{{ Vite::asset('resources/ts/scrollDots.ts') }}"></script>
+@endPushOnce

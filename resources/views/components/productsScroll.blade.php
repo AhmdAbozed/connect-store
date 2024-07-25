@@ -3,14 +3,12 @@
 </div>
 
 <div class="flex-col flex relative  w-full ">
-    <div class="h-full flex absolute z-10 scroll-arrow cursor-pointer left-arrow rotate-180">
+    <button class="h-full flex absolute z-10 scroll-arrow cursor-pointer left-arrow rotate-180">
         <img class="h-6 w-6 m-auto" src="{{ Vite::asset('resources/images/right-arrow.svg') }}" alt="">
-
-    </div>
-    <div class="h-full flex absolute z-10 scroll-arrow cursor-pointer right-arrow right-0">
+    </button>
+    <button class="h-full flex absolute z-10 scroll-arrow cursor-pointer right-arrow right-0">
         <img class="h-6 w-6 m-auto" src="{{ Vite::asset('resources/images/right-arrow.svg') }}" alt="">
-
-    </div>
+    </button>
 
     <div class="relative flex overflow-y-hidden  sm:w-auto pt-1 overflow-x sm:overflow-x-hidden self-center scroll-smooth snap-x scrollable w-full">
 
@@ -112,3 +110,8 @@
 
     </div>
 </div>
+
+
+@pushOnce('scripts')
+<script src="{{ Vite::asset('resources/ts/imgScroll.ts') }}"></script>
+@endPushOnce

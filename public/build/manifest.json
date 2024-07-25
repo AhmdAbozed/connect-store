@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-B7nmgIcs.css",
+    "file": "assets/app-DAC0HFtj.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -40,9 +40,25 @@
     "file": "assets/cart-CJBSIaaQ.svg",
     "src": "resources/images/cart.svg"
   },
+  "resources/images/fullscreen.svg": {
+    "file": "assets/fullscreen-Dc-xVB1X.svg",
+    "src": "resources/images/fullscreen.svg"
+  },
   "resources/images/laptop.png": {
     "file": "assets/laptop-BpYwwdUT.png",
     "src": "resources/images/laptop.png"
+  },
+  "resources/images/laptop2.jpg": {
+    "file": "assets/laptop2-Crngc9JJ.jpg",
+    "src": "resources/images/laptop2.jpg"
+  },
+  "resources/images/laptop3.avif": {
+    "file": "assets/laptop3-CEGEVher.avif",
+    "src": "resources/images/laptop3.avif"
+  },
+  "resources/images/laptop4.webp": {
+    "file": "assets/laptop4-D-SIiion.webp",
+    "src": "resources/images/laptop4.webp"
   },
   "resources/images/lenovo.png": {
     "file": "assets/lenovo-C5NcdVAY.png",
@@ -85,9 +101,42 @@
     "src": "resources/images/slim-banner.webp"
   },
   "resources/ts/app.ts": {
-    "file": "assets/app-RzHmCC6L.js",
+    "file": "assets/app-BwDpqcm8.js",
     "name": "app",
     "src": "resources/ts/app.ts",
+    "isEntry": true,
+    "imports": [
+      "resources/ts/bootstrap.ts"
+    ]
+  },
+  "resources/ts/bootstrap.ts": {
+    "file": "assets/bootstrap-C1-XIpUa.js",
+    "name": "bootstrap",
+    "src": "resources/ts/bootstrap.ts",
+    "isEntry": true
+  },
+  "resources/ts/imgScroll.ts": {
+    "file": "assets/imgScroll-CS46AE-c.js",
+    "name": "imgScroll",
+    "src": "resources/ts/imgScroll.ts",
+    "isEntry": true
+  },
+  "resources/ts/productPage.ts": {
+    "file": "assets/productPage-Crz5OsoJ.js",
+    "name": "productPage",
+    "src": "resources/ts/productPage.ts",
+    "isEntry": true
+  },
+  "resources/ts/scrollDots.ts": {
+    "file": "assets/scrollDots-Db4LkTpD.js",
+    "name": "scrollDots",
+    "src": "resources/ts/scrollDots.ts",
+    "isEntry": true
+  },
+  "resources/ts/sidebar.ts": {
+    "file": "assets/sidebar-BjmLh7e_.js",
+    "name": "sidebar",
+    "src": "resources/ts/sidebar.ts",
     "isEntry": true
   }
 }

@@ -13,7 +13,7 @@ export default {
     
       },
       fontFamily: {
-        'poppins': ['Poppins', 'sans-serif'],
+        'roboto': ['Roboto', 'sans-serif'],
       },
       keyframes: {
         fadeInOut: {
@@ -29,6 +29,10 @@ export default {
           '0%': { transform: 'translateX(-100%)'},
           '100%': {  transform:'none' },
         }
+        
+      },
+       boxShadow: {
+        '3xl': 'rgba(0, 0, 0, 0.0) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;',
       },
       animation: {
         fadeIn: 'fadeIn 0.3s forwards',

@@ -1,5 +1,5 @@
 function imageHandler(){
-    const scrollArrows = document.querySelectorAll(".scroll-arrow") as NodeListOf<HTMLImageElement>
+    const scrollArrows = document.querySelectorAll(".scroll-arrow") as NodeListOf<HTMLButtonElement>
     console.log(scrollArrows)
     function resetScrolls(){
         const imgSections = document.querySelectorAll(".scrollable").forEach((e)=>{
@@ -11,6 +11,10 @@ function imageHandler(){
         console.log("hmm")
         element.addEventListener("click", (e) => {
             console.log('clciked')
+            element.disabled = true;
+            setTimeout(()=>{
+                element.disabled = false
+            }, 300)
             const target = e.currentTarget as HTMLImageElement
             const scrollableWrapper = target.parentElement!.querySelector('.scrollable')!;
             const direction = target.classList.contains('left-arrow') ? -1 : 1;
