@@ -123,7 +123,7 @@
             </div>
         </section>
     </div>
-    <div id="fullScreenModal" class="fixed inset-0 bg-black bg-opacity-75 items-center justify-center animate-fadeIn hidden">
+    <div id="fullScreenModal" class="fixed inset-0 bg-black bg-opacity-75 items-center justify-center animate-fadeIn hidden z-30">
         <div class="relative">
             <img id="fullScreenImage" src="{{ Vite::asset('resources/images/laptop2.jpg') }}" alt="Full Screen Image" class="w-screen max-h-full">
             <button id="closeButton" class="absolute top-2 right-2 bg-white text-black rounded-full p-2">

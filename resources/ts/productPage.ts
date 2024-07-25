@@ -37,10 +37,13 @@ function productScrollHandler() {
             console.log(newBigActiveImg);
             newBigActiveImg.classList.add("big-active");
             newBigActiveImg.classList.remove("opacity-50");
-            (document.getElementById('fullScreenImage') as HTMLImageElement).src = (newBigActiveImg.children[0] as HTMLImageElement).src;
+            (
+                document.getElementById("fullScreenImage") as HTMLImageElement
+            ).src = (newBigActiveImg.children[0] as HTMLImageElement).src;
             const prevBigActiveImg = document.querySelector(".big-active");
             const scrollWidth = prevBigActiveImg!.getBoundingClientRect().width;
-            document.getElementById("big-images-scrollable")!.scrollLeft = scrollWidth * Number(newBigActiveImg.id[1]);
+            document.getElementById("big-images-scrollable")!.scrollLeft =
+                scrollWidth * Number(newBigActiveImg.id[1]);
         });
     });
 }
@@ -94,28 +97,42 @@ const TouchZoomHandler = () => {
     const thumbnail = document.getElementById("fullscreen-icon")!;
     const fullScreenModal = document.getElementById("fullScreenModal")!;
     const closeButton = document.getElementById("closeButton")!;
-
+    let isFullscreen = false;
     // Show full screen image
     thumbnail.addEventListener("click", () => {
-        console.log('clicky')
-        document.querySelector('body')?.classList.add('overflow-y-hidden')
+        console.log("clicked");
+        isFullscreen = true;
+        history.pushState({ fullscreen: true }, "");
+        document.querySelector("body")?.classList.add("overflow-y-hidden");
         fullScreenModal.classList.replace("hidden", "flex");
-        fullScreenModal.classList.replace("opacity-0", "opacity-100");
     });
 
+    //Close using back button
+    window.addEventListener("popstate", () => {
+        console.log("popstate: ", isFullscreen);
+
+        if (isFullscreen) {
+            document
+                .querySelector("body")
+                ?.classList.remove("overflow-y-hidden");
+            fullScreenModal.classList.replace("flex", "hidden");
+        }
+    });
     // Close full screen image
     closeButton.addEventListener("click", () => {
-        
-        document.querySelector('body')?.classList.remove('overflow-y-hidden');
+        document.querySelector("body")?.classList.remove("overflow-y-hidden");
         fullScreenModal.classList.replace("flex", "hidden");
+        history.back();
     });
 
     // Close the modal if clicked outside the image
     fullScreenModal.addEventListener("click", (e) => {
         if (e.target === fullScreenModal) {
-            
-        document.querySelector('body')?.classList.remove('overflow-y-hidden');
+            document
+                .querySelector("body")
+                ?.classList.remove("overflow-y-hidden");
             fullScreenModal.classList.replace("flex", "hidden");
+            history.back();
         }
     });
 };

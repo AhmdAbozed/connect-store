@@ -111,5 +111,5 @@
 
 
 @pushOnce('scripts')
-<script src="{{ Vite::asset('resources/ts/img-scroll.ts') }}"></script>
+<script src="{{ Vite::asset('resources/ts/imgScroll.ts') }}"></script>
 @endPushOnce
