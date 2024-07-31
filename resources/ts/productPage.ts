@@ -136,7 +136,15 @@ const TouchZoomHandler = () => {
         }
     });
 };
+function missingImgHandler(){
+    document.querySelectorAll('.product-img').forEach((element)=>{
+        element.addEventListener('error',()=>{
+            element.parentElement!.classList.add('hidden')
+        })
+    })
+}
 productZoomHandler();
 productScrollHandler();
 TouchZoomHandler();
 orderCountHandler();
+missingImgHandler();

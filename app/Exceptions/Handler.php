@@ -3,8 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
 
+use Throwable;
+use Illuminate\Support\Facades\Log;
 class Handler extends ExceptionHandler
 {
     /**
@@ -26,5 +27,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    public function report(Throwable $e)
+    {
+        if (true) {
+            //log to terminal, excluding the stack trace
+            Log::error('['.$e->getCode().'] "'.$e->getMessage().'" on line '.$e->getTrace()[0]['line'].' of file '.$e->getTrace()[0]['file']);
+        } else {
+            Log::error($e);
+            //log to log file
+            //parent::report($e);
+        }
     }
 }

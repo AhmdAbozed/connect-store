@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/product', [ProductController::class, 'getProducts']);
+Route::get('/product/{id}', [ProductController::class, 'getProducts']);
+Route::get('/categories', [CategoryController::class, 'getCategories']);
+Route::get('/brand', [BrandController::class, 'getBrands']);
+
+Route::post('/product', [ProductController::class, 'addProduct']);
+Route::post('/category', [CategoryController::class, 'addCategory']);
+Route::post('/brand', [BrandController::class, 'addBrand']);
+
+
+Route::post('/administrator/product/delete/{id}', [ProductController::class, 'deleteProduct']);

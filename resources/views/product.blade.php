@@ -7,48 +7,40 @@
                 </button>
                 <div class="flex overflow-x-hidden scroll-smooth snap-x w-[95vw] sm:w-auto max-w-[42rem] self-center pt-1  h-80 sm:h-[28rem] mb-1 scrollable" id="big-images-scrollable">
                     <div class="big-img transition-opacity duration-400 overflow-hidden h-full min-w-full big-active" id="b0">
-                        <img src="{{ Vite::asset('resources/images/laptop2.jpg') }}" class="object-contain transition rounded h-full mx-auto" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'0'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
                     </div>
                     <div class="big-img transition-opacity duration-400 overflow-hidden h-full min-w-full opacity-50" id="b1">
-                        <img src="{{ Vite::asset('resources/images/laptop3.avif') }}" class="object-contain transition rounded h-full mx-auto" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'1'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
                     </div>
                     <div class="big-img transition-opacity duration-400 overflow-hidden h-full min-w-full opacity-50" id="b2">
-                        <img src="{{ Vite::asset('resources/images/laptop4.webp') }}" class="object-contain transition rounded h-full mx-auto" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'2'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
                     </div>
                 </div>
 
                 <div class="content-between grid gap-1 grid-cols-3 grid-rows-1 p-2 ">
                     <div class="h-full flex shadow-3xl -translate-y-1">
-                        <img src="{{ Vite::asset('resources/images/laptop2.jpg') }}" id="s0" class="aspect-square m-auto object-contain small-img transition-opacity duration-400 cursor-pointer small-active" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'0'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" id="s0" class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer small-active" />
                     </div>
                     <div class="h-full flex shadow-3xl -translate-y-0">
-                        <img src="{{ Vite::asset('resources/images/laptop3.avif') }}" id="s1" class="aspect-square m-auto object-contain small-img transition-opacity duration-400 cursor-pointer opacity-50" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'1'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" id="s1" class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
                     </div>
                     <div class="h-full flex shadow-3xl -translate-y-0">
-                        <img src="{{ Vite::asset('resources/images/laptop4.webp') }}" id="s2" class="aspect-square m-auto object-contain small-img transition-opacity duration-400 cursor-pointer opacity-50" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'3'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" id="s2" class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
                     </div>
                 </div>
             </div>
             <div class="flex w-full flex-col col-span-3 h-full py-3 px-1">
                 <div class=" text-xl sm:text-2xl font-poppins mx-2 border-b-2 border-gray-300  mt-4">
-                    Dell G15-5515 Laptop - AMD Ryzen™ 7-5800H - 8GB - 512GB SSD - NVIDIA® GeForce RTX™ 3050 4GB
+                    {{$product->name}}
                 </div>
                 <div class="pl-4 flex flex-col font-medium mt-2 min-h-64">
+                    @foreach (json_decode($product->specifications) as $specification)
                     <div class="text-gray-600 mt-2 sm:mt-3">
-                        <span class="font-semibold text-gray-800">Processor: </span> AMD® Ryzen™ 7 5800H Mobile (20 MB total cache, 8 cores, 16 threads)
+                        <span class="font-semibold text-gray-800">{{$specification->specName}}: </span>{{$specification->specValue}}
                     </div>
-                    <div class="text-gray-600 mt-2 sm:mt-3">
-                        <span class="font-semibold text-gray-800">RAM: </span> 8GB
-                    </div>
-                    <div class="text-gray-600 mt-2 sm:mt-3">
-                        <span class="font-semibold text-gray-800">Hard Disk: </span>512GB SSD
-                    </div>
-                    <div class="text-gray-600 mt-2 sm:mt-3">
-                        <span class="font-semibold text-gray-800">Graphics Card: </span> NVIDIA® GeForce RTX™ 3050 4GB
-                    </div>
-                    <div class="text-gray-600 mt-2 sm:mt-3">
-                        <span class="font-semibold text-gray-800">Display Size: </span> 15.6 Inches
-                    </div>
+                    @endforeach
+
+                  
                     <div class="text-gray-600 mt-2 sm:mt-3">
                         <span class="font-semibold text-gray-800">Cash On Delivery </span>
                     </div>
@@ -59,11 +51,15 @@
 
                 <div class=" flex text-2xl font-poppins mx-2 border-y-2 border-gray-300 text-blue-500 py-2 mt-auto">
                     <div class="my-auto">
-                        EGP 41,999 <span class="line-through text-gray-400"> EGP 51,999</span>
+                        @if ($product->discounted_price)
+                        EGP {{$product->discounted_price}} <span class="line-through text-gray-400"> EGP {{$product->price}}</span>
+                        @else
+                        EGP {{$product->price}}
+                        @endif
                     </div>
                     <div class=" flex-col ml-auto">
                         <span class="block text-black font-medium text-sm my-auto mr-2"> In Stock</span>
-                        <span class=" block text-gray-600 font-medium col-span-2 text-sm my-auto mr-2"> 2 left</span>
+                        <span class=" block text-gray-600 font-medium col-span-2 text-sm my-auto mr-2"> {{$product->stock}} left</span>
 
                     </div>
                 </div>
@@ -89,38 +85,13 @@
                 <div class=" font-medium">Model</div>
                 <div class="text-gray-600 font-medium col-span-2">Dell G15-5515</div>
             </div>
+            @foreach (json_decode($product->specifications) as $specification)
             <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Processor</div>
-                <div class="text-gray-600 font-medium col-span-2">AMD® Ryzen™ 7 5800H Mobile (20 MB total cache, 8 cores, 16 threads)</div>
+                <div class=" font-medium">{{$specification->specName}}</div>
+                <div class="text-gray-600 font-medium col-span-2">{{$specification->specValue}}</div>
             </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">RAM</div>
-                <div class="text-gray-600 font-medium col-span-2">8 GB DDR4</div>
-            </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Hard Disk</div>
-                <div class="text-gray-600 font-medium col-span-2">512 GB, M.2, PCIe NVMe, SSD</div>
-            </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Graphics Card</div>
-                <div class="text-gray-600 font-medium col-span-2">NVIDIA® GeForce RTX™ 3050 4GB</div>
-            </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Display Type</div>
-                <div class="text-gray-600 font-medium col-span-2">15.6", FHD 1920x1080</div>
-            </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Connectivity</div>
-                <div class="text-gray-600 font-medium col-span-2">Wi-Fi 6 AX1650 (2x2) and Bluetooth</div>
-            </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">OPERATING SYSTEM</div>
-                <div class="text-gray-600 font-medium col-span-2">SYSTEM Windows 11</div>
-            </div>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Product Warranty</div>
-                <div class="text-gray-600 font-medium col-span-2"> 1 Year</div>
-            </div>
+            @endforeach
+
         </section>
     </div>
     <div id="fullScreenModal" class="fixed inset-0 bg-black bg-opacity-75 items-center justify-center animate-fadeIn hidden z-30">

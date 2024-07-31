@@ -1,5 +1,6 @@
 <x-layout>
     <x-banner />
+    <div class="w-5 h-5 translate-y-1 bg-black"></div>
     <x-categoriesScroll />
     <x-brandsSection />
     <x-productsScroll title="ON SALE" />
