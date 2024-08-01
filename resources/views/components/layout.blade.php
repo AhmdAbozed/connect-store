@@ -53,9 +53,9 @@
                 </div>
 
                 <img src="{{ Vite::asset('resources/images/right-arrow-white.svg') }}" class="object-contain h-3 ml-1 my-auto peer-hover:rotate-90 peer-hover/panel:rotate-90 transition-all" />
-                <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
+                <a href="/" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
                     Home
-                </div>
+                </a>
                 <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
                     Special Offers
                 </div>

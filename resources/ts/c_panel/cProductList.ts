@@ -13,8 +13,9 @@ const removeBtn = document.querySelectorAll('.removeBtn').forEach((btn) => {
         }
         removeBtn.innerHTML = 'Deleting';
         removeBtn.disabled = true;
-        const productId = removeBtn.parentElement!.id
-        const response = await fetch('/api/administrator/product/delete/'+productId, {
+        const itemId = removeBtn.parentElement!.id
+        
+        const response = await fetch('/api/administrator/'+removeBtn.dataset.type+'/delete/'+itemId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Optional, depending on your server's requirements
@@ -25,7 +26,7 @@ const removeBtn = document.querySelectorAll('.removeBtn').forEach((btn) => {
         if (response.status === 200) {
             const data = await response.json();
             console.log('Success:', data);
-            document.getElementById('p'+productId)?.remove();
+            document.getElementById('p'+itemId)?.remove();
         } else {
             removeBtn.innerHTML = 'Failed to delete' + ' '+response.status
             console.error('Error:', response.statusText);

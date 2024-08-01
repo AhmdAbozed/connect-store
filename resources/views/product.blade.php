@@ -25,7 +25,7 @@
                         <img src="{{$fileUrl.'/file/connect-store/product/'.'1'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" id="s1" class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
                     </div>
                     <div class="h-full flex shadow-3xl -translate-y-0">
-                        <img src="{{$fileUrl.'/file/connect-store/product/'.'3'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" id="s2" class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
+                        <img src="{{$fileUrl.'/file/connect-store/product/'.'2'.$product->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" id="s2" class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     {{$product->name}}
                 </div>
                 <div class="pl-4 flex flex-col font-medium mt-2 min-h-64">
-                    @foreach (json_decode($product->specifications) as $specification)
+                    @foreach (collect(json_decode($product->specifications))->take(5) as $specification)
                     <div class="text-gray-600 mt-2 sm:mt-3">
                         <span class="font-semibold text-gray-800">{{$specification->specName}}: </span>{{$specification->specValue}}
                     </div>
@@ -52,9 +52,9 @@
                 <div class=" flex text-2xl font-poppins mx-2 border-y-2 border-gray-300 text-blue-500 py-2 mt-auto">
                     <div class="my-auto">
                         @if ($product->discounted_price)
-                        EGP {{$product->discounted_price}} <span class="line-through text-gray-400"> EGP {{$product->price}}</span>
+                        EGP {{number_format($product->discounted_price)}} <span class="line-through text-gray-400"> EGP {{number_format($product->price)}}</span>
                         @else
-                        EGP {{$product->price}}
+                        EGP {{number_format($product->price)}}
                         @endif
                     </div>
                     <div class=" flex-col ml-auto">
@@ -81,10 +81,7 @@
         </div>
         <section class="mx-2 ">
             <h2 class="text-xl  px-1 ">Specification</h2>
-            <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
-                <div class=" font-medium">Model</div>
-                <div class="text-gray-600 font-medium col-span-2">Dell G15-5515</div>
-            </div>
+
             @foreach (json_decode($product->specifications) as $specification)
             <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
                 <div class=" font-medium">{{$specification->specName}}</div>
@@ -102,7 +99,7 @@
             </button>
         </div>
     </div>
-    <x-productsScroll title="Related Products"></x-productsScroll>
+    <x-productsScroll title="Related Products" :fileUrl="$fileUrl" :fileToken="$fileToken" :products="$relatedProducts"></x-productsScroll>
     @pushOnce('scripts')
     <script src="{{ Vite::asset('resources/ts/productPage.ts') }}"></script>
     @endPushOnce

@@ -1,5 +1,5 @@
 
-const selectedProductFiles: Array<any> = [];
+let selectedProductFiles: Array<any> = [];
 const productImageHandler = () => {
 
     document
@@ -16,39 +16,39 @@ const productImageHandler = () => {
             updatePreviews();
         });
 
-    function updatePreviews() {
-        const previewContainer = document.getElementById(
-            "preview-container"
-        ) as HTMLElement;
-        previewContainer.innerHTML = ""; // Clear previous previews
-
-        selectedProductFiles.forEach((file, index) => {
-            const imgContainer = document.createElement("div");
-            imgContainer.classList.add("relative", "w-24", "h-24", "border", "border-gray-200", "p-1", "rounded", "flex", "items-center", "justify-center");
-
-            const img = document.createElement("img");
-            img.src = URL.createObjectURL(file);
-            img.onload = function () {
-                URL.revokeObjectURL(img.src); // Clean up memory once the image is loaded
-            };
-            img.classList.add("object-cover", "w-full", "h-full", "rounded");
-
-            const removeButton = document.createElement("button");
-            removeButton.innerHTML = "&times;";
-            removeButton.classList.add("absolute", "top-0", "right-0", "bg-red-500", "text-white", "rounded-full", "w-6", "h-6", "flex", "items-center", "justify-center", "text-xs", "hover:bg-red-700"
-            );
-            removeButton.addEventListener("click", function () {
-                selectedProductFiles.splice(index, 1);
-                updatePreviews();
-            });
-
-            imgContainer.appendChild(img);
-            imgContainer.appendChild(removeButton);
-            previewContainer.appendChild(imgContainer);
-        });
-    }
 };
 
+function updatePreviews() {
+    const previewContainer = document.getElementById(
+        "preview-container"
+    ) as HTMLElement;
+    previewContainer.innerHTML = ""; // Clear previous previews
+
+    selectedProductFiles.forEach((file, index) => {
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("relative", "w-24", "h-24", "border", "border-gray-200", "p-1", "rounded", "flex", "items-center", "justify-center");
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.onload = function () {
+            URL.revokeObjectURL(img.src); // Clean up memory once the image is loaded
+        };
+        img.classList.add("object-cover", "w-full", "h-full", "rounded");
+
+        const removeButton = document.createElement("button");
+        removeButton.innerHTML = "&times;";
+        removeButton.classList.add("absolute", "top-0", "right-0", "bg-red-500", "text-white", "rounded-full", "w-6", "h-6", "flex", "items-center", "justify-center", "text-xs", "hover:bg-red-700"
+        );
+        removeButton.addEventListener("click", function () {
+            selectedProductFiles.splice(index, 1);
+            updatePreviews();
+        });
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(removeButton);
+        previewContainer.appendChild(imgContainer);
+    });
+}
 const productSpecsHandler = () => {
     const addSpecificationInput = function () {
         // Create a new div element
@@ -121,9 +121,7 @@ const postProductHandler = () => {
             submission.append("Category_id", target.elements.category.value);
             submission.append("Brand_id", target.elements.brand.value);
             submission.append("Updating_id", target.elements.UpdatingId.value);
-            console.log(submission);
             const specifications = Array.from(document.querySelectorAll(".product-specification"))
-            console.log(specifications);
             //@ts-ignore
             const specJsonArray = specifications.map((element) => { return { specName: element.children[0].value, specValue: element.children[1].value } })
             console.log(specJsonArray);
@@ -147,13 +145,13 @@ const postProductHandler = () => {
             const json = await res.json();
             submitBtn.innerHTML = 'Submit';
             submitBtn.disabled = false;
-
+            selectedProductFiles = [];
+            updatePreviews();
             resultDiv.classList.remove('hidden')
             if (res.status === 200) {
-                console.log("message sent", json);
                 resultDiv.children[0].innerHTML = 'Product Added.'
                 resultDiv.children[1].classList.remove('hidden')
-                resultDiv.children[1].href = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+                resultDiv.children[1].href = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')+'/product/'+json.id
             } else {
                 resultDiv.children[0].innerHTML = 'Failed to add product. Code: ' + res.status
                 resultDiv.children[1].classList.add('hidden')

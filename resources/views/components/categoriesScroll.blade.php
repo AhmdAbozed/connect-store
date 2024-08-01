@@ -13,97 +13,18 @@
 
     </div>
 
-    <div class="relative flex overflow-y-hidden sm:overflow-x-hidden sm:w-auto pt-1 min-w-100vw  overflow-x self-center scroll-smooth snap-x scrollable">
-
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b01">
+    <div class="relative flex overflow-y-hidden pt-1 overflow-x sm:overflow-x-hidden self-center scroll-smooth snap-x scrollable w-full">
+    @foreach ($categories as $category)
+        <div class="scroll-img w-[50vw] lg:w-[16.66vw] sm:w-[33.3vw] px-1 flex-shrink-0" id="b01">
             <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
+                <img src="{{$fileUrl.'/file/connect-store/product/'.'0'.$category->img_id.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" class="col object-contain  rounded h-52 mx-auto -translate-y-0" />
+                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">{{$category->name}}</div>
 
             </div>
 
         </div>
-
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b01">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b01">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b01">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b02">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b03">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-        </div>
-
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b03">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-        </div>
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b03">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-        </div>
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b04">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
-
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b05">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
-
-        <div class="scroll-img min-w-[33%]  lg:min-w-[16.6%]" id="b06">
-            <div class="relative">
-                <img src="{{ Vite::asset('resources/images/camera-mini.webp') }}" class="col object-contain  rounded h-full -translate-y-0" />
-                <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">Cameras</div>
-
-            </div>
-
-        </div>
+    @endforeach
+     
 
 
     </div>

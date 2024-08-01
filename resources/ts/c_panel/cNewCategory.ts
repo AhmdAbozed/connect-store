@@ -1,44 +1,62 @@
 
 const postCategoryHandler = () => {
     const post = async (e: SubmitEvent) => {
-        console.log('what the fuck')
+        console.log('er')
         e.preventDefault();
-        const target = e.target as any;
-        const submission = new FormData();
-        
-        submission.append("Name", target.elements.categoryName.value);
-        //const specifications = Array.from(document.querySelectorAll("category-specification"))
-        //@ts-ignore
-        //const specJsonArray = specifications.map((element)=>{return {specName: element.children[0].value} })
-        //submission.append('Specifications', JSON.stringify(specJsonArray))
-        const options: RequestInit = {
-            method: "POST",
-            headers: {
-                "Access-Control-Allow-Credentials": "true",
-                //without decoding, %3D in token isn't converted to =, which causes token mismatch
-                
-                Accept: "multipart/form-data",
-            },
-            credentials: "include",
-            body: submission,
-        };
 
-        (e.target! as HTMLFormElement).reset();
-        const endpoint = location.protocol + "//" + location.host + "/api/category/";
-        const res = await fetch(endpoint, options);
-        const json = await res.json();
-        if (res.status === 200) {
-            console.log("message sent", json);
+        const target = e.target as any;
+        const resultDiv = target.querySelector('.result');
+        const submission = new FormData();
+        const submitBtn = target.querySelector('.submit-btn') as HTMLButtonElement;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Submitting...';
+        resultDiv.classList.add('hidden')
+        try {
+
+            submission.append("Name", target.elements.categoryName.value);
+            submission.append("Image", target.elements.categoryImage.files[0]);
+            submission.append("Updating_id", target.elements.UpdatingId.value);
+        
+            const options: RequestInit = {
+                method: "POST",
+                headers: {
+                    "Access-Control-Allow-Credentials": "true",
+                    Accept: "multipart/form-data",
+                },
+                credentials: "include",
+                body: submission,
+            };
+
+            (e.target! as HTMLFormElement).reset();
+            const endpoint = location.protocol + "//" + location.host + "/api/category/";
+            const res = await fetch(endpoint, options);
+            const json = await res.json();
+            submitBtn.innerHTML = 'Submit';
+            submitBtn.disabled = false;
+
+            resultDiv.classList.remove('hidden')
+            if (res.status === 200) {
+                resultDiv.children[0].innerHTML = 'Category Added.'
+            } else {
+                resultDiv.children[0].innerHTML = 'Failed to add category. Code: ' + res.status
+            }
+        } catch (e) {
+            submitBtn.innerHTML = 'Submit';
+            submitBtn.disabled = false;
+            resultDiv.classList.remove('hidden')
+
+            resultDiv.children[0].innerHTML = 'Failed to add category. Unknown Error'
+            resultDiv.children[1].classList.add('hidden')
+
         }
     };
+
     document.getElementById('new-category-panel')!.addEventListener('submit', post)
-};
 
-
+}
 const categoryPresetHandler = () => {
     const addSpecificationInput = function () {
         // Create a new div element
-        console.log('hmmmmm')
         const div = document.createElement("div");
         div.className = "flex space-x-4 items-center";
 
@@ -73,6 +91,8 @@ const categoryPresetHandler = () => {
             e.preventDefault();
             addSpecificationInput();
         });
+
 };
+
 postCategoryHandler();
 categoryPresetHandler();

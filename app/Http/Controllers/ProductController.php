@@ -15,7 +15,7 @@ class ProductController extends Controller
         error_log(json_encode($request->all()));
         error_log($request->hasFile('Images'));
         $imgId = bin2hex(random_bytes(5));
-        $productData = [
+        $itemData = [
             'name' => $request->input('Name'),
             'price' => $request->input('Price'),
             'discounted_price' => $request->input('Discounted_price'),
@@ -27,11 +27,13 @@ class ProductController extends Controller
         ];
         error_log('update id: '.$request->input('Updating_id'));
         if (intval($request->input('Updating_id'))) {
-            $product = Product::query()->find($request->input('Updating_id'))->update($productData);
+            
+        error_log('updating product');
+            $product = Product::query()->find($request->input('Updating_id'))->update($itemData);
             $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
-            return response($product);
+            return response(['id'=>$request->input('Updating_id')]);
         } else {
-            $product = Product::query()->create($productData);
+            $product = Product::query()->create($itemData);
             $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
             return response($product);
         }
