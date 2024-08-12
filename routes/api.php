@@ -25,6 +25,7 @@ Route::get('/product', [ProductController::class, 'getProducts']);
 Route::get('/product/{id}', [ProductController::class, 'getProducts']);
 Route::get('/categories', [CategoryController::class, 'getCategories']);
 Route::get('/brand', [BrandController::class, 'getBrands']);
+Route::get('/product', [ProductController::class, 'getProducts']);
 
 Route::post('/product', [ProductController::class, 'addProduct']);
 Route::post('/category', [CategoryController::class, 'addCategory']);

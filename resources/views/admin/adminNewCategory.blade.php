@@ -10,16 +10,16 @@
                 @else
                 <div class="text-2xl mb-2  mx-auto">New Category</div>
                 @endif
-                <input type="file" name="categoryImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                <input type="file" name="categoryImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                 <input type="number" id="updatingId" name="UpdatingId" class="hidden" value="{{ isset($updatingItem) ?  $updatingItem->id : 0 }}">
 
-                <div id="presetInputs" class="space-y-4 py-2">
+                <div id="specificationInputs" class="space-y-4 py-2">
                     <input type="text" name="categoryName" id="" placeholder="Category name" class="w-full p-2 border border-gray-300 rounded-lg" required>
                     <!-- Input fields will be added here -->
 
                 </div>
-                <button id="add-preset-btn" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 hidden">
-                    Add Preset Specifications
+                <button id="add-inputs-btn" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Add Filter Specifications
                 </button>
                 <button type="submit" class="mt-4 bg-blue-500 block text-white px-4 py-2 rounded submit-btn">Submit</button>
                 <div class="hidden result"><span></span></div>

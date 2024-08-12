@@ -16,7 +16,11 @@ const postCategoryHandler = () => {
             submission.append("Name", target.elements.categoryName.value);
             submission.append("Image", target.elements.categoryImage.files[0]);
             submission.append("Updating_id", target.elements.UpdatingId.value);
-        
+            const specifications = Array.from(document.querySelectorAll(".category-specification"))
+            //@ts-ignore
+            const specJsonArray = specifications.map((element) => { return element.children[0].value })
+            submission.append('Specifications', JSON.stringify(specJsonArray))
+
             const options: RequestInit = {
                 method: "POST",
                 headers: {
@@ -28,7 +32,7 @@ const postCategoryHandler = () => {
             };
 
             (e.target! as HTMLFormElement).reset();
-            const endpoint = location.protocol + "//" + location.host + "/api/category/";
+            const endpoint = location.protocol + "//" + location.host + "/_api/category/";
             const res = await fetch(endpoint, options);
             const json = await res.json();
             submitBtn.innerHTML = 'Submit';
@@ -54,17 +58,18 @@ const postCategoryHandler = () => {
     document.getElementById('new-category-panel')!.addEventListener('submit', post)
 
 }
-const categoryPresetHandler = () => {
+const categorySpecsHandler = () => {
     const addSpecificationInput = function () {
         // Create a new div element
         const div = document.createElement("div");
-        div.className = "flex space-x-4 items-center";
+        div.className = "flex space-x-4 items-center category-specification";
 
         // Create the first input element
         const input1 = document.createElement("input");
         input1.type = "text";
-        input1.placeholder = "Specification Name";
-        input1.className = "w-full p-2 border border-gray-300 rounded-lg product-specification";
+        input1.placeholder = "Specification";
+        input1.className = "w-full p-2 border border-gray-300 rounded-lg";
+        input1.required = true;
 
         // Create the remove button
         const removeBtn = document.createElement("button");
@@ -81,18 +86,16 @@ const categoryPresetHandler = () => {
         div.appendChild(removeBtn);
 
         // Append the div to the form
-        document.getElementById("presetInputs")!.appendChild(div);
+        document.getElementById("specificationInputs")!.appendChild(div);
     };
 
+    addSpecificationInput();
     document
-        .getElementById("add-preset-btn")!
+        .getElementById("add-inputs-btn")!
         .addEventListener("click", function (e) {
-            console.log('errr')
             e.preventDefault();
             addSpecificationInput();
         });
-
 };
-
 postCategoryHandler();
-categoryPresetHandler();
+categorySpecsHandler();

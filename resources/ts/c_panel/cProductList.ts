@@ -15,7 +15,7 @@ const removeBtn = document.querySelectorAll('.removeBtn').forEach((btn) => {
         removeBtn.disabled = true;
         const itemId = removeBtn.parentElement!.id
         
-        const response = await fetch('/api/administrator/'+removeBtn.dataset.type+'/delete/'+itemId, {
+        const response = await fetch('/_api/administrator/'+removeBtn.dataset.type+'/delete/'+itemId, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Optional, depending on your server's requirements

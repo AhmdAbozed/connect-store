@@ -25,18 +25,16 @@ class ProductController extends Controller
             'brand_id' => intval($request->input('Brand_id')),
             'img_id' => $imgId
         ];
-        error_log('update id: '.$request->input('Updating_id'));
+        error_log('update id: ' . $request->input('Updating_id'));
+        $product = '';
         if (intval($request->input('Updating_id'))) {
-            
-        error_log('updating product');
+            error_log('updating product');
             $product = Product::query()->find($request->input('Updating_id'))->update($itemData);
-            $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
-            return response(['id'=>$request->input('Updating_id')]);
         } else {
             $product = Product::query()->create($itemData);
-            $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
-            return response($product);
         }
+        $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
+        return response($product);
     }
 
     public function getProduct(Request $request, $product_id)
@@ -58,7 +56,8 @@ class ProductController extends Controller
             abort(400, 'Invalid URL category id');
         }
     }
-    public function deleteProduct(Request $request, int $product_id){
+    public function deleteProduct(Request $request, int $product_id)
+    {
         $result = Product::destroy($product_id);
         return response($result);
     }

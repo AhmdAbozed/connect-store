@@ -26,7 +26,7 @@ const postBrandHandler = () => {
             };
 
             (e.target! as HTMLFormElement).reset();
-            const endpoint = location.protocol + "//" + location.host + "/api/brand/";
+            const endpoint = location.protocol + "//" + location.host + "/_api/brand/";
             const res = await fetch(endpoint, options);
             const json = await res.json();
             submitBtn.innerHTML = 'Submit';

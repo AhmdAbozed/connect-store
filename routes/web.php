@@ -46,6 +46,18 @@ Route::get('/product/{id}', function ($product_id, BackBlazeService $BackBlazeSe
 
 
 
+Route::get('/categories/{id}', function ($category_id,  BackBlazeService $BackBlazeService) {
+    $category = Category::query()->find($category_id);
+    
+    $products = $category->products()->with('brand')->get();
+    error_log(json_encode($category));
+    error_log(json_encode($products));
+    $downloadAuth = $BackBlazeService->getAuthorizationToken();
+
+    return view('category', ['category' => $category, 'products'=>$products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
+});
+
+
 Route::get('/administrator/products', function () {
     $products = Product::all();
     return view('admin/adminProductList', ['items' => $products]);

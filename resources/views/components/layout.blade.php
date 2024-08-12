@@ -104,7 +104,7 @@
                 Accessories
             </div>
     </section>
-    <div class="flex flex-col mt-12  mb-10">
+    <div class="flex flex-col mt-[2.77rem]">
         {{$slot}}
     </div>
     <footer class="w-full min-h-50 bg-gray-950 flex flex-col mt-auto">

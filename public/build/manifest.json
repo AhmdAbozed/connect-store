@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CPRIMgAQ.css",
+    "file": "assets/app-KdUWiyS0.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -115,6 +115,42 @@
     "src": "resources/ts/bootstrap.ts",
     "isEntry": true
   },
+  "resources/ts/c_panel/cNewBrand.ts": {
+    "file": "assets/cNewBrand-D1-NgB0u.js",
+    "name": "cNewBrand",
+    "src": "resources/ts/c_panel/cNewBrand.ts",
+    "isEntry": true
+  },
+  "resources/ts/c_panel/cNewCategory.ts": {
+    "file": "assets/cNewCategory-6yoF6RNQ.js",
+    "name": "cNewCategory",
+    "src": "resources/ts/c_panel/cNewCategory.ts",
+    "isEntry": true
+  },
+  "resources/ts/c_panel/cNewProduct.ts": {
+    "file": "assets/cNewProduct-DD3w43Q1.js",
+    "name": "cNewProduct",
+    "src": "resources/ts/c_panel/cNewProduct.ts",
+    "isEntry": true
+  },
+  "resources/ts/c_panel/cPanels.ts": {
+    "file": "assets/cPanels-BrdmEUTW.js",
+    "name": "cPanels",
+    "src": "resources/ts/c_panel/cPanels.ts",
+    "isEntry": true
+  },
+  "resources/ts/c_panel/cProductList.ts": {
+    "file": "assets/cProductList-Bolg1KCE.js",
+    "name": "cProductList",
+    "src": "resources/ts/c_panel/cProductList.ts",
+    "isEntry": true
+  },
+  "resources/ts/category.ts": {
+    "file": "assets/category-D5zm5ht_.js",
+    "name": "category",
+    "src": "resources/ts/category.ts",
+    "isEntry": true
+  },
   "resources/ts/imgScroll.ts": {
     "file": "assets/imgScroll-CS46AE-c.js",
     "name": "imgScroll",
@@ -122,7 +158,7 @@
     "isEntry": true
   },
   "resources/ts/productPage.ts": {
-    "file": "assets/productPage-BIXtuz6k.js",
+    "file": "assets/productPage-CKC0Ap7k.js",
     "name": "productPage",
     "src": "resources/ts/productPage.ts",
     "isEntry": true

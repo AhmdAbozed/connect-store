@@ -11,7 +11,7 @@ const productImageHandler = () => {
                 alert("You can only upload 3 images for a product.");
                 return;
             }
-
+            console.log('before push, ',files)
             files.forEach((file) => selectedProductFiles.push(file));
             updatePreviews();
         });
@@ -26,7 +26,7 @@ function updatePreviews() {
 
     selectedProductFiles.forEach((file, index) => {
         const imgContainer = document.createElement("div");
-        imgContainer.classList.add("relative", "w-24", "h-24", "border", "border-gray-200", "p-1", "rounded", "flex", "items-center", "justify-center");
+        imgContainer.classList.add("relative", "border", "border-gray-200", "p-1", "rounded", "flex", "items-center", "justify-center");
 
         const img = document.createElement("img");
         img.src = URL.createObjectURL(file);
@@ -97,7 +97,7 @@ const productSpecsHandler = () => {
 };
 const postProductHandler = () => {
     const postProduct = async (e: SubmitEvent) => {
-
+        console.log(selectedProductFiles);
         e.preventDefault();
         const target = e.target as any;
         const resultDiv = target.querySelector('.result')
@@ -139,7 +139,7 @@ const postProductHandler = () => {
             };
 
             target.reset();
-            const endpoint = location.protocol + "//" + location.host + "/api/product/";
+            const endpoint = location.protocol + "//" + location.host + "/_api/product/";
            
             const res = await fetch(endpoint, options);
             const json = await res.json();
@@ -157,6 +157,9 @@ const postProductHandler = () => {
                 resultDiv.children[1].classList.add('hidden')
             }
         } catch (e) {
+            
+            selectedProductFiles = [];
+            updatePreviews();
             submitBtn.innerHTML = 'Submit';
             submitBtn.disabled = false;
             resultDiv.classList.remove('hidden')

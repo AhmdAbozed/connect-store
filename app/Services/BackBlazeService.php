@@ -31,29 +31,47 @@ class BackBlazeService
         return $response->json();
     }
 
+    private function uploadFileHttp($uploadUrlBody, $filePath,  $imgId, $index)
+    {
+        $response = Http::withHeaders([
+            //'Content-Type' in withHeaders is completely ignored on post
+            'Authorization' => $uploadUrlBody['authorizationToken'],
+            'X-Bz-File-Name' => urlencode('product/' . mb_convert_encoding($index . $imgId, 'UTF-8', 'ISO-8859-1')),
+            'Content-Length' => File::size($filePath),
+            'X-Bz-Content-Sha1' => sha1_file($filePath)
+        ])->withBody(File::get($filePath))->contentType('b2/x-auto')->post($uploadUrlBody['uploadUrl']);
+        return $response;
+    }
     public function uploadFiles(array $filePaths, $imgId)
     {
+        return 1;
+        error_log(json_encode($filePaths[0]));
         $authorizationBody = $this->getAuthorizationBody();
         error_log(json_encode($authorizationBody));
         $uploadUrlBody = $this->getUploadUrl($authorizationBody['authorizationToken'], $authorizationBody['apiInfo']['storageApi']['apiUrl']);
-        
-        foreach ($filePaths as $index => $filePath){
-            $response = Http::withHeaders([
-                //'Content-Type' in withHeaders is completely ignored on post
-                'Authorization' => $uploadUrlBody['authorizationToken'],
-                'X-Bz-File-Name' => urlencode('product/'.mb_convert_encoding($index . $imgId, 'UTF-8', 'ISO-8859-1')),
-                'Content-Length' => File::size($filePath),
-                'X-Bz-Content-Sha1' => sha1_file($filePath)
-            ])->withBody(File::get($filePath))->contentType('b2/x-auto')->post($uploadUrlBody['uploadUrl']);
+        $retryFiles = [];
+        foreach ($filePaths as $index => $filePath) {
+            $response = $this->uploadFileHttp($uploadUrlBody, $filePath, $imgId, $index);
+            error_log(json_encode($response));
+            error_log('first' . json_encode($response));
 
+            error_log('first' . json_encode($response->status()));
+            if (!$response->successful()) {
+                error_log('failed');
+                array_push($retryFiles, $filePath);
+            }
         }
-        error_log(json_encode($response->json()));
+        //sometimes bb is busy, retrying helps but may need more retries, also frontend isnt told if images arent uploaded
+        foreach ($retryFiles as $index => $filePath) {
+            error_log('retrying failed ones');
+            $response = $this->uploadFileHttp($uploadUrlBody, $filePath, $imgId, $index);
+        }
         return $response->json('fileId');
     }
 
-    public function getAuthorizationToken(){
+    public function getAuthorizationToken()
+    {
         $authorizationBody = $this->getAuthorizationBody();
         return (object)['authorizationToken' => $authorizationBody['authorizationToken'], 'apiUrl' => $authorizationBody['apiInfo']['storageApi']['apiUrl']];
     }
-    
 }

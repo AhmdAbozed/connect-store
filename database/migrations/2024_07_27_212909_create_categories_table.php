@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->text('img_id');
-            //$table->text('preset');
+            $table->text('specifications');
             $table->timestamps();
         });
     }

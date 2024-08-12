@@ -11,8 +11,10 @@
                 <div class="text-2xl mb-2  mx-auto">New Product</div>
                 @endif
                 <label class="block mb-4">
-                    <span class="text-gray-700">Upload product images</span>
-                    <input type="file" id="image-input" multiple accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                    <label for="image-input" class="w-32 mt-1 block text-white mr-4 py-2 px-4 rounded-full border-0 text-sm font-semibold bg-blue-500 hover:bg-blue-400 cursor-pointer">
+                        Upload Images
+                    </label>
+                    <input type="file" id="image-input" multiple accept="image/*" class="hidden" required>
                 </label>
                 <div id="preview-container" class="flex flex-wrap gap-4"></div>
                 <div id="specificationInputs" class="space-y-4 py-2">
