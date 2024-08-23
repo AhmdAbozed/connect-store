@@ -50,12 +50,8 @@ const setFilterValues = (specFilters: Array<filterField>, products: Array<produc
     });
 }
 const updateProductFilters = () => {
-
-    const min = (document.getElementById('min-price') as HTMLInputElement).value
-    const max = (document.getElementById('max-price') as HTMLInputElement).value
-    const filteredProducts = filterProducts(getFilterValues(), bladeProducts, Number(min), Number(max));
+    const filteredProducts = filterProducts(getFilterValues(), bladeProducts, Number(minPrice), Number(maxPrice));
     createProductCards(filteredProducts);
-
 }
 const generateFilterHtml = (specFilters: Array<filterField>, products: Array<product>) => {
 
@@ -204,7 +200,7 @@ function createProductCards(products: Array<product>) {
             <a class="scroll-img w-full  border-t-[1px] border-r-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.id}">
                 <div class="relative flex flex-col h-full rounded-md">
                     ${discountPercentage ? `<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${discountPercentage}% OFF</div>` : ''}
-                    <img src="${fileUrl}/file/connect-store/product/0${product.img_id}?Authorization=${fileToken}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0" />
+                    <img src="${fileUrl}/file/connect-store/product/${product.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0" />
                     <div class="z-10 text-gray-800 mx-auto text-sm text-center px-1 line-clamp-2">${product.name}</div>
                     ${product.discounted_price ?
                 `<div class="z-10 mx-auto text-sm text-center mt-auto text-blue-500">EGP ${product.discounted_price.toLocaleString()}</div>
@@ -221,15 +217,26 @@ function createProductCards(products: Array<product>) {
     })
     document.getElementById('main-content')?.append(wrapper)
 }
+function setPrice(e:any){
+const target = e.target as HTMLButtonElement;
+const newMin = Number((target.parentElement?.querySelector('#min-price') as HTMLInputElement).value)
+const newMax = Number((target.parentElement?.querySelector('#max-price') as HTMLInputElement).value)
+newMin ? minPrice = newMin : minPrice = 0;
+newMax ? maxPrice = newMax : maxPrice = 9999999;
+updateProductFilters();
+}
 //@ts-ignore //to use blade variable in ts file, i reassign it in ts so its not undefined to the editor 
 const bladeCategorySpecs: Array<string> = JSON.parse(phpCategorySpecs);
 //@ts-ignore
 const bladeProducts: Array<product> = phpProducts;
+let minPrice = 0;
+let maxPrice = 9999999;
 const specFilters: Array<filterField> = bladeCategorySpecs.map((spec) => { return { filterName: spec, filterChildren: [] } })
 filterPanelHandler();
 createProductCards(bladeProducts);
 setFilterValues(specFilters, bladeProducts);
 generateFilterHtml(specFilters, bladeProducts);
-document.getElementById('set-price')?.addEventListener('click', updateProductFilters);
+document.getElementById('set-price')?.addEventListener('click', setPrice);
+document.getElementById('set-price-lg')?.addEventListener('click', setPrice);
 document.getElementById('sort-by')?.addEventListener('change', updateProductFilters);
 

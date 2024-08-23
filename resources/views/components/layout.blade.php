@@ -4,12 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css','resources/ts/app.ts'])
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    @vite(['resources/css/app.css', 'resources/ts/app.ts'])
 </head>
 
 <body class="flex flex-col font-semibold font-sans">
-    <header class="flex flex-col  fixed w-full z-40">
+    <header class="flex flex-col  fixed w-full z-[100]">
         <div class="flex bg-gray-950 text-white  h-11 w-full px-4">
             <!-- Left element -->
             <button class="flex-shrink-0 lg:hidden" id='sidebar-button'>
@@ -56,11 +55,14 @@
                 <a href="/" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
                     Home
                 </a>
+                <a href="/categories/1" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
+                    Laptops
+                </a>
+                <a href="/categories/2" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
+                    Monitors
+                </a>
                 <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
-                    Special Offers
-                </div>
-                <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
-                    Stores
+                    Cameras
                 </div>
                 <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400 ml-auto">
                     Contact Us
@@ -70,9 +72,9 @@
         </div>
     </header>
     <section class="flex-col w-10/12 sm:w-52 h-full bg-gray-900 hidden animate-slideIn fixed z-40 mt-10" id='sidebar' style='box-shadow: 0 0 5px 0 rgba(50,50,50,.75);'>
-        <div class="border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12 cursor-pointer">
+        <a href="/" class="border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12 cursor-pointer">
             Home
-        </div>
+        </a>
         <div class="border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12 cursor-pointer">
             Special Offers
         </div>
@@ -87,75 +89,80 @@
             <img class="h-6 w-6 ml-auto my-auto mr-2 rotate-90" src="{{ Vite::asset('resources/images/right-arrow-white.svg') }}" alt="">
         </button>
         <div class="flex flex-col">
-            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-300 h-12">
+            <a href="/categories/1" class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-100 h-12">
                 Laptops
-            </div>
-            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-300 h-12">
+            </a>
+            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-100 h-12">
                 Cameras
             </div>
-            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-300 h-12">
-                Screens
-            </div>
-            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-300 h-12">
+            <a class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-100 h-12">
+                Monitors
+            </a>
+            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-100 h-12">
                 Headphones
             </div>
 
-            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-300 h-12">
+            <div class="flex cursor-pointer text-xl p-2 ml-4  border-gray-700 text-gray-100 h-12">
                 Accessories
             </div>
     </section>
-    <div class="flex flex-col mt-[2.77rem]">
-        {{$slot}}
+    <div class="flex flex-col mt-[2.77rem] mb-4">
+        {{ $slot }}
     </div>
+    <div class="mt-5"></div>
     <footer class="w-full min-h-50 bg-gray-950 flex flex-col mt-auto">
-        <div class="grid font-medium w-full min-h-40  grid-cols-3 lg:grid-cols-5 text-gray-100 pl-6 pt-4">
-            <div class="justify-center col-span-1 lg:grid-span-3 lg:ml-10">
-                <div class="text-lg">
-                    Home
+        <div class="grid font-medium w-full min-h-40 grid-cols-2  sm:grid-cols-3 lg:grid-cols-5 text-gray-100 pl-6 pt-4">
+            <div class=" lg:ml-10 text-lg">
+                <div  class="mt-1">
+                    <a href="/">Home</a>
                 </div>
-                <div class="text-lg">
-                    Special Offers
+                <div class="mt-1">
+                    Support: 01061676615
                 </div>
-                <div class="text-lg">
-                    Contact Us
+                <div class="flex mt-2">
+                    <a href="https://api.whatsapp.com/send?phone=01061676615" class="mr-2">
+                        <img src="{{ Vite::asset('resources/images/whatsapp.svg') }}" class="object-contain h-5 ml-1 my-auto transition-all" />
+                    </a>
+                    <a href="https://facebook.com">
+                        <img src="{{ Vite::asset('resources/images/facebook.svg') }}" class="object-contain h-5 ml-1 my-auto transition-all" />
+                    </a>
+                    
                 </div>
-                <div class="text-lg">
-                    About Us
-                </div>
-
             </div>
-            <div>
-                <div class="text-lg">
-                    Categories
-                </div>
-                <div class=" text-gray-300 mt-1">
+            <div class="text-lg">
+
+                <div class=" text-gray-100 mt-1">
                     Laptops
                 </div>
-                <div class=" text-gray-300 mt-1">
+                <div class=" text-gray-100 mt-1">
                     Cameras
                 </div>
-                <div class=" text-gray-300 mt-1">
-                    Accessories
+                <div class=" text-gray-100 mt-1">
+                    PCs
+                </div>
+                <div class="block sm:hidden">
+
+                    <div class=" text-gray-300 mt-1">
+                        Printers
+                    </div>
+                    <div class=" text-gray-300 mt-1">
+                        Monitors
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <div class="text-lg">
-                    Brands
+            <div class="hidden sm:block text-lg">
+
+                <div class=" text-gray-300 mt-1">
+                    Printers
                 </div>
                 <div class=" text-gray-300 mt-1">
-                    Lenovo
-                </div>
-                <div class=" text-gray-300 mt-1">
-                    Asus
-                </div>
-                <div class=" text-gray-300 mt-1">
-                    Dell
+                    Monitors
                 </div>
             </div>
 
         </div>
-        <div class=" text-gray-400 text-xs p-1 pt-0 mr-4">All Rights Reserved by Connect ©.</div>
+        <div class=" text-gray-400 text-xs p-2 pt-0 mr-4">All Rights Reserved by Connect ©.</div>
     </footer>
 </body>
 

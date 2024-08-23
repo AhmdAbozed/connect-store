@@ -2,13 +2,12 @@
     <x-adminHeader />
     <div class=" w-full min-h-[30rem] flex flex-col py-10">
         <div class="w-full sm:max-w-md mx-auto">
-        <x-adminNewHead/>
+            <x-adminNewHead />
             <form class="bg-white p-6 pt-2 rounded shadow-md w-full sm:max-w-md mx-auto c-panel" id="new-product-panel">
                 @if (isset($updatingItem))
-                <div class="text-2xl mb-2  mx-auto">Updating {{$updatingItem->name}} </div>
-
+                    <div class="text-2xl mb-2  mx-auto">Updating {{ $updatingItem->name }} </div>
                 @else
-                <div class="text-2xl mb-2  mx-auto">New Product</div>
+                    <div class="text-2xl mb-2  mx-auto">New Product</div>
                 @endif
                 <label class="block mb-4">
                     <label for="image-input" class="w-32 mt-1 block text-white mr-4 py-2 px-4 rounded-full border-0 text-sm font-semibold bg-blue-500 hover:bg-blue-400 cursor-pointer">
@@ -17,25 +16,23 @@
                     <input type="file" id="image-input" multiple accept="image/*" class="hidden" required>
                 </label>
                 <div id="preview-container" class="flex flex-wrap gap-4"></div>
-                <div id="specificationInputs" class="space-y-4 py-2">
+                <div id="" class="space-y-4 py-2">
                     <input type="text" name="productName" id="" placeholder="Product name" class="w-full p-2 border border-gray-300 rounded-lg" required>
                     <input type="number" name="productPrice" id="" placeholder="Product Price" class="w-full p-2 border border-gray-300 rounded-lg" required>
                     <input type="number" name="discountedPrice" id="" placeholder="Discounted Price (Empty for none)" class="w-full p-2 border border-gray-300 rounded-lg">
                     <input type="number" name="stock" id="" placeholder="Available Stock" class="w-full p-2 border border-gray-300 rounded-lg" required>
-                    <input type="number" id="updatingId" name="UpdatingId" class="hidden" value="{{ isset($updatingItem) ?  $updatingItem->id : 0 }}">
-                    <!-- Input fields will be added here -->
-                    <select name="category" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    <input type="number" id="updatingId" name="UpdatingId" class="hidden" value="{{ isset($updatingItem) ? $updatingItem->id : 0 }}">
+                    <select name="category" id="category-select" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                         <option value="-1" selected disabled>Choose Category..</option>
                         @foreach ($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
-                    <select name="brand" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="-1" selected disabled>Choose Brand..</option>
-                        @foreach ($brands as $brand)
-                        <option value="{{$brand->id}}">{{$brand->name}}</option>
-                        @endforeach
-                    </select>
+                 
+                    <div id="specificationInputs" class="space-y-4">
+
+                    </div>
+
                 </div>
                 <button id="add-inputs-btn" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
                     Add Specifications
@@ -50,8 +47,11 @@
         </div>
 
     </div>
-
+    <script>
+        //for using blade variables in script files
+        const phpCategories = {{ Illuminate\Support\Js::from($categories) }};
+    </script>
     @pushOnce('scripts')
-    <script src="{{ Vite::asset('resources/ts/c_panel/cNewProduct.ts') }}"></script>
+        <script src="{{ Vite::asset('resources/ts/c_panel/cNewProduct.ts') }}"></script>
     @endPushOnce
 </x-layout>

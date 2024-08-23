@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-KdUWiyS0.css",
+    "file": "assets/app-BSnQ93S0.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -39,6 +39,14 @@
   "resources/images/cart.svg": {
     "file": "assets/cart-CJBSIaaQ.svg",
     "src": "resources/images/cart.svg"
+  },
+  "resources/images/facebook.svg": {
+    "file": "assets/facebook--kR1Oifl.svg",
+    "src": "resources/images/facebook.svg"
+  },
+  "resources/images/filters.svg": {
+    "file": "assets/filters-BbYnTaHU.svg",
+    "src": "resources/images/filters.svg"
   },
   "resources/images/fullscreen.svg": {
     "file": "assets/fullscreen-Dc-xVB1X.svg",
@@ -100,6 +108,14 @@
     "file": "assets/slim-banner-CLbyuPV-.webp",
     "src": "resources/images/slim-banner.webp"
   },
+  "resources/images/sort.svg": {
+    "file": "assets/sort-C_uTs2cJ.svg",
+    "src": "resources/images/sort.svg"
+  },
+  "resources/images/whatsapp.svg": {
+    "file": "assets/whatsapp-CaxAB3GD.svg",
+    "src": "resources/images/whatsapp.svg"
+  },
   "resources/ts/app.ts": {
     "file": "assets/app-BwDpqcm8.js",
     "name": "app",
@@ -122,15 +138,21 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewCategory.ts": {
-    "file": "assets/cNewCategory-6yoF6RNQ.js",
+    "file": "assets/cNewCategory-CmddtNhb.js",
     "name": "cNewCategory",
     "src": "resources/ts/c_panel/cNewCategory.ts",
     "isEntry": true
   },
   "resources/ts/c_panel/cNewProduct.ts": {
-    "file": "assets/cNewProduct-DD3w43Q1.js",
+    "file": "assets/cNewProduct-CylMljgv.js",
     "name": "cNewProduct",
     "src": "resources/ts/c_panel/cNewProduct.ts",
+    "isEntry": true
+  },
+  "resources/ts/c_panel/cOrderList.ts": {
+    "file": "assets/cOrderList-CFq8Q3Pp.js",
+    "name": "cOrderList",
+    "src": "resources/ts/c_panel/cOrderList.ts",
     "isEntry": true
   },
   "resources/ts/c_panel/cPanels.ts": {
@@ -140,13 +162,13 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cProductList.ts": {
-    "file": "assets/cProductList-Bolg1KCE.js",
+    "file": "assets/cProductList-B_PYcIOo.js",
     "name": "cProductList",
     "src": "resources/ts/c_panel/cProductList.ts",
     "isEntry": true
   },
   "resources/ts/category.ts": {
-    "file": "assets/category-D5zm5ht_.js",
+    "file": "assets/category-CZ76iDDb.js",
     "name": "category",
     "src": "resources/ts/category.ts",
     "isEntry": true
@@ -158,7 +180,7 @@
     "isEntry": true
   },
   "resources/ts/productPage.ts": {
-    "file": "assets/productPage-CKC0Ap7k.js",
+    "file": "assets/productPage-DXVNJXJk.js",
     "name": "productPage",
     "src": "resources/ts/productPage.ts",
     "isEntry": true

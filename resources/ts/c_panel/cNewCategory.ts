@@ -34,7 +34,6 @@ const postCategoryHandler = () => {
             (e.target! as HTMLFormElement).reset();
             const endpoint = location.protocol + "//" + location.host + "/_api/category/";
             const res = await fetch(endpoint, options);
-            const json = await res.json();
             submitBtn.innerHTML = 'Submit';
             submitBtn.disabled = false;
 
@@ -48,10 +47,9 @@ const postCategoryHandler = () => {
             submitBtn.innerHTML = 'Submit';
             submitBtn.disabled = false;
             resultDiv.classList.remove('hidden')
-
+            console.log(e)
             resultDiv.children[0].innerHTML = 'Failed to add category. Unknown Error'
-            resultDiv.children[1].classList.add('hidden')
-
+            throw e;
         }
     };
 

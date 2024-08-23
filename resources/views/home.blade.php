@@ -1,8 +1,6 @@
 <x-layout>
     <x-banner />
-    <div class="w-5 h-5 translate-y-1 bg-black"></div>
     <x-categoriesScroll :categories="$categories" :fileUrl="$fileUrl" :fileToken="$fileToken" />
-    <x-brandsSection />
     <x-productsScroll title="ON SALE" :products="$saleProducts" :fileUrl="$fileUrl" :fileToken="$fileToken" />
     @php
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,11 @@ Route::get('/product', [ProductController::class, 'getProducts']);
 Route::post('/product', [ProductController::class, 'addProduct']);
 Route::post('/category', [CategoryController::class, 'addCategory']);
 Route::post('/brand', [BrandController::class, 'addBrand']);
+Route::post('/order', [OrderController::class, 'addOrder']);
+Route::get('/orders', [OrderController::class, 'getOrders']);
 
 
 Route::post('/administrator/product/delete/{id}', [ProductController::class, 'deleteProduct']);
+Route::post('/administrator/category/delete/{id}', [CategoryController::class, 'deleteCategory']);
+
+Route::post('/administrator/order/{id}', [OrderController::class, 'updateOrder']);

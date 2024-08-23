@@ -18,17 +18,17 @@ const removeBtn = document.querySelectorAll('.removeBtn').forEach((btn) => {
         const response = await fetch('/_api/administrator/'+removeBtn.dataset.type+'/delete/'+itemId, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // Optional, depending on your server's requirements
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({}) // Sending an empty JSON object
         });
 
+        const data = await response.text();
         if (response.status === 200) {
-            const data = await response.json();
             console.log('Success:', data);
             document.getElementById('p'+itemId)?.remove();
         } else {
-            removeBtn.innerHTML = 'Failed to delete' + ' '+response.status
+            removeBtn.innerHTML = 'Failed: ' +response.status + ' '+data
             console.error('Error:', response.statusText);
         }
     })

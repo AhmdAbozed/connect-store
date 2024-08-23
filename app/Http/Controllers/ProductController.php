@@ -22,7 +22,6 @@ class ProductController extends Controller
             'stock' => $request->input('Stock'),
             'specifications' => $request->input('Specifications'),
             'category_id' => intval($request->input('Category_id')),
-            'brand_id' => intval($request->input('Brand_id')),
             'img_id' => $imgId
         ];
         error_log('update id: ' . $request->input('Updating_id'));
@@ -56,8 +55,11 @@ class ProductController extends Controller
             abort(400, 'Invalid URL category id');
         }
     }
-    public function deleteProduct(Request $request, int $product_id)
+    public function deleteProduct(Request $request, BackBlazeService $BackBlazeService, int $product_id)
     {
+        $imgId = Product::query()->find($product_id)->img_id;
+        error_log($imgId);
+        $BackBlazeService->deleteFiles('product/'.$imgId);
         $result = Product::destroy($product_id);
         return response($result);
     }

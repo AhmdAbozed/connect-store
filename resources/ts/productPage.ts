@@ -1,3 +1,9 @@
+
+
+function setFullscreenImg(){
+    //Temporary fix as src is undefined for this element when set by blade
+    (document.getElementById('fullScreenImage') as HTMLImageElement).src = (document.getElementById('img1') as HTMLImageElement).src; 
+}
 function productScrollHandler() {
     const smallImgs = document.querySelectorAll(
         ".small-img"
@@ -21,7 +27,6 @@ function productScrollHandler() {
         prevBigActiveImg?.classList.add("opacity-50");
     }
     smallImgs.forEach((element) => {
-        console.log("hmm");
         element.addEventListener("click", (e) => {
             resetImgs();
             const target = e.target as HTMLImageElement;
@@ -75,28 +80,12 @@ const productZoomHandler = () => {
         });
     });
 };
-const orderCountHandler = () => {
-    const decrementButton = document.getElementById("decrement")!;
-    const incrementButton = document.getElementById("increment")!;
-    const numberDisplay = document.getElementById("number")!;
-    let count = 0;
-
-    decrementButton.addEventListener("click", () => {
-        if (count > 0) {
-            count--;
-            numberDisplay.textContent = JSON.stringify(count);
-        }
-    });
-
-    incrementButton.addEventListener("click", () => {
-        count++;
-        numberDisplay.textContent = JSON.stringify(count);
-    });
-};
 const TouchZoomHandler = () => {
     const thumbnail = document.getElementById("fullscreen-icon")!;
     const fullScreenModal = document.getElementById("fullScreenModal")!;
     const closeButton = document.getElementById("closeButton")!;
+    const imgSrc = (document.querySelector('.big-active') as HTMLImageElement).src;
+    (document.getElementById('fullScreenImage') as HTMLImageElement).src = imgSrc;
     let isFullscreen = false;
     // Show full screen image
     thumbnail.addEventListener("click", () => {
@@ -136,15 +125,107 @@ const TouchZoomHandler = () => {
         }
     });
 };
-function missingImgHandler(){
-    document.querySelectorAll('.product-img').forEach((element)=>{
-        element.addEventListener('error',()=>{
+function missingImgHandler() {
+    document.querySelectorAll('.product-img').forEach((element) => {
+        element.addEventListener('error', () => {
             element.parentElement!.classList.add('hidden')
         })
     })
 }
+const orderHandler = () => {
+
+    function orderCountHandler() {
+        const decrementButton = document.getElementById("decrement")!;
+        const incrementButton = document.getElementById("increment")!;
+        const numberDisplay = document.getElementById("quantity")!;
+
+        decrementButton.addEventListener("click", () => {
+            if (count > 1) {
+                count--;
+                numberDisplay.textContent = JSON.stringify(count);
+            }
+        });
+
+        incrementButton.addEventListener("click", () => {
+            count++;
+            numberDisplay.textContent = JSON.stringify(count);
+        });
+    };
+    function sendOrderHandler() {
+        document.getElementById('order-form')?.addEventListener('submit', async (e: SubmitEvent) => {
+            e.preventDefault();
+            const target = e.target as any;
+            const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Sending Order..';
+
+            try {
+                const submission = new FormData();
+
+                submission.append("Name", target.elements.fullName.value);
+                submission.append("Address", target.elements.address.value);
+                submission.append("PhoneNumber", target.elements.phoneNumber.value);
+                submission.append("Products", JSON.stringify([{ id: bladeProduct.id, quantity: count }]));
+
+                const options: RequestInit = {
+                    method: "POST",
+                    headers: {
+                        "Access-Control-Allow-Credentials": "true",
+                        //without decoding, %3D in token isn't converted to =, which causes token mismatch
+
+                        Accept: "multipart/form-data",
+                    },
+                    credentials: "include",
+                    body: submission,
+                };
+
+                target.reset();
+                const endpoint = location.protocol + "//" + location.host + "/_api/order/";
+
+                const res = await fetch(endpoint, options);
+                if (res.status === 200) {
+                    submitBtn.innerHTML = 'Order Sent.';
+                } else {
+                    submitBtn.innerHTML = 'Failed to send order: ' + res.status;
+                    submitBtn.disabled = false;
+
+                }
+            } catch (e) {
+
+                submitBtn.innerHTML = 'Failed to send order: Unknown Error';
+                submitBtn.disabled = false;
+                throw (e);
+            }
+
+        })
+    }
+    const orderWindow = document.getElementById('order-popup')!;
+    //vite build redeclares count causing redeclaration error, 
+    const countCopy = count;
+    document.getElementById('close-order')?.addEventListener('click', () => {
+        orderWindow.classList.add('hidden')
+    })
+    document.getElementById('order-overlay')?.addEventListener('click', () => {
+        orderWindow.classList.add('hidden')
+    })
+    document.getElementById('buy-button')?.addEventListener('click', () => {
+        document.getElementById('order-count')!.innerHTML = JSON.stringify(countCopy)
+        document.getElementById('order-price')!.innerHTML = JSON.stringify((bladeProduct.discounted_price ? bladeProduct.discounted_price : bladeProduct.price) * count);
+
+        orderWindow?.classList.remove('hidden')
+
+    })
+    sendOrderHandler();
+    orderCountHandler();
+
+}
+//@ts-ignore
+const bladeProduct = phpProduct;
+let count = 1;
+
+orderHandler();
 productZoomHandler();
 productScrollHandler();
 TouchZoomHandler();
-orderCountHandler();
 missingImgHandler();
+setFullscreenImg();
