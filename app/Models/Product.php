@@ -23,6 +23,7 @@ class Product extends Model
         'stock',
         'img_id',
         'category_id',
+        'subcategory_id',
         'brand_id'
     ];
     public function category(): BelongsTo

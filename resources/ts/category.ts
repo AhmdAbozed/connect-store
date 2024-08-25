@@ -200,7 +200,7 @@ function createProductCards(products: Array<product>) {
             <a class="scroll-img w-full  border-t-[1px] border-r-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.id}">
                 <div class="relative flex flex-col h-full rounded-md">
                     ${discountPercentage ? `<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${discountPercentage}% OFF</div>` : ''}
-                    <img src="${fileUrl}/file/connect-store/product/${product.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0" />
+                    <img src="${fileUrl}/file/connect-store/product/${product.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0 h-52" />
                     <div class="z-10 text-gray-800 mx-auto text-sm text-center px-1 line-clamp-2">${product.name}</div>
                     ${product.discounted_price ?
                 `<div class="z-10 mx-auto text-sm text-center mt-auto text-blue-500">EGP ${product.discounted_price.toLocaleString()}</div>

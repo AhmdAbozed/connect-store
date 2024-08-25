@@ -22,7 +22,8 @@ return new class extends Migration
             $table->text('specifications');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-                           
+            $table->unsignedBigInteger('subcategory_id')->nullable();
+            $table->foreign('subcategory_id')->references('id')->on('subcategories');
             $table->text('img_id');
             $table->timestamps();
         });

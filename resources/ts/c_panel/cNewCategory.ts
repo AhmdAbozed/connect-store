@@ -1,6 +1,8 @@
 
 const postCategoryHandler = () => {
-    const post = async (e: SubmitEvent) => {
+    //@ts-ignore
+    const bladeIsSubcategory = phpIsSubcategory;
+    const post = async (e: SubmitEvent, type: 'category' | 'subcategory') => {
         console.log('er')
         e.preventDefault();
 
@@ -16,10 +18,15 @@ const postCategoryHandler = () => {
             submission.append("Name", target.elements.categoryName.value);
             submission.append("Image", target.elements.categoryImage.files[0]);
             submission.append("Updating_id", target.elements.UpdatingId.value);
-            const specifications = Array.from(document.querySelectorAll(".category-specification"))
-            //@ts-ignore
-            const specJsonArray = specifications.map((element) => { return element.children[0].value })
-            submission.append('Specifications', JSON.stringify(specJsonArray))
+            if (type === 'subcategory') {
+                submission.append("Category_id", target.elements.category.value);
+            } else if (type === 'category') {
+                const specifications = Array.from(document.querySelectorAll(".category-specification"))
+                //@ts-ignore
+                const specJsonArray = specifications.map((element) => { return element.children[0].value })
+                submission.append('Specifications', JSON.stringify(specJsonArray))
+
+            }
 
             const options: RequestInit = {
                 method: "POST",
@@ -32,28 +39,30 @@ const postCategoryHandler = () => {
             };
 
             (e.target! as HTMLFormElement).reset();
-            const endpoint = location.protocol + "//" + location.host + "/_api/category/";
+
+
+            const endpoint = location.protocol + "//" + location.host + "/_api/" + type;
             const res = await fetch(endpoint, options);
             submitBtn.innerHTML = 'Submit';
             submitBtn.disabled = false;
 
             resultDiv.classList.remove('hidden')
             if (res.status === 200) {
-                resultDiv.children[0].innerHTML = 'Category Added.'
+                resultDiv.children[0].innerHTML = type + ' Added.'
             } else {
-                resultDiv.children[0].innerHTML = 'Failed to add category. Code: ' + res.status
+                resultDiv.children[0].innerHTML = 'Failed to add ' + type + '. Code: ' + res.status
             }
         } catch (e) {
             submitBtn.innerHTML = 'Submit';
             submitBtn.disabled = false;
             resultDiv.classList.remove('hidden')
             console.log(e)
-            resultDiv.children[0].innerHTML = 'Failed to add category. Unknown Error'
+            resultDiv.children[0].innerHTML = 'Failed to add ' + type + '. Unknown Error'
             throw e;
         }
     };
 
-    document.getElementById('new-category-panel')!.addEventListener('submit', post)
+    document.getElementById('new-category-panel')!.addEventListener('submit', (e) => post(e, bladeIsSubcategory ? 'subcategory' : 'category'));
 
 }
 const categorySpecsHandler = () => {

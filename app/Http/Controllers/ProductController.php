@@ -13,8 +13,9 @@ class ProductController extends Controller
     public function addProduct(BackBlazeService $BackBlazeService, Request $request)
     {
         error_log(json_encode($request->all()));
-        error_log($request->hasFile('Images'));
+        error_log(json_encode(intval($request->input('Subcategory_id')) ?: null));
         $imgId = bin2hex(random_bytes(5));
+
         $itemData = [
             'name' => $request->input('Name'),
             'price' => $request->input('Price'),
@@ -22,9 +23,10 @@ class ProductController extends Controller
             'stock' => $request->input('Stock'),
             'specifications' => $request->input('Specifications'),
             'category_id' => intval($request->input('Category_id')),
+            //?: returns the value if it exists, else returns null
+            'subcategory_id' => intval($request->input('Subcategory_id')) ?: null,
             'img_id' => $imgId
         ];
-        error_log('update id: ' . $request->input('Updating_id'));
         $product = '';
         if (intval($request->input('Updating_id'))) {
             error_log('updating product');
@@ -59,7 +61,7 @@ class ProductController extends Controller
     {
         $imgId = Product::query()->find($product_id)->img_id;
         error_log($imgId);
-        $BackBlazeService->deleteFiles('product/'.$imgId);
+        $BackBlazeService->deleteFiles('product/' . $imgId);
         $result = Product::destroy($product_id);
         return response($result);
     }

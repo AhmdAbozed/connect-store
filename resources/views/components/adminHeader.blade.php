@@ -9,6 +9,9 @@
         </a>
         <a href="/administrator/categories" class="flex-shrink-0 text-lg min-w-16 text-center hover:text-blue-400 px-4">
             Categories
+        </a> 
+        <a href="/administrator/subcategories" class="flex-shrink-0 text-lg min-w-16 text-center hover:text-blue-400 px-4">
+            Subcategories
         </a>
         <a href="/administrator/orders/pending" class="flex-shrink-0 text-lg min-w-16 text-center hover:text-blue-400 px-4">
             Orders

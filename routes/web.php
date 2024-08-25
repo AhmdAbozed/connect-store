@@ -5,6 +5,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Subcategory;
 use App\Services\BackBlazeService;
 use Illuminate\Support\Facades\Route;
 
@@ -49,15 +50,19 @@ Route::get('/product/{id}', function ($product_id, BackBlazeService $BackBlazeSe
 
 Route::get('/categories/{id}', function ($category_id,  BackBlazeService $BackBlazeService) {
     $category = Category::query()->find($category_id);
-
+    $subcategories = $category->subcategories()->get();
     $products = $category->products()->get();
-    error_log(json_encode($category));
-    error_log(json_encode($products));
     $downloadAuth = $BackBlazeService->getAuthorizationToken();
-
-    return view('category', ['category' => $category, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
+    return view('category', ['category' => $category, 'subcategories'=>$subcategories, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
 });
 
+Route::get('/categories/{id}/subcategories/{subcategory_id}', function ($category_id, $subcategory_id, BackBlazeService $BackBlazeService) {
+    $category = Category::query()->find($category_id);
+    $subcategory = Subcategory::query()->find($subcategory_id);
+    $products = $subcategory->products()->get();
+    $downloadAuth = $BackBlazeService->getAuthorizationToken();
+    return view('category', ['category' => $category, 'subcategory'=>$subcategory, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
+});
 
 Route::get('/administrator/products', function () {
     $products = Product::all();
@@ -66,6 +71,10 @@ Route::get('/administrator/products', function () {
 Route::get('/administrator/categories', function () {
     $categories = Category::all();
     return view('admin/adminCategoryList', ['items' => $categories]);
+});
+Route::get('/administrator/subcategories', function () {
+    $subcategories = Subcategory::with('category')->get();
+    return view('admin/adminCategoryList', ['items' => $subcategories]);
 });
 Route::get('/administrator/orders/completed', function () {
     $orders = Order::all();
@@ -81,17 +90,23 @@ Route::get('/administrator/orders/pending', function () {
 
 Route::get('/administrator/new-product', function () {
     $categories = Category::all();
+    $subcategories = Subcategory::all();
+    return view('admin/adminNewProduct', ['categories' => $categories, 'subcategories'=>$subcategories, 'panel' => 1]);
+});
 
-    return view('admin/adminNewProduct', ['categories' => $categories, 'panel' => 1]);
-});
 Route::get('/administrator/new-category', function () {
-    return view('admin/adminNewCategory');
+    $categories = Category::all();
+    return view('admin/adminNewCategory', ['isSubcategory'=>false, 'categories'=>$categories]);
 });
+
+Route::get('/administrator/new-subcategory', function () {
+    $categories = Category::all();
+    return view('admin/adminNewCategory', ['isSubcategory'=>true, 'categories' => $categories]);
+});
+
 Route::get('/administrator/new-brand', function () {
     return view('admin/adminNewBrand');
 });
-
-
 
 Route::get('/administrator/product/{id}', function ($product_id) {
     $product = Product::query()->findOrFail($product_id);
@@ -99,7 +114,13 @@ Route::get('/administrator/product/{id}', function ($product_id) {
     $brands = Brand::all();
     return view('admin/adminNewProduct', ['updatingItem' => $product, 'categories' => $categories, 'brands' => $brands]);
 });
+
 Route::get('/administrator/category/{id}', function ($category_id) {
     $category = Category::query()->findOrFail($category_id);
-    return view('admin/adminNewCategory', ['updatingItem' => $category]);
+    return view('admin/adminNewCategory', ['isSubcategory'=>false,'updatingItem' => $category]);
+});
+
+Route::get('/administrator/subcategory/{id}', function ($subcategory_id) {
+    $subcategory = Subcategory::query()->findOrFail($subcategory_id);
+    return view('admin/adminNewCategory', ['isSubcategory'=>true,'updatingItem' => $subcategory]);
 });

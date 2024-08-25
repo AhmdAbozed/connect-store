@@ -19,20 +19,40 @@ const productImageHandler = () => {
 };
 function categoryOptionsHandler(categories: Array<any>) {
     document.getElementById('category-select')?.addEventListener('change', (e) => {
-        const target = e.target as HTMLSelectElement;
-        const categoryId = Number(target.value) as number;
-        const category = categories.find((element)=>{return element.id==categoryId})
-        console.log(categories)
-        const categorySpecifications: Array<string> = JSON.parse(category.specifications)
-        if(categorySpecifications.length){
-            document.getElementById("specificationInputs")!.replaceChildren();
-            categorySpecifications.forEach((specificationName) => {
-                addSpecificationInput(specificationName);
-            })
-            
-        }
-        
+        const categoryId = Number((e.target as HTMLSelectElement).value);
+        const category = categories.find((element) => { return element.id == categoryId })
+        updateSpecifications(category);
+        updateSubcategories(categoryId);
+
     })
+}
+function updateSubcategories(categoryId: number) {
+    //@ts-ignore
+    const bladeSubcategories: Array<any> = phpSubcategories;
+    const options = bladeSubcategories.filter(sub => { console.log(sub.category_id, categoryId); return sub.category_id == categoryId });
+    const subSelect = document.getElementById('subcategory-select')!;
+    subSelect.replaceChildren();
+    const emptySubOption = document.createElement('option');
+    emptySubOption.value = '0';
+    emptySubOption.innerHTML = 'No subcategory';
+    subSelect?.append(emptySubOption);
+
+    options.forEach((sub) => {
+        const subOption = document.createElement('option');
+        subOption.value = sub.id;
+        subOption.innerHTML = sub.name
+        subSelect?.append(subOption);
+    })
+}
+function updateSpecifications(category: any) {
+    const categorySpecifications: Array<string> = JSON.parse(category.specifications)
+    if (categorySpecifications.length) {
+        document.getElementById("specificationInputs")!.replaceChildren();
+        categorySpecifications.forEach((specificationName) => {
+            addSpecificationInput(specificationName);
+        })
+    }
+
 }
 function updatePreviews() {
     const previewContainer = document.getElementById(
@@ -139,6 +159,7 @@ const postProductHandler = () => {
             submission.append("Discounted_price", target.elements.discountedPrice.value);
             submission.append("Stock", target.elements.stock.value);
             submission.append("Category_id", target.elements.category.value);
+            submission.append("Subcategory_id", target.elements.subcategory.value);
             submission.append("Updating_id", target.elements.UpdatingId.value);
             const specifications = Array.from(document.querySelectorAll(".product-specification"))
             //@ts-ignore
@@ -156,7 +177,7 @@ const postProductHandler = () => {
                 credentials: "include",
                 body: submission,
             };
-
+            console.log(submission)
             target.reset();
             const endpoint = location.protocol + "//" + location.host + "/_api/product/";
 
@@ -185,7 +206,7 @@ const postProductHandler = () => {
 
             resultDiv.children[0].innerHTML = 'Failed to add product. Unknown Error'
             resultDiv.children[1].classList.add('hidden')
-            throw(e);
+            throw (e);
         }
 
     };

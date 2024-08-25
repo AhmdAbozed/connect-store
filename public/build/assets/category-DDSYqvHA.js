@@ -2,7 +2,7 @@ const N=()=>{var c,t;const s=document.getElementById("filters-sidebar-wrapper");
             <a class="scroll-img w-full  border-t-[1px] border-r-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${e.id}">
                 <div class="relative flex flex-col h-full rounded-md">
                     ${n?`<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${n}% OFF</div>`:""}
-                    <img src="${i}/file/connect-store/product/${e.img_id}/0?Authorization=${l}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0" />
+                    <img src="${i}/file/connect-store/product/${e.img_id}/0?Authorization=${l}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0 h-52" />
                     <div class="z-10 text-gray-800 mx-auto text-sm text-center px-1 line-clamp-2">${e.name}</div>
                     ${e.discounted_price?`<div class="z-10 mx-auto text-sm text-center mt-auto text-blue-500">EGP ${e.discounted_price.toLocaleString()}</div>
                         <div class="z-10 mx-auto text-sm text-center text-gray-400 line-through mb-2">EGP ${e.price.toLocaleString()}</div>`:`<div class="z-10 mx-auto text-sm text-center mt-1 text-blue-500 mb-auto">EGP ${e.price.toLocaleString()}</div>`}

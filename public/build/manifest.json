@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BSnQ93S0.css",
+    "file": "assets/app-wbCr8jLL.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -138,13 +138,13 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewCategory.ts": {
-    "file": "assets/cNewCategory-CmddtNhb.js",
+    "file": "assets/cNewCategory-CdUjLRV0.js",
     "name": "cNewCategory",
     "src": "resources/ts/c_panel/cNewCategory.ts",
     "isEntry": true
   },
   "resources/ts/c_panel/cNewProduct.ts": {
-    "file": "assets/cNewProduct-CylMljgv.js",
+    "file": "assets/cNewProduct-Cj0GHkQC.js",
     "name": "cNewProduct",
     "src": "resources/ts/c_panel/cNewProduct.ts",
     "isEntry": true
@@ -168,7 +168,7 @@
     "isEntry": true
   },
   "resources/ts/category.ts": {
-    "file": "assets/category-CZ76iDDb.js",
+    "file": "assets/category-DDSYqvHA.js",
     "name": "category",
     "src": "resources/ts/category.ts",
     "isEntry": true

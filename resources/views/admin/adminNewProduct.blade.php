@@ -28,7 +28,11 @@
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
-                 
+                    <select name="subcategory" id="subcategory-select" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                        <option value="0" selected>No Subcategory</option>
+         
+                         
+                    </select>
                     <div id="specificationInputs" class="space-y-4">
 
                     </div>
@@ -50,6 +54,7 @@
     <script>
         //for using blade variables in script files
         const phpCategories = {{ Illuminate\Support\Js::from($categories) }};
+        const phpSubcategories = {{Illuminate\Support\Js::from($subcategories)}}
     </script>
     @pushOnce('scripts')
         <script src="{{ Vite::asset('resources/ts/c_panel/cNewProduct.ts') }}"></script>
