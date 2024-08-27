@@ -1,5 +1,8 @@
 <x-layout>
-    <x-banner />
+    <div class="flex lg:h-[26rem] mx-auto px-2 mt-4">
+        <x-categoriesPanel/>
+        <x-banner />
+    </div>
     <x-categoriesScroll :categories="$categories" :fileUrl="$fileUrl" :fileToken="$fileToken" />
     <x-productsScroll title="ON SALE" :products="$saleProducts" :fileUrl="$fileUrl" :fileToken="$fileToken" />
     @php

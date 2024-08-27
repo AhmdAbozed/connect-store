@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         DB::table('categories')->insert([
-            'name' => 'Laptops',
+            'name' => 'Data Storage',
             'img_id' => '3ba4f5c3a2',
-            'specifications' => '["Brand","CPU","RAM"]'
+            'specifications' => '["Storage Type"]'
         ]);
         DB::table('categories')->insert([
             'name' => 'Monitors',
@@ -33,29 +33,29 @@ class DatabaseSeeder extends Seeder
         ]);
       
         DB::table('subcategories')->insert([
-            'name' => '360 Laptops',
+            'name' => 'External Storage',
             'img_id' => '9765ae9806',
             'category_id' => 1,
         ]);
       
         DB::table('subcategories')->insert([
-            'name' => 'Gaming Laptops',
+            'name' => 'Internal Storage',
             'img_id' => '1dbadee920',
             'category_id' => 1,
         ]);
       
         DB::table('subcategories')->insert([
-            'name' => 'Pro Laptops',
+            'name' => 'Network Attached Storage',
             'img_id' => '42560491db',
             'category_id' => 1,
         ]);
-      
+      /*
         DB::table('subcategories')->insert([
             'name' => 'Student Laptops',
             'img_id' => '42560491db',
             'category_id' => 1,
         ]);
-      
+      */
         //convenientally generated from sql SELECT using gpt
         DB::table('products')->insert([
             [
@@ -66,7 +66,9 @@ class DatabaseSeeder extends Seeder
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'HP'],
                     ['specName' => 'CPU', 'specValue' => 'Intel i7'],
-                    ['specName' => 'RAM', 'specValue' => '8 GB']
+                    ['specName' => 'RAM', 'specValue' => '8 GB'],
+                    
+                    ['specName' => 'Storage Type', 'specValue' => 'External SSD']
                 ]),
                 'category_id' => 1,
                 
@@ -83,9 +85,11 @@ class DatabaseSeeder extends Seeder
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'Lenovo'],
                     ['specName' => 'CPU', 'specValue' => 'Intel i7'],
-                    ['specName' => 'RAM', 'specValue' => '16 GB']
+                    ['specName' => 'RAM', 'specValue' => '16 GB'],
+                    ['specName' => 'Storage Type', 'specValue' => 'USB Flash Drive']
+                
                 ]),
-                'subcategory_id' => 2,
+                'subcategory_id' => 1,
                 'category_id' => 1,
                 'img_id' => '47b8fe9a32',
                 'created_at' => Carbon::parse('2024-08-15 17:14:20'),
@@ -98,10 +102,11 @@ class DatabaseSeeder extends Seeder
                 'stock' => 5,
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'LG'],
-                    ['specName' => 'Size', 'specValue' => '27 Inches']
+                    ['specName' => 'Size', 'specValue' => '27 Inches'],
+                    ['specName' => 'Storage Type', 'specValue' => 'Memory Card']
                 ]),
-                'category_id' => 2,
-                'subcategory_id' => NULL,
+                'category_id' => 1,
+                'subcategory_id' => 1,
                 'img_id' => 'a043395293',
                 'created_at' => Carbon::parse('2024-08-15 17:47:44'),
                 'updated_at' => Carbon::parse('2024-08-15 17:47:44'),
@@ -113,10 +118,12 @@ class DatabaseSeeder extends Seeder
                 'stock' => 1,
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'Samsung'],
-                    ['specName' => 'Size', 'specValue' => '22 Inches']
+                    ['specName' => 'Size', 'specValue' => '22 Inches'],
+                    ['specName' => 'Storage Type', 'specValue' => 'Internal SSD']
+
                 ]),
-                'category_id' => 2,
-                'subcategory_id' => NULL,
+                'category_id' => 1,
+                'subcategory_id' => 2,
                 'img_id' => 'a043395293',
                 'created_at' => Carbon::parse('2024-08-15 17:47:44'),
                 'updated_at' => Carbon::parse('2024-08-15 17:47:44'),

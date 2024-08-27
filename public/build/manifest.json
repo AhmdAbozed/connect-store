@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-wbCr8jLL.css",
+    "file": "assets/app-BMdwQDtb.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -76,6 +76,10 @@
     "file": "assets/menu-BhYoNCoL.svg",
     "src": "resources/images/menu.svg"
   },
+  "resources/images/menu2.svg": {
+    "file": "assets/menu2-D_MueAsF.svg",
+    "src": "resources/images/menu2.svg"
+  },
   "resources/images/mini-banner.webp": {
     "file": "assets/mini-banner-D2SHF12Z.webp",
     "src": "resources/images/mini-banner.webp"
@@ -87,6 +91,14 @@
   "resources/images/oppo.png": {
     "file": "assets/oppo-BRrmKpDv.png",
     "src": "resources/images/oppo.png"
+  },
+  "resources/images/phones.webp": {
+    "file": "assets/phones-zupXL2iD.webp",
+    "src": "resources/images/phones.webp"
+  },
+  "resources/images/right-arrow-dark.svg": {
+    "file": "assets/right-arrow-dark-DJ1CQXz3.svg",
+    "src": "resources/images/right-arrow-dark.svg"
   },
   "resources/images/right-arrow-white.svg": {
     "file": "assets/right-arrow-white-aPUNc2F6.svg",
