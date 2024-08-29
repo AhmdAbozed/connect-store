@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BMdwQDtb.css",
+    "file": "assets/app-CFsSUaL8.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -150,16 +150,19 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewCategory.ts": {
-    "file": "assets/cNewCategory-CdUjLRV0.js",
+    "file": "assets/cNewCategory-CPMGsxSO.js",
     "name": "cNewCategory",
     "src": "resources/ts/c_panel/cNewCategory.ts",
     "isEntry": true
   },
   "resources/ts/c_panel/cNewProduct.ts": {
-    "file": "assets/cNewProduct-Cj0GHkQC.js",
+    "file": "assets/cNewProduct-BIeN35NF.js",
     "name": "cNewProduct",
     "src": "resources/ts/c_panel/cNewProduct.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/ts/utils.ts"
+    ]
   },
   "resources/ts/c_panel/cOrderList.ts": {
     "file": "assets/cOrderList-CFq8Q3Pp.js",
@@ -180,10 +183,13 @@
     "isEntry": true
   },
   "resources/ts/category.ts": {
-    "file": "assets/category-DDSYqvHA.js",
+    "file": "assets/category-DjWYPftk.js",
     "name": "category",
     "src": "resources/ts/category.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/ts/utils.ts"
+    ]
   },
   "resources/ts/imgScroll.ts": {
     "file": "assets/imgScroll-CS46AE-c.js",
@@ -207,6 +213,18 @@
     "file": "assets/sidebar-BjmLh7e_.js",
     "name": "sidebar",
     "src": "resources/ts/sidebar.ts",
+    "isEntry": true
+  },
+  "resources/ts/types.ts": {
+    "file": "assets/types-l0sNRNKZ.js",
+    "name": "types",
+    "src": "resources/ts/types.ts",
+    "isEntry": true
+  },
+  "resources/ts/utils.ts": {
+    "file": "assets/utils-D11pOpYs.js",
+    "name": "utils",
+    "src": "resources/ts/utils.ts",
     "isEntry": true
   }
 }

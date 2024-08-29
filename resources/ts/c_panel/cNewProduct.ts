@@ -1,3 +1,5 @@
+import { filterField } from "@/types";
+import { getFilters } from "../utils";
 
 let selectedProductFiles: Array<any> = [];
 const productImageHandler = () => {
@@ -46,11 +48,19 @@ function updateSubcategories(categoryId: number) {
 }
 function updateSpecifications(category: any) {
     const categorySpecifications: Array<string> = JSON.parse(category.specifications)
+    //@ts-ignore
+    const bladeProducts: Array<any> = phpProducts;
+
+    const categoryFilters = getFilters(categorySpecifications, bladeProducts.filter(e => e.category_id == category.id))
+    console.log(categoryFilters);
     if (categorySpecifications.length) {
         document.getElementById("specificationInputs")!.replaceChildren();
-        categorySpecifications.forEach((specificationName) => {
-            addSpecificationInput(specificationName);
+        document.getElementById("filterInputs")!.replaceChildren();
+        categoryFilters.forEach((categoryFilter) => {
+            addFilterInput(categoryFilter);
         })
+        //default empty spec
+        addSpecificationInput();
     }
 
 }
@@ -86,44 +96,97 @@ function updatePreviews() {
     });
 }
 
-const addSpecificationInput = function (categorySpecification?: string) {
-    // Create a new div element
-    const div = document.createElement("div");
-    div.className = "flex space-x-4 items-center product-specification";
+const addFilterInput = function (categoryFilter: filterField) {
 
-    // Create the first input element
+    const specificationWrapper = document.createElement("div");
+    specificationWrapper.className = "flex space-x-4 items-center product-specification";
+    const filterValuesWrapper = document.createElement('div')
+    filterValuesWrapper.className = "flex text-blue-600 mb-4 mt-1";
+    //Add input for spec name if its not an existing category spec
     const input1 = document.createElement("input");
     input1.type = "text";
     input1.placeholder = "Specification";
     input1.className = "w-full p-2 border border-gray-300 rounded-lg";
     input1.required = true;
-    if (categorySpecification) {
-        input1.value = categorySpecification;
-    }
-    // Create the second input element
+    const categorySpecName = document.createElement("div");
+    categorySpecName.className = "min-w-12"
+    categorySpecName.innerHTML = categoryFilter.filterName;
+    specificationWrapper.appendChild(categorySpecName);
+    input1.value = categoryFilter.filterName;
+    input1.classList.add('hidden')
+    categoryFilter.filterChildren.forEach((filterValue) => {
+        const filterValueElement = document.createElement('div');
+        filterValueElement.className = "mr-2 cursor-pointer"
+        filterValueElement.innerHTML = '"'+filterValue.value+'"'
+        filterValueElement.addEventListener('click',()=>{(document.getElementById(categoryFilter.filterName) as HTMLInputElement).value = filterValue.value})
+        filterValuesWrapper.appendChild(filterValueElement);
+    })
+
+    specificationWrapper.appendChild(input1);
+
+    //Add spec value input
     const input2 = document.createElement("input");
     input2.type = "text";
     input2.placeholder = "Value";
     input2.required = true;
     input2.className = "w-full p-2 border border-gray-300 rounded-lg";
+    input2.id = categoryFilter.filterName;
+    specificationWrapper.appendChild(input2);
 
-    // Create the remove button
+    //Add the remove button
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
     removeBtn.innerText = "X";
     removeBtn.className =
         "bg-red-500 text-white py-2 px-4 rounded-lg ml-1 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400";
     removeBtn.addEventListener("click", function () {
-        div.remove();
+        specificationWrapper.remove();
+        filterValuesWrapper.remove();
     });
-
-    // Append the inputs and the remove button to the div
-    div.appendChild(input1);
-    div.appendChild(input2);
-    div.appendChild(removeBtn);
+    specificationWrapper.appendChild(removeBtn);
 
     // Append the div to the form
-    document.getElementById("specificationInputs")!.appendChild(div);
+    document.getElementById("filterInputs")!.appendChild(specificationWrapper);
+    document.getElementById("filterInputs")!.appendChild(filterValuesWrapper);
+
+}
+const addSpecificationInput = function () {
+    // Create a new div element
+    const specificationWrapper = document.createElement("div");
+    specificationWrapper.className = "flex space-x-4 items-center product-specification";
+
+    //Add input for spec name if its not an existing category spec
+    const input1 = document.createElement("input");
+    input1.type = "text";
+    input1.placeholder = "Specification";
+    input1.className = "w-full p-2 border border-gray-300 rounded-lg";
+    input1.required = true;
+
+    specificationWrapper.appendChild(input1);
+
+    //Add spec value input
+    const input2 = document.createElement("input");
+    input2.type = "text";
+    input2.placeholder = "Value";
+    input2.required = true;
+    input2.className = "w-full p-2 border border-gray-300 rounded-lg";
+    specificationWrapper.appendChild(input2);
+
+    //Add the remove button
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.innerText = "X";
+    removeBtn.className =
+        "bg-red-500 text-white py-2 px-4 rounded-lg ml-1 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400";
+    removeBtn.addEventListener("click", function () {
+        specificationWrapper.remove();
+    });
+    specificationWrapper.appendChild(removeBtn);
+
+    // Append the div to the form
+
+    document.getElementById("specificationInputs")!.appendChild(specificationWrapper);
+
 };
 
 const productSpecsHandler = () => {
@@ -163,7 +226,7 @@ const postProductHandler = () => {
             submission.append("Updating_id", target.elements.UpdatingId.value);
             const specifications = Array.from(document.querySelectorAll(".product-specification"))
             //@ts-ignore
-            const specJsonArray = specifications.map((element) => { return { specName: element.children[0].value, specValue: element.children[1].value } })
+            const specJsonArray = specifications.map((element) => { return { specName: element.querySelectorAll('input')[0].value, specValue: element.querySelectorAll('input')[1].value } })
             console.log(specJsonArray);
             submission.append('Specifications', JSON.stringify(specJsonArray))
             const options: RequestInit = {

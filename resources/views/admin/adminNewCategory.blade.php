@@ -32,7 +32,7 @@
 
                     </div>
                     <button id="add-inputs-btn" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        Add Filter Specifications
+                        Add Filter
                     </button>
                 @endif
                 <button type="submit" class="mt-4 bg-blue-500 block text-white px-4 py-2 rounded submit-btn">Submit</button>
@@ -48,6 +48,6 @@
     </script>
 
     @pushOnce('scripts')
-        <script src="{{ Vite::asset('resources/ts/c_panel/cNewCategory.ts') }}"></script>
+        <script src="{{ Vite::asset('resources/ts/c_panel/cNewCategory.ts') }}" ></script>
     @endPushOnce
 </x-layout>

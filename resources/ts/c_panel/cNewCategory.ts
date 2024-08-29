@@ -74,7 +74,7 @@ const categorySpecsHandler = () => {
         // Create the first input element
         const input1 = document.createElement("input");
         input1.type = "text";
-        input1.placeholder = "Specification";
+        input1.placeholder = "Filter";
         input1.className = "w-full p-2 border border-gray-300 rounded-lg";
         input1.required = true;
 

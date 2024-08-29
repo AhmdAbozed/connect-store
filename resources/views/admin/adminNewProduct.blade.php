@@ -33,8 +33,13 @@
          
                          
                     </select>
+                    <div class="text-lg">Filters</div>
+                    <div id="filterInputs" class=" border-b-2 pb-4">
+                       
+                    </div>
+                    <div class="text-lg">Specifications</div>
                     <div id="specificationInputs" class="space-y-4">
-
+                       
                     </div>
 
                 </div>
@@ -55,8 +60,9 @@
         //for using blade variables in script files
         const phpCategories = {{ Illuminate\Support\Js::from($categories) }};
         const phpSubcategories = {{Illuminate\Support\Js::from($subcategories)}}
+        const phpProducts = {{Illuminate\Support\Js::from($products)}}
     </script>
     @pushOnce('scripts')
-        <script src="{{ Vite::asset('resources/ts/c_panel/cNewProduct.ts') }}"></script>
+        <script src="{{ Vite::asset('resources/ts/c_panel/cNewProduct.ts') }}" type="module"></script>
     @endPushOnce
 </x-layout>

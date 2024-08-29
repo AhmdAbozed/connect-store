@@ -1,3 +1,5 @@
+import { filterField, product, productSpec } from "./types";
+import { getFilters } from "./utils";
 const filterPanelHandler = () => {
     const sidebar = document.getElementById('filters-sidebar-wrapper')!;
     document.getElementById('filters-button')?.addEventListener('click', () => {
@@ -14,41 +16,6 @@ const filterPanelHandler = () => {
     })
 }
 
-type product = {
-    id: number,
-    name: string,
-    price: number,
-    discounted_price: number,
-    specifications: string,
-    created_at: string,
-    img_id: string
-}
-type productSpec = { specName: string, specValue: string };
-type filterChild = { value: string, productCount: number };
-type filterField = { filterName: string, filterChildren: Array<filterChild> };
-
-const setFilterValues = (specFilters: Array<filterField>, products: Array<product>) => {
-
-    products.forEach((product: any) => {
-
-        const productSpecs: Array<productSpec> = JSON.parse(product.specifications);
-        productSpecs.forEach((productSpec) => {
-            //find product spec name that exists in category filters if any
-            const filter = specFilters.find(filter => filter.filterName == productSpec.specName)
-            if (filter) {
-                //see if a filter check for this value already exists
-                const filterChild = filter.filterChildren.find(child => child.value == productSpec.specValue)
-                if (filterChild) {
-                    //filter check already exists, increment number of products for that have it 
-                    filterChild.productCount += 1;
-                } else {
-                    //filther check doesn't exist, add it to the checks
-                    filter.filterChildren.push({ value: productSpec.specValue, productCount: 1 })
-                }
-            }
-        })
-    });
-}
 const updateProductFilters = () => {
     const filteredProducts = filterProducts(getFilterValues(), bladeProducts, Number(minPrice), Number(maxPrice));
     createProductCards(filteredProducts);
@@ -231,10 +198,9 @@ const bladeCategorySpecs: Array<string> = JSON.parse(phpCategorySpecs);
 const bladeProducts: Array<product> = phpProducts;
 let minPrice = 0;
 let maxPrice = 9999999;
-const specFilters: Array<filterField> = bladeCategorySpecs.map((spec) => { return { filterName: spec, filterChildren: [] } })
 filterPanelHandler();
 createProductCards(bladeProducts);
-setFilterValues(specFilters, bladeProducts);
+const specFilters = getFilters(bladeCategorySpecs, bladeProducts);
 generateFilterHtml(specFilters, bladeProducts);
 document.getElementById('set-price')?.addEventListener('click', setPrice);
 document.getElementById('set-price-lg')?.addEventListener('click', setPrice);

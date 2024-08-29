@@ -14,11 +14,11 @@
         <div class="opacity-50 bg-black w-[100vw] fixed h-full" id="filter-overlay"></div>
 
     </section>
-    <div class="flex w-full sm:w-10/12 mx-auto flex-wrap justify-center ">
+    <div class="flex w-full sm:w-10/12 mx-auto flex-wrap justify-center lg:space-x-2">
         
         @if (isset($subcategories))
             @foreach ($subcategories as $sub)
-                <a href="{{'/categories/'.$category->id.'/subcategories/'.$sub->id}}" class="flex-1 min-w-[49%] flex-grow-0 sm:min-w-48 lg:min-w-[25%] flex flex-col shadow-md rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all pt-2" id="b0">
+                <a href="{{'/categories/'.$category->id.'/subcategories/'.$sub->id}}" class="flex-1 min-w-[49%] flex-grow-0 sm:min-w-48 lg:min-w-[20%] lg:max-w-32 flex flex-col shadow-md rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all pt-2" id="b0">
                     <img src="{{ $fileUrl . '/file/connect-store/product/' . $sub->img_id . '/0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded w-full aspect-square mx-auto" id="img1" />
                     <div class="text-center -translate-y-2">{{ $sub->name }}</div>
                 </a>
@@ -81,6 +81,6 @@
     </script>
 
     @pushOnce('scripts')
-        <script src="{{ Vite::asset('resources/ts/category.ts') }}"></script>
+        <script src="{{ Vite::asset('resources/ts/category.ts') }}" type="module"></script>
     @endPushOnce
 </x-layout>

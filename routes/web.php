@@ -91,7 +91,8 @@ Route::get('/administrator/orders/pending', function () {
 Route::get('/administrator/new-product', function () {
     $categories = Category::all();
     $subcategories = Subcategory::all();
-    return view('admin/adminNewProduct', ['categories' => $categories, 'subcategories'=>$subcategories, 'panel' => 1]);
+    $products = Product::all(['id','category_id','specifications']);
+    return view('admin/adminNewProduct', ['categories' => $categories, 'subcategories'=>$subcategories, 'products'=>$products, 'panel' => 1]);
 });
 
 Route::get('/administrator/new-category', function () {
