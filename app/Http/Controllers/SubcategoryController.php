@@ -16,6 +16,7 @@ class SubcategoryController extends Controller
         $itemData = [
             'name' => $request->input('Name'),
             'img_id' => $imgId,
+            'specifications' => $request->input('Specifications'),
             'category_id' => intval($request->input('Category_id')),
         ];
         $categoryResult = $subcategory::addSubcategory($itemData, $request->file('Image'), intval($request->input('Updating_id')), $backBlazeService, $imgId);

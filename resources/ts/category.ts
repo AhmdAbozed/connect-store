@@ -193,16 +193,15 @@ newMax ? maxPrice = newMax : maxPrice = 9999999;
 updateProductFilters();
 }
 //@ts-ignore //to use blade variable in ts file, i reassign it in ts so its not undefined to the editor 
-const bladeCategorySpecs: Array<string> = JSON.parse(phpCategorySpecs);
+const bladeSubcategorySpecs: Array<string> = (phpSubcategorySpecs ? JSON.parse(phpSubcategorySpecs):['Brand']);
 //@ts-ignore
 const bladeProducts: Array<product> = phpProducts;
 let minPrice = 0;
 let maxPrice = 9999999;
 filterPanelHandler();
 createProductCards(bladeProducts);
-const specFilters = getFilters(bladeCategorySpecs, bladeProducts);
+const specFilters = getFilters(bladeSubcategorySpecs || ['Brand'], bladeProducts);
 generateFilterHtml(specFilters, bladeProducts);
 document.getElementById('set-price')?.addEventListener('click', setPrice);
 document.getElementById('set-price-lg')?.addEventListener('click', setPrice);
 document.getElementById('sort-by')?.addEventListener('change', updateProductFilters);
-

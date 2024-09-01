@@ -33,6 +33,7 @@ export default {
           '0%': { transform: 'translateX(-100%)'},
           '100%': {  transform:'none' },
         },
+       
         slideFadeIn: {
           '0%':{width:'12rem', opacity: '0%'},
           '100%':{width:'20rem', opacity: '100%'}
@@ -47,7 +48,8 @@ export default {
         fadeInOut: 'fadeInOut 3s forwards',
         
         slideIn: 'slideIn 0.2s forwards',
-        slideFadeIn: 'slideFadeIn 0.2s forwards'
+        slideFadeIn: 'slideFadeIn 0.2s forwards',
+       
       }
     },
   },

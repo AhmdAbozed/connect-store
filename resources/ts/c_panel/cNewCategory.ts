@@ -20,14 +20,12 @@ const postCategoryHandler = () => {
             submission.append("Updating_id", target.elements.UpdatingId.value);
             if (type === 'subcategory') {
                 submission.append("Category_id", target.elements.category.value);
-            } else if (type === 'category') {
                 const specifications = Array.from(document.querySelectorAll(".category-specification"))
                 //@ts-ignore
                 const specJsonArray = specifications.map((element) => { return element.children[0].value })
                 submission.append('Specifications', JSON.stringify(specJsonArray))
 
             }
-
             const options: RequestInit = {
                 method: "POST",
                 headers: {

@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CFsSUaL8.css",
+    "file": "assets/app-B859OV5G.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -143,6 +143,12 @@
     "src": "resources/ts/bootstrap.ts",
     "isEntry": true
   },
+  "resources/ts/builder.ts": {
+    "file": "assets/builder-Dmtx9Pni.js",
+    "name": "builder",
+    "src": "resources/ts/builder.ts",
+    "isEntry": true
+  },
   "resources/ts/c_panel/cNewBrand.ts": {
     "file": "assets/cNewBrand-D1-NgB0u.js",
     "name": "cNewBrand",
@@ -150,7 +156,7 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewCategory.ts": {
-    "file": "assets/cNewCategory-CPMGsxSO.js",
+    "file": "assets/cNewCategory-CqbGrv_P.js",
     "name": "cNewCategory",
     "src": "resources/ts/c_panel/cNewCategory.ts",
     "isEntry": true
@@ -183,7 +189,7 @@
     "isEntry": true
   },
   "resources/ts/category.ts": {
-    "file": "assets/category-DjWYPftk.js",
+    "file": "assets/category-CegrCi6l.js",
     "name": "category",
     "src": "resources/ts/category.ts",
     "isEntry": true,

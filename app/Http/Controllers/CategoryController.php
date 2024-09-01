@@ -17,7 +17,6 @@ class CategoryController extends Controller
         $itemData = [
             'name' => $request->input('Name'),
             'img_id' => $imgId,
-            'specifications' => $request->input('Specifications'),
         ];
         $categoryResult = $category::addCategory($itemData, $request->file('Image'), intval($request->input('Updating_id')), $backBlazeService, $imgId);
         return response($categoryResult);

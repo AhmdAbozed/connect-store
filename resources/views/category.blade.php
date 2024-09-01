@@ -70,10 +70,14 @@
 
     <script>
         //for using blade variables in script files
-        const phpCategorySpecs = {{ Illuminate\Support\Js::from($category->specifications) }};
+        //const phpCategorySpecs = {{ Illuminate\Support\Js::from($category->specifications) }};
         let phpSubcategories;
+        let phpSubcategorySpecs;
         @if (isset($subcategories))
             phpSubcategories = {{ Illuminate\Support\Js::from($subcategories) }};
+        @endif
+        @if (isset($subcategory))
+            phpSubcategorySpecs = {{ Illuminate\Support\Js::from($subcategory->specifications) }};
         @endif
         const phpProducts = {{ Illuminate\Support\Js::from($products) }};
         const phpFileToken = {{ Illuminate\Support\Js::from($fileToken) }};
