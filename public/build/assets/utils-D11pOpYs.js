@@ -1,1 +1,0 @@
-const a=(l,c)=>{const s=l.map(t=>({filterName:t,filterChildren:[]}));return c.forEach(t=>{JSON.parse(t.specifications).forEach(r=>{const i=s.find(e=>e.filterName==r.specName);if(i){const e=i.filterChildren.find(n=>n.value==r.specValue);e?e.productCount+=1:i.filterChildren.push({value:r.specValue,productCount:1})}})}),s};export{a as g};

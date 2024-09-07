@@ -1,8 +1,8 @@
 
 
-function setFullscreenImg(){
+function setFullscreenImg() {
     //Temporary fix as src is undefined for this element when set by blade
-    (document.getElementById('fullScreenImage') as HTMLImageElement).src = (document.getElementById('img1') as HTMLImageElement).src; 
+    (document.getElementById('fullScreenImage') as HTMLImageElement).src = (document.getElementById('img1') as HTMLImageElement).src;
 }
 function productScrollHandler() {
     const smallImgs = document.querySelectorAll(
@@ -125,11 +125,19 @@ const TouchZoomHandler = () => {
         }
     });
 };
-function missingImgHandler() {
-    document.querySelectorAll('.product-img').forEach((element) => {
-        element.addEventListener('error', () => {
-            element.parentElement!.classList.add('hidden')
+function appendSmallImgs() {
+    //@ts-ignore 
+    const bladeFileToken: Array<string> = phpFileToken;
+    //@ts-ignore
+    const bladeFileUrl: Array<product> = phpFileUrl;
+    document.querySelectorAll('.small-img-wrapper').forEach((element, index) => {
+        const imgElement = document.createElement('img');
+        imgElement.addEventListener('error', (e) => {
+            (e.target as HTMLImageElement).parentElement!.classList.add('hidden');
         })
+        imgElement.className = 'aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50' + (index==0 ? 'small-active':'0');
+        imgElement.src = `${bladeFileUrl}/file/connect-store/product/${bladeProduct.img_id}/${index}?Authorization=${bladeFileToken}&b2ContentDisposition=attachment`
+        element.appendChild(imgElement);
     })
 }
 const orderHandler = () => {
@@ -227,5 +235,5 @@ orderHandler();
 productZoomHandler();
 productScrollHandler();
 TouchZoomHandler();
-missingImgHandler();
+appendSmallImgs();
 setFullscreenImg();

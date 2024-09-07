@@ -1,5 +1,5 @@
 <x-layout>
-    <div id="order-popup" class="">
+    <div id="order-popup" class="hidden">
         <section class="z-50 fixed flex w-full h-full -translate-y-12 animate-fadeIn" id='order-wrapper'>
 
             <div id='order-overlay' class="opacity-50 bg-black w-[100vw] fixed h-full translate-y-2 z-30 ">
@@ -79,10 +79,10 @@
     <div class=" max-w-3xl w-full shadow-3xl p-4 mx-auto bg-gray-50">
         <h2 class="text-2xl p-4 text-center border-b-2 justify-center flex items-center">SECURITY SYSTEM</h2>
         <div class=" font-medium">
-            <x-builderComponent title='Video Recorder' />
-            <x-builderComponent title='Cameras' />
-            <x-builderComponent title='Power Supply' />
-            <x-builderComponent title='Camera Cables' />
+            <x-builderComponent title='Video Recorder' subcategoryId='1' />
+            <x-builderComponent title='Cameras' subcategoryId='2'/>
+            <x-builderComponent title='Power Supply' subcategoryId='3'/>
+            <x-builderComponent title='Cables' subcategoryId='4'/>
 
             <div class="flex text-lg mt-6 justify-between">
                 <div class="price justify-center flex items-center sm:text-2xl"> Build Cost: <span class="text-gray-700" id='bottomTotal'>0 EGP</span></div>

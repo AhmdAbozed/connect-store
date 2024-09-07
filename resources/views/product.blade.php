@@ -17,7 +17,7 @@
                         <span class="whitespace-pre">Quantity: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="order-count">1</span>
                     </div>
                     <div class=" font-semibold flex">
-                        <span class="whitespace-pre">Price: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="order-price">{{$product->discounted_price ?? $product->price}}</span>
+                        <span class="whitespace-pre">Price: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="order-price">{{ $product->discounted_price ?? $product->price }}</span>
                     </div>
 
                 </div>
@@ -50,28 +50,22 @@
                 </button>
                 <div class="flex overflow-x-hidden scroll-smooth snap-x w-[95vw] sm:w-auto max-w-[42rem] self-center pt-1  h-80 sm:h-[28rem] mb-1 scrollable" id="big-images-scrollable">
                     <div class="big-img transition-opacity duration-400 overflow-hidden h-full min-w-full big-active" id="b0">
-                        <img src="{{  $fileUrl . '/file/connect-store/product/' . $product->img_id.'/0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" id="img1"/>
+                        <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id . '/0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" id="img1" />
                     </div>
                     <div class="big-img transition-opacity duration-400 overflow-hidden h-full min-w-full opacity-50" id="b1">
-                        <img src="{{  $fileUrl . '/file/connect-store/product/' . $product->img_id.'/1' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
+                        <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id . '/1' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
                     </div>
                     <div class="big-img transition-opacity duration-400 overflow-hidden h-full min-w-full opacity-50" id="b2">
-                        <img src="{{  $fileUrl . '/file/connect-store/product/' . $product->img_id.'/2' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
+                        <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id . '/2' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain product-img transition rounded h-full mx-auto" />
                     </div>
                 </div>
 
                 <div class="content-between grid gap-1 grid-cols-3 grid-rows-1 p-2 ">
-                    <div class="h-full flex shadow-3xl -translate-y-1">
-                        <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id.'/0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" id="s0"
-                            class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer small-active" />
+                    <div class="h-full flex shadow-3xl -translate-y-1 small-img-wrapper">
                     </div>
-                    <div class="h-full flex shadow-3xl -translate-y-0">
-                        <img src="{{  $fileUrl . '/file/connect-store/product/' . $product->img_id.'/1' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" id="s1"
-                            class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
+                    <div class="h-full flex shadow-3xl -translate-y-0 small-img-wrapper">
                     </div>
-                    <div class="h-full flex shadow-3xl -translate-y-0">
-                        <img src="{{  $fileUrl . '/file/connect-store/product/' . $product->img_id.'/2' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" id="s2"
-                            class="aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50" />
+                    <div class="h-full flex shadow-3xl -translate-y-0 small-img-wrapper">
                     </div>
                 </div>
             </div>
@@ -149,7 +143,10 @@
     <script>
         //for using blade variables in script files
         const phpProduct = {{ Illuminate\Support\Js::from($product) }};
-        </script>
+        const phpFileToken = {{ Illuminate\Support\Js::from($fileToken) }};
+        const phpFileUrl = {{ Illuminate\Support\Js::from($fileUrl) }};
+ 
+    </script>
     @pushOnce('scripts')
         <script src="{{ Vite::asset('resources/ts/productPage.ts') }}"></script>
     @endPushOnce

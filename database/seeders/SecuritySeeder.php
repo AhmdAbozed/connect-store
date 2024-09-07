@@ -37,19 +37,20 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'specifications' => json_encode(["Voltage", "Wattage"])
             ],
-            [
-                'name' => 'Surveillance Accessories',
-                'img_id' => '57e0f9914c',
-                'category_id' => 1,
-                'specifications' => json_encode(["Type"]),
-            ],
-            
+           
             [
                 'name' => 'Cables',
                 'img_id' => '184aae9993',
                 'category_id' => 1,
                 'specifications' => json_encode(["Length", "Type"]),
             ],
+            [
+                'name' => 'Surveillance Accessories',
+                'img_id' => '57e0f9914c',
+                'category_id' => 1,
+                'specifications' => json_encode(["Type"]),
+            ]
+            
         ]);
 
 
@@ -99,7 +100,7 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 1111,
                 'stock' => 5,
                 'specifications' => json_encode([
-                    ["specName" => "Channels", "specValue" => "8"],
+                    ["specName" => "Channels", "specValue" => "8 Channels"],
                     ["specName" => "Resolution", "specValue" => "2MP"],
                     
                     ["specName" => "Type", "specValue" => "DVR"]
@@ -114,7 +115,7 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 232,
                 'stock' => 5,
                 'specifications' => json_encode([
-                    ["specName" => "Channels", "specValue" => "4"],
+                    ["specName" => "Channels", "specValue" => "4 Channels"],
                     ["specName" => "Resolution", "specValue" => "4MP"],
                     ["specName" => "Type", "specValue" => "DVR"]
                 ]),
@@ -128,7 +129,7 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 1111,
                 'stock' => 3,
                 'specifications' => json_encode([
-                    ["specName" => "Channels", "specValue" => "8"],
+                    ["specName" => "Channels", "specValue" => "8 Channels"],
                     ["specName" => "Resolution", "specValue" => "6MP"],
                     ["specName" => "Type", "specValue" => "NVR"]
                 ]),
@@ -208,7 +209,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Type", "specValue" => "Coaxial"]
                 ]),
                 'category_id' => 1,
-                'subcategory_id' => 5,
+                'subcategory_id' => 4,
                 'img_id' => 'd8e6f8a2f0',
             ],
             [
@@ -221,7 +222,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Type", "specValue" => "Ethernet"]
                 ]),
                 'category_id' => 1,
-                'subcategory_id' => 5,
+                'subcategory_id' => 4,
                 'img_id' => '81cd1aac82',
             ],
             [
@@ -234,7 +235,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Type", "specValue" => "Ethernet"]
                 ]),
                 'category_id' => 1,
-                'subcategory_id' => 5,
+                'subcategory_id' => 4,
                 'img_id' => '44e47b0740',
             ],
             [
@@ -247,7 +248,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Type", "specValue" => "Coaxial"]
                 ]),
                 'category_id' => 1,
-                'subcategory_id' => 5,
+                'subcategory_id' => 4,
                 'img_id' => '0f12816e1c',
             ],
         ]);

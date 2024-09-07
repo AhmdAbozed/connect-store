@@ -1,7 +1,5 @@
 
-const postCategoryHandler = () => {
-    //@ts-ignore
-    const bladeIsSubcategory = phpIsSubcategory;
+const postCategoryHandler = (isSubcategory: boolean) => {
     const post = async (e: SubmitEvent, type: 'category' | 'subcategory') => {
         console.log('er')
         e.preventDefault();
@@ -102,5 +100,10 @@ const categorySpecsHandler = () => {
             addSpecificationInput();
         });
 };
-postCategoryHandler();
-categorySpecsHandler();
+
+    //@ts-ignore
+    const bladeIsSubcategory = phpIsSubcategory;
+postCategoryHandler(bladeIsSubcategory);
+if(bladeIsSubcategory){
+    categorySpecsHandler();
+}

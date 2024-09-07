@@ -30,6 +30,9 @@ class OrderController extends Controller
             $order->delete();
             return 200;
         }
-
+    }
+    public function getOrders(Request $request){
+        $orders = Order::all();
+        return response($orders);        
     }
 }

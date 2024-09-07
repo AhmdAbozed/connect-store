@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-B859OV5G.css",
+    "file": "assets/app-Dyi2M7r7.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -144,10 +144,13 @@
     "isEntry": true
   },
   "resources/ts/builder.ts": {
-    "file": "assets/builder-Dmtx9Pni.js",
+    "file": "assets/builder-i-fYnldu.js",
     "name": "builder",
     "src": "resources/ts/builder.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/ts/utils.ts"
+    ]
   },
   "resources/ts/c_panel/cNewBrand.ts": {
     "file": "assets/cNewBrand-D1-NgB0u.js",
@@ -156,13 +159,13 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewCategory.ts": {
-    "file": "assets/cNewCategory-CqbGrv_P.js",
+    "file": "assets/cNewCategory-wv-He3w4.js",
     "name": "cNewCategory",
     "src": "resources/ts/c_panel/cNewCategory.ts",
     "isEntry": true
   },
   "resources/ts/c_panel/cNewProduct.ts": {
-    "file": "assets/cNewProduct-BIeN35NF.js",
+    "file": "assets/cNewProduct-ofwI_89u.js",
     "name": "cNewProduct",
     "src": "resources/ts/c_panel/cNewProduct.ts",
     "isEntry": true,
@@ -189,7 +192,7 @@
     "isEntry": true
   },
   "resources/ts/category.ts": {
-    "file": "assets/category-CegrCi6l.js",
+    "file": "assets/category-Cio_uRLk.js",
     "name": "category",
     "src": "resources/ts/category.ts",
     "isEntry": true,
@@ -204,7 +207,7 @@
     "isEntry": true
   },
   "resources/ts/productPage.ts": {
-    "file": "assets/productPage-DXVNJXJk.js",
+    "file": "assets/productPage-BwYPpGep.js",
     "name": "productPage",
     "src": "resources/ts/productPage.ts",
     "isEntry": true
@@ -228,7 +231,7 @@
     "isEntry": true
   },
   "resources/ts/utils.ts": {
-    "file": "assets/utils-D11pOpYs.js",
+    "file": "assets/utils-B3iq3xPc.js",
     "name": "utils",
     "src": "resources/ts/utils.ts",
     "isEntry": true

@@ -19,19 +19,21 @@ const productImageHandler = () => {
         });
 
 };
-function categoryOptionsHandler(categories: Array<any>) {
+function categoryOptionsHandler(categories: Array<any>, subcategories: Array<any>) {
     document.getElementById('category-select')?.addEventListener('change', (e) => {
         const categoryId = Number((e.target as HTMLSelectElement).value);
-        const category = categories.find((element) => { return element.id == categoryId })
-        updateSpecifications(category);
-        updateSubcategories(categoryId);
-
+        updateSubcategories(categoryId, subcategories);
     })
 }
-function updateSubcategories(categoryId: number) {
-    //@ts-ignore
-    const bladeSubcategories: Array<any> = phpSubcategories;
-    const options = bladeSubcategories.filter(sub => { console.log(sub.category_id, categoryId); return sub.category_id == categoryId });
+function subcategoryOptionsHandler(subcategories: Array<any>) {
+    document.getElementById('subcategory-select')?.addEventListener('change', (e) => {
+        const subcategoryId = Number((e.target as HTMLSelectElement).value);
+        const subcategory = subcategories.find((element) => { return element.id == subcategoryId })
+        updateSpecifications(subcategory);
+    })
+}
+function updateSubcategories(categoryId: number, subcategories:Array<any>) {
+    const options = subcategories.filter(sub => { console.log(sub.category_id, categoryId); return sub.category_id == categoryId });
     const subSelect = document.getElementById('subcategory-select')!;
     subSelect.replaceChildren();
     const emptySubOption = document.createElement('option');
@@ -46,12 +48,14 @@ function updateSubcategories(categoryId: number) {
         subSelect?.append(subOption);
     })
 }
-function updateSpecifications(category: any) {
-    const categorySpecifications: Array<string> = JSON.parse(category.specifications)
+function updateSpecifications(subcategory: any) {
+    console.log(subcategory);
+    const categorySpecifications: Array<string> = JSON.parse(subcategory.specifications)
     //@ts-ignore
     const bladeProducts: Array<any> = phpProducts;
-
-    const categoryFilters = getFilters(categorySpecifications, bladeProducts.filter(e => e.category_id == category.id))
+    console.log(bladeProducts);
+    console.log(bladeProducts.filter(e => e.subcategory_id == subcategory.id))
+    const categoryFilters = getFilters(categorySpecifications, bladeProducts.filter(e => e.subcategory_id == subcategory.id))
     console.log(categoryFilters);
     if (categorySpecifications.length) {
         document.getElementById("specificationInputs")!.replaceChildren();
@@ -117,8 +121,8 @@ const addFilterInput = function (categoryFilter: filterField) {
     categoryFilter.filterChildren.forEach((filterValue) => {
         const filterValueElement = document.createElement('div');
         filterValueElement.className = "mr-2 cursor-pointer"
-        filterValueElement.innerHTML = '"'+filterValue.value+'"'
-        filterValueElement.addEventListener('click',()=>{(document.getElementById(categoryFilter.filterName) as HTMLInputElement).value = filterValue.value})
+        filterValueElement.innerHTML = '"' + filterValue.value + '"'
+        filterValueElement.addEventListener('click', () => { (document.getElementById(categoryFilter.filterName) as HTMLInputElement).value = filterValue.value })
         filterValuesWrapper.appendChild(filterValueElement);
     })
 
@@ -281,4 +285,7 @@ postProductHandler();
 
 //@ts-ignore
 const bladeCategories = phpCategories;
-categoryOptionsHandler(bladeCategories);
+//@ts-ignore
+const bladeSubcategories: Array<any> = phpSubcategories;
+categoryOptionsHandler(bladeCategories, bladeSubcategories);
+subcategoryOptionsHandler(bladeSubcategories)

@@ -1,5 +1,5 @@
-import { filterField, product, productSpec } from "./types";
-import { getFilters } from "./utils";
+import { filterField, filteredItem, product, productSpec, systemSpecs } from "./types";
+import { getFilters, mapComponents, securityFilters } from "./utils";
 const filterPanelHandler = () => {
     const sidebar = document.getElementById('filters-sidebar-wrapper')!;
     document.getElementById('filters-button')?.addEventListener('click', () => {
@@ -67,10 +67,7 @@ const generateFilterHtml = (specFilters: Array<filterField>, products: Array<pro
             });
 
             // Append the fieldset to the container
-            console.log(filtersContainer)
-            console.log(fieldset)
             filtersContainer.appendChild(fieldset);
-            console.log('it is ', filtersContainer)
         }
     });
 }
@@ -148,54 +145,147 @@ function createProductCards(products: Array<product>) {
         document.getElementById("products-wrapper")?.remove();
     }
     const wrapper = document.createElement("section")
-    wrapper.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 p-1 pr-0";
+    if (bladeBuildingSecSystem) {
+        wrapper.className = "flex flex-col p-1"
+    } else {
+        wrapper.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 p-1 pr-0";
+
+    }
     wrapper.id = "products-wrapper";
-    console.log(products)
-    products.forEach((product) => {
-        let discountPercentage = null;
-        if (product.discounted_price) {
-            discountPercentage = Math.round((1 - (product.discounted_price / product.price)) * 100);
+    let builderComponents: Array<filteredItem<any>> = [];
+
+    const securitySystem: systemSpecs = localStorage.getItem('securitySystem') ? JSON.parse(localStorage.getItem('securitySystem')!) : { recorder: [], cameras: [], cables: [], PDU: [] };
+    if (bladeBuildingSecSystem) {
+        switch (bladeSubcategory.id) {
+            case securityFilters.recordersId: builderComponents = securityFilters.filterRecorders(mapComponents.mapRecorders(products), securitySystem); break;
+            case securityFilters.camerasId: builderComponents = securityFilters.filterCameras(mapComponents.mapCameras(products), securitySystem); break;
+            case securityFilters.PDUsId: builderComponents = securityFilters.filterPDUs(mapComponents.mapPDUs(products), securitySystem); break;
+            case securityFilters.CablesId: builderComponents = securityFilters.filterCables(mapComponents.mapCables(products), securitySystem); break;
         }
-
-        // Create the card structure
-
-        //@ts-ignore //to use blade variable in ts file, i reassign it in ts so its not undefined to the editor 
-        const fileToken: Array<string> = phpFileToken;
-        //@ts-ignore
-        const fileUrl: Array<product> = phpFileUrl;
-        const productCard = `
-            <a class="scroll-img w-full  border-t-[1px] border-r-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.id}">
-                <div class="relative flex flex-col h-full rounded-md">
-                    ${discountPercentage ? `<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${discountPercentage}% OFF</div>` : ''}
-                    <img src="${fileUrl}/file/connect-store/product/${product.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" class="object-contain rounded -translate-y-0 h-52" />
-                    <div class="z-10 text-gray-800 mx-auto text-sm text-center px-1 line-clamp-2">${product.name}</div>
-                    ${product.discounted_price ?
-                `<div class="z-10 mx-auto text-sm text-center mt-auto text-blue-500">EGP ${product.discounted_price.toLocaleString()}</div>
-                        <div class="z-10 mx-auto text-sm text-center text-gray-400 line-through mb-2">EGP ${product.price.toLocaleString()}</div>` :
-                `<div class="z-10 mx-auto text-sm text-center mt-1 text-blue-500 mb-auto">EGP ${product.price.toLocaleString()}</div>`
+    }
+    console.log(builderComponents)
+    //@ts-ignore 
+    const fileToken: Array<string> = phpFileToken;
+    //@ts-ignore
+    const fileUrl: Array<product> = phpFileUrl;
+    if (builderComponents.length) {
+        console.log(builderComponents)
+        builderComponents.sort((a: filteredItem<any>, b: filteredItem<any>) => {
+            //+ converts boolean to number so ts doesn't complain
+            return +b.compatibility - +a.compatibility;
+        });
+        console.log(builderComponents)
+        console.log(builderComponents)
+        builderComponents.forEach((product) => {
+            let specsDiv = '';
+            JSON.parse(product.item.specifications).forEach((spec: any, index:number) => {
+                if (index % 2 === 0) {
+                    specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`
+                } else {
+                    specsDiv += `<div class="mb-1 text-right">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`
+                }
+            });
+            let discountPercentage = null;
+            if (product.item.discounted_price) {
+                discountPercentage = Math.round((1 - (product.item.discounted_price / product.item.price)) * 100);
             }
+            function getcomponentType(id: number) {
+                switch (id) {
+                    case securityFilters.recordersId: return 'recorder';
+                    case securityFilters.camerasId: return 'cameras';
+                    case securityFilters.PDUsId: return 'PDU';
+                    case securityFilters.CablesId: return 'cables';
+
+                }
+            }
+            const disabled = product.compatibility ? '' : 'disabled'; 
+            const priceElement =    product.item.discounted_price ?`
+            <div class="ml-auto my-auto mx-auto text-lg translate-y-1">
+                <div class="z-10   text-center my-auto text-blue-500 ml-auto">${product.item.discounted_price.toLocaleString()} EGP </div>
+                <div class="z-10   text-center text-gray-400 line-through mb-2">${product.item.price.toLocaleString()} EGP </div>
+            </div>`:
+            `<div class="ml-auto my-auto mx-auto text-lg text-blue-500">${product.item.price.toLocaleString()} EGP </div>`;
+            const productCard = `
+            <div class="sm:w-full w-11/12 mx-auto mb-2 flex sm:block border-y-[1px] border-x-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.item.id}">
+                <div class="relative mx-auto flex flex-col sm:flex-row h-full rounded-md p-2 ">
+                    ${discountPercentage ? `<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${discountPercentage}% OFF</div>` : ''}
+                    <div class="flex mx-auto  sm:mx-0">
+                        <img  class="object-contain rounded -translate-y-0 h-36 my-auto w-36 lg:ml-4 sm:w-36 mr-4" src="${fileUrl}/file/connect-store/product/${product.item.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" />
+                            <div class="block sm:hidden text-lg my-auto">${priceElement}</div>
+                    </div>
+                    <div class="flex flex-col sm:max-w-[12rem] lg:max-w-[20rem] w-full justify-between ">
+                        <div class="z-10 text-gray-800  text-lg px-1 line-clamp-2 mb-4 sm:mb-0">${product.item.name}</div>
+                        <div class="grid grid-cols-2 mb-4  sm:mb-0">
+                            ${specsDiv}
+                        </div>
+                        <div class="text-red-600 line-clamp-2 w-[20rem] sm:w-auto">${product.compatibility ? '' : product.message}</div>
+                    </div>
+                    <div class="hidden sm:block sm:my-auto sm:mr-4 sm:ml-auto">${priceElement}</div>
+                    <button class=" rounded-xl  p-2 text-white  text-center mx-auto sm:mx-0 my-auto ${product.compatibility ? 'bg-blue-600' : 'bg-blue-200'} sm:h-9 lg:max-h-12 lg:h-auto w-40 sm:w-20 lg:w-40 selectComponentBtn" ${disabled} data-type="${getcomponentType(product.item.subcategory.id)}" id="${product.item.id}">Select Component</button>
+     
                 </div>
-            </a>
+                
+            </div>
         `;
+            console.log('err')
+            wrapper.insertAdjacentHTML('beforeend', productCard);
+        })
+    } else {
+        products.forEach((product) => {
+            let discountPercentage = null;
+            if (product.discounted_price) {
+                discountPercentage = Math.round((1 - (product.discounted_price / product.price)) * 100);
+            }
 
-        // Append to the container
-        wrapper.insertAdjacentHTML('beforeend', productCard);
-
-    })
+            // Create the card structure
+            const productCard = `
+                <a class="scroll-img w-full  border-t-[1px] border-r-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.id}">
+                    <div class="relative flex flex-col h-full rounded-md">
+                        ${discountPercentage ? `<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${discountPercentage}% OFF</div>` : ''}
+                        <img  class="object-contain rounded -translate-y-0 h-52" src="${fileUrl}/file/connect-store/product/${product.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" />
+                        <div class="z-10 text-gray-800 mx-auto text-sm text-center px-1 line-clamp-2">${product.name}</div>
+                        ${product.discounted_price ?
+                    `<div class="z-10 mx-auto text-sm text-center mt-auto text-blue-500">${product.discounted_price.toLocaleString()} EGP </div>
+                            <div class="z-10 mx-auto text-sm text-center text-gray-400 line-through mb-2">${product.price.toLocaleString()} EGP </div>` :
+                    `<div class="z-10 mx-auto text-sm text-center mt-1 text-blue-500 mb-auto">${product.price.toLocaleString()} EGP </div>`
+                }
+                    </div>
+                </a>
+            `;
+            wrapper.insertAdjacentHTML('beforeend', productCard);
+        })
+    }
     document.getElementById('main-content')?.append(wrapper)
+    document.querySelectorAll('.selectComponentBtn').forEach((element: any) => {
+        element.addEventListener('click', (e: any) => {
+            if (e.target.dataset.type == 'cameras' || e.target.dataset.type == 'cables') {
+                securitySystem[e.target.dataset.type as string].push((builderComponents.find(component => component.item.id == e.target.id))!.item)
+            } else {
+                securitySystem[e.target.dataset.type as string] = [builderComponents.find(component => component.item.id == e.target.id)!.item]
+            }
+            console.log(securitySystem)
+            localStorage.setItem('securitySystem', JSON.stringify(securitySystem));
+            window.location.href = '/builder'
+        })
+    })
 }
-function setPrice(e:any){
-const target = e.target as HTMLButtonElement;
-const newMin = Number((target.parentElement?.querySelector('#min-price') as HTMLInputElement).value)
-const newMax = Number((target.parentElement?.querySelector('#max-price') as HTMLInputElement).value)
-newMin ? minPrice = newMin : minPrice = 0;
-newMax ? maxPrice = newMax : maxPrice = 9999999;
-updateProductFilters();
+
+function setPrice(e: any) {
+    const target = e.target as HTMLButtonElement;
+    const newMin = Number((target.parentElement?.querySelector('#min-price') as HTMLInputElement).value)
+    const newMax = Number((target.parentElement?.querySelector('#max-price') as HTMLInputElement).value)
+    newMin ? minPrice = newMin : minPrice = 0;
+    newMax ? maxPrice = newMax : maxPrice = 9999999;
+    updateProductFilters();
 }
+//@ts-ignore
+const bladeSubcategory = phpSubcategory;
 //@ts-ignore //to use blade variable in ts file, i reassign it in ts so its not undefined to the editor 
-const bladeSubcategorySpecs: Array<string> = (phpSubcategorySpecs ? JSON.parse(phpSubcategorySpecs):['Brand']);
+const bladeSubcategorySpecs: Array<string> = (bladeSubcategory ? JSON.parse(phpSubcategory.specifications) : ['Brand']);
 //@ts-ignore
 const bladeProducts: Array<product> = phpProducts;
+//@ts-ignore
+const bladeBuildingSecSystem: boolean = phpBuilding;
 let minPrice = 0;
 let maxPrice = 9999999;
 filterPanelHandler();

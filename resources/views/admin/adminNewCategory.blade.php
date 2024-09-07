@@ -26,7 +26,7 @@
                 @endif
                 <input type="text" name="categoryName" id="" placeholder="{{ $isSubcategory ? 'Subcategory name' : 'Category name' }}" class="w-full mt-4 p-2 border border-gray-300 rounded-lg" required>
                        
-                @if (!$isSubcategory)
+                @if ($isSubcategory)
                     <div id="specificationInputs" class="space-y-4 py-2">
                         <!-- Input fields will be added here -->
 

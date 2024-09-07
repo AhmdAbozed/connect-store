@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Subcategory;
 use App\Services\BackBlazeService;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,10 +35,10 @@ Route::get('/', function (BackBlazeService $BackBlazeService) {
 Route::get('/builder', function (BackBlazeService $BackBlazeService) {
 
     $recorderId = 1;
-    $PDUId = 3;
     $cameraId = 2;
-    $cableId = 5;
-    $accId = 4; 
+    $PDUId = 3;
+    $cableId = 4;
+    $accId = 5;
     $downloadAuth = $BackBlazeService->getAuthorizationToken();
     $products = Product::with('subcategory')->whereIn('subcategory_id', [$recorderId, $PDUId, $cameraId, $cableId, $accId])->get();
     $recorders = $products->whereIn('subcategory_id', [$recorderId]);
@@ -45,8 +46,8 @@ Route::get('/builder', function (BackBlazeService $BackBlazeService) {
     $cameras = $products->whereIn('subcategory_id', [$cameraId]);
     $cables = $products->whereIn('subcategory_id', [$cableId]);
     $accessories = $products->whereIn('subcategory_id', [$accId]);
-    
-    return view('securityBuilder', ['recorders'=>$recorders, 'PDUs'=>$PDUs, 'cameras'=>$cameras, 'cables'=>$cables,'accessories'=>$accessories, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
+
+    return view('securityBuilder', ['recorders' => $recorders, 'PDUs' => $PDUs, 'cameras' => $cameras, 'cables' => $cables, 'accessories' => $accessories, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
 });
 
 Route::get('/product/{id}', function ($product_id, BackBlazeService $BackBlazeService) {
@@ -69,12 +70,17 @@ Route::get('/categories/{id}', function ($category_id,  BackBlazeService $BackBl
     return view('category', ['category' => $category, 'subcategories' => $subcategories, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
 });
 
-Route::get('/categories/{id}/subcategories/{subcategory_id}', function ($category_id, $subcategory_id, BackBlazeService $BackBlazeService) {
-    $category = Category::query()->find($category_id);
+Route::get('/categories/{category_id}/subcategories/{subcategory_id}/{builder?}', function ( $category_id, $subcategory_id, $builder = '') {
+    $BackBlazeService = app(BackBlazeService::class);
+    
     $subcategory = Subcategory::query()->find($subcategory_id);
-    $products = $subcategory->products()->get();
+    $category = Category::query()->find($category_id);
+    $products = $subcategory->products()->with('subcategory')->get();
     $downloadAuth = $BackBlazeService->getAuthorizationToken();
-    return view('category', ['category' => $category, 'subcategory' => $subcategory, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
+    if ($builder == 'builder') {
+        return view('category', ['building' => true, 'category' => $category, 'subcategory' => $subcategory, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
+    } 
+    else return view('category', ['category' => $category, 'subcategory' => $subcategory, 'products' => $products, 'fileToken' => $downloadAuth->authorizationToken, 'fileUrl' => $downloadAuth->apiUrl]);
 });
 
 Route::get('/administrator/products', function () {
@@ -103,7 +109,7 @@ Route::get('/administrator/orders/pending', function () {
 Route::get('/administrator/product/{id?}', function ($product_id = null) {
     $categories = Category::all();
     $subcategories = Subcategory::all();
-    $products = Product::all(['id', 'category_id', 'specifications', 'name']);
+    $products = Product::all(['id', 'category_id', 'specifications', 'name', 'subcategory_id']);
     if ($product_id) {
         return view('admin/adminNewProduct', [
             'categories' => $categories,
