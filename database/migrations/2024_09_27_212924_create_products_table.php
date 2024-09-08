@@ -14,17 +14,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->text('name');
             $table->float('price');
             $table->float('discounted_price')->nullable();
             $table->integer('stock');
             $table->text('specifications');
+            $table->fullText(['name', 'specifications'])->language('english');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('subcategory_id')->nullable();
             $table->foreign('subcategory_id')->references('id')->on('subcategories');
             $table->text('img_id');
+            $table->text('type');
             $table->timestamps();
         });
     }
@@ -34,6 +36,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropFullText(['name', 'specifications']);
+        });
         Schema::dropIfExists('products');
     }
 };

@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
     use HasFactory;
-    
+    use Searchable;
     /**
      * The attributes that are mass assignable.
      *
@@ -24,17 +26,23 @@ class Product extends Model
         'img_id',
         'category_id',
         'subcategory_id',
-        'brand_id'
+        'type'
     ];
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-
     }
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(Subcategory::class);
-
     }
-    
+    #[SearchUsingFullText(['name', 'specifications','type'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'specifications' => $this->specifications,
+            'type'=>$this->type
+        ];
+    }
 }

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :fileUrl="$fileUrl" :fileToken="$fileToken">
     <section id="filters-sidebar-wrapper" class="hidden z-30">
         <div class="flex-col w-10/12 h-full bg-gray-100 animate-slideIn fixed z-40 flex" id='filters-sidebar' style='box-shadow: 0 0 5px 0 rgba(50,50,50,.75);'>
 

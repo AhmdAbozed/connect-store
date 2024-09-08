@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :fileUrl="$fileUrl" :fileToken="$fileToken">
 
     <div id="order-popup" class="hidden">
         <div id='order-overlay' class="opacity-50 bg-black w-[100vw] fixed h-full z-30 ">

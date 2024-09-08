@@ -32,6 +32,7 @@ export type SystemComponent =
     discounted_price: number;
     specifications: string;
     subcategory_id: number;
+    img_id:string
 }
 
 export type Recorder = Item & {

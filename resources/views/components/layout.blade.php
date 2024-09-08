@@ -8,14 +8,18 @@
 </head>
 
 <body class="flex flex-col font-semibold font-sans">
-    <header class="flex flex-col  fixed w-full z-[100]">
-        <div class="flex bg-gray-950 text-white  h-11 w-full px-4">
+    <header class="flex flex-col  fixed w-full z-50 h-[4.5rem] bg-white shadow-md ">
+        <div class="flex  w-full max-w-[71rem] m-auto">
             <!-- Left element -->
             <button class="flex-shrink-0 lg:hidden" id='sidebar-button'>
                 <img src="{{ Vite::asset('resources/images/menu.svg') }}" class="object-contain h-8" />
             </button>
-            <div class="flex-shrink-0 mx-3 text-lg  relative hidden lg:flex w-full">
-                <div class=" peer pt-2">Categories</div>
+
+            <button class="flex-shrink-0 ">
+                <img src="{{ Vite::asset('resources/images/logo.png') }}" class="object-contain h-12" />
+            </button>
+            <div class="flex-shrink-0 mx-3 text-lg flex-grow static lg:relative flex">
+                <div class=" peer pt-[0.95rem] ml-6  hidden lg:flex">Categories</div>
                 <div class="w-[50vw] h-80 bg-gray-100 z-40 pl-6 pt-3 shadow-xl hidden peer/panel peer-hover:flex  hover:flex animate-fadeIn transition-all absolute top-11 rounded-lg">
                     <div class="grid grid-cols-4 text-black">
                         <div class="flex flex-col">
@@ -26,7 +30,6 @@
                             <div class="mt-2 font-medium cursor-pointer text-gray-700">Asus</div>
                             <div class="mt-2 font-medium cursor-pointer text-gray-700">Acer</div>
                             <div class="mt-2 font-medium cursor-pointer text-gray-700">HP</div>
-
                         </div>
                         <div class="flex flex-col">
                             <div class="text-md border-b-2 cursor-pointer w-32">Cameras</div>
@@ -50,24 +53,35 @@
                         </div>
                     </div>
                 </div>
+                <img src="{{ Vite::asset('resources/images/right-arrow-dark.svg') }}" class=" hidden lg:flex object-contain h-3 ml-1 my-auto peer-hover:rotate-90 peer-hover/panel:rotate-90 transition-all" />
+                <div class="flex-grow p-2 bg-white shadow-md lg:shadow-none lg:mx-8 flex lg:relative absolute w-[100vw] right-0 m-0 lg:w-auto translate-y-12 lg:translate-y-0" id="search-wrapper">
+                    
+                    <input type="text" class="m-0 py-3 px-4 flex-grow lg:static hidden  lg:flex lg:w-auto text-[#7f8286] bg-[#f4f5f6e3] bg-clip-border rounded-lg text-base font-normal leading-6 tracking-normal h-12 border-2 border-gray-400 lg:border-0" autocomplete="off" id="search-input" placeholder="Search">
+                    <img src="{{ Vite::asset('resources/images/search.svg') }}" class="absolute hidden lg:block right-6 opacity-50 object-contain h-5 top-6 ml-1 my-auto peer-hover:rotate-90 peer-hover/panel:rotate-90 transition-all" />
+                    <div class="flex-grow min-h-80  z-40 w-[95vw] lg:w-full  bg-white translate-y-[1.2rem]  shadow-xl  animate-fadeIn transition-all absolute top-11 rounded-lg hidden" id="search-results-wrapper">
+                        <div class="flex  w-full text-black flex-wrap max-h-[70vh] overflow-y-auto" id="search-results">
 
-                <img src="{{ Vite::asset('resources/images/right-arrow-white.svg') }}" class="object-contain h-3 ml-1 my-auto peer-hover:rotate-90 peer-hover/panel:rotate-90 transition-all" />
-                <a href="/" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
-                    Home
-                </a>
-                <a href="/categories/1" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
-                    Laptops
-                </a>
-                <a href="/categories/2" class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
-                    Monitors
-                </a>
-                <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400">
-                    Cameras
-                </div>
-                <div class="flex-shrink-0 mx-3 text-lg pt-2 hover:text-blue-400 ml-auto">
-                    Contact Us
+                        </div>
+                        <div class="w-4/12 max-w-20 absolute left-1/2 top-1/2 block" id="search-roller">
+                            <img src="{{ Vite::asset('resources/images/roller.svg') }}" class="opacity-20 w-full -translate-y-1/2 -translate-x-1/2"></img>
+                        </div>
+
+                        <div class=" absolute left-1/2 top-1/2 text-gray-500 hidden" id="none-found">
+                            <div class="-translate-y-1/2 -translate-x-1/2 text-center">
+                                No matches found.
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
+            <button class="ml-auto mr-4 lg:hidden" id="searchBtn">
+                <img src="{{ Vite::asset('resources/images/search.svg') }}" class="object-contain h-7 my-auto " id="searchBtnImg"/>
+            
+            </button>
+                    
+        </div>
 
         </div>
     </header>
@@ -81,7 +95,7 @@
         <div class="border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12 cursor-pointer">
             Checkout
         </div>
-        <div class="border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12 cursor-pointer">
+        <div class="border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12 cursor-pointer ">
             Contact Us
         </div>
         <button class="flex border-b-2 text-xl p-2 border-gray-700 text-gray-100 h-12">
@@ -106,14 +120,14 @@
                 Accessories
             </div>
     </section>
-    <div class="flex flex-col mt-[2.77rem] mb-4">
+    <div class="flex flex-col mt-[5rem] mb-4">
         {{ $slot }}
     </div>
     <div class="mt-5"></div>
     <footer class="w-full min-h-50 bg-gray-950 flex flex-col mt-auto">
         <div class="grid font-medium w-full min-h-40 grid-cols-2  sm:grid-cols-3 lg:grid-cols-5 text-gray-100 pl-6 pt-4">
             <div class=" lg:ml-10 text-lg">
-                <div  class="mt-1">
+                <div class="mt-1">
                     <a href="/">Home</a>
                 </div>
                 <div class="mt-1">
@@ -126,7 +140,7 @@
                     <a href="https://facebook.com">
                         <img src="{{ Vite::asset('resources/images/facebook.svg') }}" class="object-contain h-5 ml-1 my-auto transition-all" />
                     </a>
-                    
+
                 </div>
             </div>
             <div class="text-lg">
@@ -165,8 +179,16 @@
         <div class=" text-gray-400 text-xs p-2 pt-0 mr-4">All Rights Reserved by Connect ©.</div>
     </footer>
 </body>
+<script>
+    @if (isset($fileToken))
+        const phpFileToken = {{ Illuminate\Support\Js::from($fileToken) }};
+        const phpFileUrl = {{ Illuminate\Support\Js::from($fileUrl) }};
 
+    @endif
+
+</script>
 <script src="{{ Vite::asset('resources/ts/sidebar.ts') }}"></script>
+<script src="{{ Vite::asset('resources/ts/header.ts') }}"></script>
 @stack('scripts')
 
 </html>

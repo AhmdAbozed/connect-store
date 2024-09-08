@@ -1,5 +1,5 @@
 <div class="mt-2">
-    <div class="font-semibold text-lg font-poppins mx-3 border-b-2 after:block after:w-16 after:m after:border-b-2 after:absolute after:border-cyan-500">
+    <div class="font-semibold text-lg font-poppins mx-3 border-b-2 after:block after:w-16 after:m after:border-b-2 after:absolute after:border-gray-600">
         SHOP BY CATEGORIES
     </div>
 </div>

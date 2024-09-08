@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Dyi2M7r7.css",
+    "file": "assets/app-CSFN8sQj.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -72,6 +72,14 @@
     "file": "assets/lenovo-C5NcdVAY.png",
     "src": "resources/images/lenovo.png"
   },
+  "resources/images/logo.jpg": {
+    "file": "assets/logo-D0tjOURu.jpg",
+    "src": "resources/images/logo.jpg"
+  },
+  "resources/images/logo.png": {
+    "file": "assets/logo-CrK54ww9.png",
+    "src": "resources/images/logo.png"
+  },
   "resources/images/menu.svg": {
     "file": "assets/menu-BhYoNCoL.svg",
     "src": "resources/images/menu.svg"
@@ -97,7 +105,7 @@
     "src": "resources/images/phones.webp"
   },
   "resources/images/right-arrow-dark.svg": {
-    "file": "assets/right-arrow-dark-DJ1CQXz3.svg",
+    "file": "assets/right-arrow-dark-43hjnTpd.svg",
     "src": "resources/images/right-arrow-dark.svg"
   },
   "resources/images/right-arrow-white.svg": {
@@ -108,6 +116,10 @@
     "file": "assets/right-arrow-D7mHR8XO.svg",
     "src": "resources/images/right-arrow.svg"
   },
+  "resources/images/roller.svg": {
+    "file": "assets/roller-DPXgWxlh.svg",
+    "src": "resources/images/roller.svg"
+  },
   "resources/images/samsung.png": {
     "file": "assets/samsung-D9gdAZda.png",
     "src": "resources/images/samsung.png"
@@ -115,6 +127,10 @@
   "resources/images/screen.webp": {
     "file": "assets/screen-D3XLc7ek.webp",
     "src": "resources/images/screen.webp"
+  },
+  "resources/images/search.svg": {
+    "file": "assets/search-DZVV_MTY.svg",
+    "src": "resources/images/search.svg"
   },
   "resources/images/slim-banner.webp": {
     "file": "assets/slim-banner-CLbyuPV-.webp",
@@ -199,6 +215,12 @@
     "imports": [
       "resources/ts/utils.ts"
     ]
+  },
+  "resources/ts/header.ts": {
+    "file": "assets/header-DA6ROM3q.js",
+    "name": "header",
+    "src": "resources/ts/header.ts",
+    "isEntry": true
   },
   "resources/ts/imgScroll.ts": {
     "file": "assets/imgScroll-CS46AE-c.js",

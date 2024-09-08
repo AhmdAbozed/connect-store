@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :fileUrl="$fileUrl" :fileToken="$fileToken">
     <div id="order-popup" class="hidden">
         <section class="z-50 fixed flex w-full h-full -translate-y-12 animate-fadeIn" id='order-wrapper'>
 

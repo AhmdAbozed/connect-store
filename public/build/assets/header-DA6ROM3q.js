@@ -1,0 +1,15 @@
+const n=document.getElementById("search-results-wrapper"),c=document.getElementById("search-wrapper"),g=phpFileToken,x=phpFileUrl;class m{static handleClickOutsideSearch(e){!c.contains(e.target)&&e.target.id!="searchBtn"&&e.target.id!="searchBtnImg"?window.innerWidth<=1024?c.classList.replace("flex","hidden"):n.classList.replace("flex","hidden"):c.classList.replace("hidden","flex")}static async fetchSearchResults(e){if(e.trim()===""){n.classList.replace("flex","hidden");return}try{const s=await(await fetch(`/_api/product/search?query=${encodeURIComponent(e)}`,{method:"POST"})).json();console.log("Search results:",s),this.renderSearchResults(s)}catch(t){console.error("Error fetching search results:",t)}}static renderSearchResults(e){var t,s,i,d;(t=document.getElementById("search-roller"))==null||t.classList.replace("block","hidden"),e.length?((s=document.getElementById("none-found"))==null||s.classList.replace("block","hidden"),(i=document.getElementById("search-results"))==null||i.replaceChildren(),e.forEach(l=>{var o;const p=l.discounted_price?`
+                    <div class="w-full text-sm text-left flex mb-1">
+            
+                        <div class="z-10 text-xl font-semibold mr-1"> ${l.discounted_price} <span class="text-[.83rem]">EGP</span></div>
+                        <div class="z-10 text-gray-400 line-through flex translate-y-[6px] text-[.83rem]"> ${l.price} EGP</div>
+    
+                    </div>`:`<div class="z-10  mt-1 text-blue-500 mb-auto" :> ${l.price} EGP</div>`,f=`
+                    <a  class="sm:flex-row flex-col flex p-2 pr-3 border-b-[1px] border-r-[1px] h-[10rem] sm:h-[6.6rem] w-1/2 border-gray-300 animate-fadeIn">
+                        <img  class="object-contain rounded -translate-y-0 mb-auto w-auto lg:w-28 h-16 lg:h-24 mr-4" src="${x}/file/connect-store/product/${l.img_id}/0?Authorization=${g}&b2ContentDisposition=attachment" />
+                        <div class ="flex flex-col">
+                            <div class="text-ellipsis line-clamp-2 leading-6 mb-auto">${l.name}</div>    
+                            <div>${p}</div>    
+                        </div>
+                    </a>
+                `;(o=document.getElementById("search-results"))==null||o.insertAdjacentHTML("beforeend",f)})):(d=document.getElementById("none-found"))==null||d.classList.replace("hidden","block")}}const u=document.getElementById("search-input");document.addEventListener("click",m.handleClickOutsideSearch);var h;(h=document.getElementById("searchBtn"))==null||h.addEventListener("click",()=>{u.classList.replace("hidden","flex")});let r;u.addEventListener("input",a=>{var e,t,s;(e=document.getElementById("search-results"))==null||e.replaceChildren(),(t=document.getElementById("none-found"))==null||t.classList.replace("block","hidden"),(s=document.getElementById("search-roller"))==null||s.classList.replace("hidden","block"),n.classList.replace("hidden","flex"),r&&clearTimeout(r),r=setTimeout(()=>m.fetchSearchResults(a.target.value),1e3)});

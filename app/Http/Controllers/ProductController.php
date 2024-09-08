@@ -25,7 +25,8 @@ class ProductController extends Controller
             'category_id' => intval($request->input('Category_id')),
             //?: returns the value if it exists, else returns null
             'subcategory_id' => intval($request->input('Subcategory_id')) ?: null,
-            'img_id' => $imgId
+            'img_id' => $imgId,
+            'type'=>Category::query()->find($request->input('Category_id'))->name
         ];
         $product = '';
         if (intval($request->input('Updating_id'))) {
@@ -46,6 +47,13 @@ class ProductController extends Controller
         } else {
             abort(400, 'Invalid URL product id');
         }
+    }
+    
+    public function searchProducts(Request $request)
+    {
+        $query = $request->input('query');
+        return response(Product::search($query)->get());
+
     }
     public function getProductsByCategory(Request $request, $category_id)
     {
