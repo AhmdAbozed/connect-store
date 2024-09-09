@@ -2,11 +2,94 @@ import { filterField } from "@/types";
 import { getFilters } from "../utils";
 
 let selectedProductFiles: Array<any> = [];
+function fillFormFromURL() {
+    // Get the URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get values from the URL query string and convert them to the appropriate type
+    const productName: string | null = urlParams.get('name');
+    const productPrice: string | null = urlParams.get('price');
+    const discountedPrice: string | null = urlParams.get('discounted_price');
+    const stock: string | null = urlParams.get('stock');
+    const categoryId: string | null = urlParams.get('category_id');
+    const subcategoryId: string | null = urlParams.get('subcategory_id');
+    const specificationsJSON: string | null = urlParams.get('specifications');
+    // Assign the values to the form fields if they exist
+    if (productName) {
+        const productNameInput = document.querySelector<HTMLInputElement>('input[name="productName"]');
+        if (productNameInput) productNameInput.value = productName;
+    }
+
+    if (productPrice) {
+        const productPriceInput = document.querySelector<HTMLInputElement>('input[name="productPrice"]');
+        if (productPriceInput) productPriceInput.value = productPrice;
+    }
+
+    if (discountedPrice) {
+        const discountedPriceInput = document.querySelector<HTMLInputElement>('input[name="discountedPrice"]');
+        if (discountedPriceInput) discountedPriceInput.value = discountedPrice;
+    }
+
+    if (stock) {
+        const stockInput = document.querySelector<HTMLInputElement>('input[name="stock"]');
+        if (stockInput) stockInput.value = stock;
+    }
+
+
+    if (categoryId) {
+        const categorySelect = document.querySelector<HTMLSelectElement>('select[name="category"]');
+        if (categorySelect) {
+            categorySelect.value = categoryId;
+            const event = new Event('change', { bubbles: true });
+            categorySelect.dispatchEvent(event);
+        }
+    }
+
+    const subcategorySelect = document.querySelector<HTMLSelectElement>('select[name="subcategory"]');
+    if (subcategoryId) {
+        if (subcategorySelect) {
+            subcategorySelect.value = subcategoryId;
+            const event = new Event('change', { bubbles: true });
+            subcategorySelect.dispatchEvent(event);
+        }
+    }
+    if (specificationsJSON) {
+        //once for url encoding and once for json
+        const specifications: Array<any> = JSON.parse(specificationsJSON);
+
+        const subcategory = bladeSubcategories[Number(subcategoryId)];
+        console.log(JSON.parse(subcategory.specifications))
+        if (subcategory && subcategoryId) {
+            const filterSpecs = [];
+            const subcategorySpecs = JSON.parse(subcategory.specifications)
+            console.log('yup', specifications)
+
+            //backwards so splice doesnt affect index
+            for (let i = specifications.length - 1; i >= 0; i--) {
+                if (subcategorySpecs.includes(specifications[i].specName)) {
+                    filterSpecs.push(specifications.splice(i, 1));
+                }
+            }
+            console.log(filterSpecs);
+            filterSpecs.forEach(filterSpec => {
+                document.querySelector<HTMLInputElement>('#'+filterSpec[0].specName)!.value = filterSpec[0].specValue; 
+            });
+            specifications.forEach((productSpec)=>{
+                addSpecificationInput(productSpec.specName, productSpec.specValue);
+            })
+            console.log(specifications);
+
+
+        }
+    }
+
+}
 const productImageHandler = () => {
 
     document
         .getElementById("image-input")!
         .addEventListener("change", function (event) {
+            document.getElementById('unchangedImgs')!.innerHTML = '';
             const files = Array.from((event.target as HTMLFormElement).files);
 
             if (selectedProductFiles.length + files.length > 3) {
@@ -32,7 +115,7 @@ function subcategoryOptionsHandler(subcategories: Array<any>) {
         updateSpecifications(subcategory);
     })
 }
-function updateSubcategories(categoryId: number, subcategories:Array<any>) {
+function updateSubcategories(categoryId: number, subcategories: Array<any>) {
     const options = subcategories.filter(sub => { console.log(sub.category_id, categoryId); return sub.category_id == categoryId });
     const subSelect = document.getElementById('subcategory-select')!;
     subSelect.replaceChildren();
@@ -154,7 +237,7 @@ const addFilterInput = function (categoryFilter: filterField) {
     document.getElementById("filterInputs")!.appendChild(filterValuesWrapper);
 
 }
-const addSpecificationInput = function () {
+const addSpecificationInput = function (value1?: string, value2?: string) {
     // Create a new div element
     const specificationWrapper = document.createElement("div");
     specificationWrapper.className = "flex space-x-4 items-center product-specification";
@@ -165,13 +248,14 @@ const addSpecificationInput = function () {
     input1.placeholder = "Specification";
     input1.className = "w-full p-2 border border-gray-300 rounded-lg";
     input1.required = true;
-
+    if (value1) input1.value = value1;
     specificationWrapper.appendChild(input1);
 
     //Add spec value input
     const input2 = document.createElement("input");
     input2.type = "text";
     input2.placeholder = "Value";
+    if (value2) input2.value = value2
     input2.required = true;
     input2.className = "w-full p-2 border border-gray-300 rounded-lg";
     specificationWrapper.appendChild(input2);
@@ -289,3 +373,4 @@ const bladeCategories = phpCategories;
 const bladeSubcategories: Array<any> = phpSubcategories;
 categoryOptionsHandler(bladeCategories, bladeSubcategories);
 subcategoryOptionsHandler(bladeSubcategories)
+fillFormFromURL();

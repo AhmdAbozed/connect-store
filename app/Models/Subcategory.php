@@ -28,19 +28,19 @@ class Subcategory extends Model
         return $this->belongsTo(Category::class);
     }
     
-    static public function addSubcategory(array $subcategory, UploadedFile $image, int $updatingId, BackBlazeService $BackBlazeService, string $imgId)
+    static public function addSubcategory(array $category, int $updatingId, BackBlazeService $BackBlazeService, string $imgId=null, $image=null) 
     {
         error_log('adding category');
         //Need clarification on code behaviour here
         $result = '';
         if (intval($updatingId)) {
-            error_log('updating product');
-            $result = Subcategory::query()->find($updatingId)->update($subcategory);
+            error_log('updating subcat');
+            $result = Subcategory::query()->find($updatingId)->update($category);
         } else {
-            $result = Subcategory::query()->create($subcategory);
+            $result = Subcategory::query()->create($category);
         }
         error_log('uploading category file');
-        $BackBlazeService->uploadFiles([$image], $imgId);
+        if($image)$BackBlazeService->uploadFiles([$image], $imgId);
         return response($result);
     }
 

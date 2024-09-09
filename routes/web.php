@@ -146,5 +146,7 @@ Route::get('/administrator/category/{id}', function ($category_id) {
 
 Route::get('/administrator/subcategory/{id}', function ($subcategory_id) {
     $subcategory = Subcategory::query()->findOrFail($subcategory_id);
-    return view('admin/adminNewCategory', ['isSubcategory' => true, 'updatingItem' => $subcategory]);
+    
+    $categories = Category::all();
+    return view('admin/adminNewCategory', ['isSubcategory' => true, 'updatingItem' => $subcategory,  'categories' => $categories]);
 });

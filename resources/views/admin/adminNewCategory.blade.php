@@ -13,7 +13,12 @@
                         <div class="text-2xl mb-2  mx-auto">New Category</div>
                     @endif
                 @endif
-                <input type="file" name="categoryImage" accept="image/*" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <div id="unchangedImgs" class="{{ isset($updatingItem) ? '' : 'hidden' }}">Unchanged Images</div>
+                @if (isset($updatingItem))
+                    <input type="file" name="categoryImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                @else
+                    <input type="file" name="categoryImage" accept="image/*" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                @endif
                 <input type="number" id="updatingId" name="UpdatingId" class="hidden" value="{{ isset($updatingItem) ? $updatingItem->id : 0 }}">
                 @if ($isSubcategory)
                     <select name="category" id="category-select" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
@@ -25,7 +30,7 @@
 
                 @endif
                 <input type="text" name="categoryName" id="" placeholder="{{ $isSubcategory ? 'Subcategory name' : 'Category name' }}" class="w-full mt-4 p-2 border border-gray-300 rounded-lg" required>
-                       
+
                 @if ($isSubcategory)
                     <div id="specificationInputs" class="space-y-4 py-2">
                         <!-- Input fields will be added here -->
@@ -48,6 +53,6 @@
     </script>
 
     @pushOnce('scripts')
-        <script src="{{ Vite::asset('resources/ts/c_panel/cNewCategory.ts') }}" ></script>
+        <script src="{{ Vite::asset('resources/ts/c_panel/cNewCategory.ts') }}"></script>
     @endPushOnce
 </x-layout>

@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         DB::table('categories')->insert([
             'name' => 'Laptops',
             'img_id' => '3ba4f5c3a2',
-            'specifications' => '["Brand","CPU","RAM"]'
         ]);
         DB::table('categories')->insert([
             'name' => 'Monitors',
@@ -36,24 +35,28 @@ class DatabaseSeeder extends Seeder
             'name' => '360 Laptops',
             'img_id' => '9765ae9806',
             'category_id' => 1,
+            'specifications' => '["Brand","CPU","RAM"]'
         ]);
 
         DB::table('subcategories')->insert([
             'name' => 'Gaming Laptops',
             'img_id' => '1dbadee920',
             'category_id' => 1,
+            'specifications' => '["Brand","CPU","RAM"]'
         ]);
 
         DB::table('subcategories')->insert([
             'name' => 'Pro Laptops',
             'img_id' => '42560491db',
             'category_id' => 1,
+            'specifications' => '["Brand","CPU","RAM"]'
         ]);
 
         DB::table('subcategories')->insert([
             'name' => 'Student Laptops',
             'img_id' => '42560491db',
             'category_id' => 1,
+            'specifications' => '["Brand","CPU","RAM"]'
         ]);
 
         //convenientally generated from sql SELECT using gpt
@@ -66,7 +69,11 @@ class DatabaseSeeder extends Seeder
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'HP'],
                     ['specName' => 'CPU', 'specValue' => 'Intel i7'],
-                    ['specName' => 'RAM', 'specValue' => '8 GB']
+                    ['specName' => 'RAM', 'specValue' => '8 GB'],
+                    
+                    ['specName' => 'RAMs', 'specValue' => '16 GBss'],
+                    
+                    ['specName' => 'RAMss', 'specValue' => '16 GBs']
                 ]),
                 'category_id' => 1,
 
@@ -84,7 +91,7 @@ class DatabaseSeeder extends Seeder
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'Lenovo'],
                     ['specName' => 'CPU', 'specValue' => 'Intel i7'],
-                    ['specName' => 'RAM', 'specValue' => '16 GB']
+                    ['specName' => 'RAM', 'specValue' => '16 GB'],
                 ]),
                 'subcategory_id' => 2,
                 'category_id' => 1,

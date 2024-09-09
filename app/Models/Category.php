@@ -30,7 +30,7 @@ class Category extends Model
         //Need clarification on code behaviour here
         $result = '';
         if (intval($updatingId)) {
-            error_log('updating product');
+            error_log('updating cat');
             $result = Category::query()->find($updatingId)->update($category);
         } else {
             $result = Category::query()->create($category);

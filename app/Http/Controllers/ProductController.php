@@ -23,19 +23,24 @@ class ProductController extends Controller
             'stock' => $request->input('Stock'),
             'specifications' => $request->input('Specifications'),
             'category_id' => intval($request->input('Category_id')),
-            //?: returns the value if it exists, else returns null
             'subcategory_id' => intval($request->input('Subcategory_id')) ?: null,
-            'img_id' => $imgId,
-            'type'=>Category::query()->find($request->input('Category_id'))->name
+            'type' => Category::query()->find($request->input('Category_id'))->name
         ];
         $product = '';
         if (intval($request->input('Updating_id'))) {
             error_log('updating product');
-            $product = Product::query()->find($request->input('Updating_id'))->update($itemData);
-        } else {
+            error_log(json_encode($itemData));
+            
+            if ($request->file('Images')) $itemData['img_id'] = $imgId;
+            error_log(json_encode($itemData));
+
+            $product = Product::query()->find($request->input('Updating_id'));
+            $product->update($itemData);
+        } else { 
+            $itemData['img_id'] = $imgId;
             $product = Product::query()->create($itemData);
         }
-        $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
+        if ($request->file('Images')) $BackBlazeService->uploadFiles($request->file('Images'), $imgId);
         return response($product);
     }
 
@@ -48,12 +53,11 @@ class ProductController extends Controller
             abort(400, 'Invalid URL product id');
         }
     }
-    
+
     public function searchProducts(Request $request)
     {
         $query = $request->input('query');
         return response(Product::search($query)->get());
-
     }
     public function getProductsByCategory(Request $request, $category_id)
     {

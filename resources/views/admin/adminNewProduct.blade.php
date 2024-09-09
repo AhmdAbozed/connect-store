@@ -10,10 +10,15 @@
                     <div class="text-2xl mb-2  mx-auto">New Product</div>
                 @endif
                 <label class="block mb-4">
+                    <div id="unchangedImgs" class="{{ isset($updatingItem) ? '' : 'hidden' }}">Unchanged Images</div>
                     <label for="image-input" class="w-32 mt-1 block text-white mr-4 py-2 px-4 rounded-full border-0 text-sm font-semibold bg-blue-500 hover:bg-blue-400 cursor-pointer">
                         Upload Images
                     </label>
-                    <input type="file" id="image-input" multiple accept="image/*" class="hidden" required>
+                    @if (isset($updatingItem))
+                        <input type="file" id="image-input" multiple accept="image/*" class="hidden">
+                    @else
+                        <input type="file" id="image-input" multiple accept="image/*" class="hidden" required>
+                    @endif
                 </label>
                 <div id="preview-container" class="flex flex-wrap gap-4"></div>
                 <div id="" class="space-y-4 py-2">
@@ -30,16 +35,16 @@
                     </select>
                     <select name="subcategory" id="subcategory-select" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                         <option value="0" selected>No Subcategory</option>
-         
-                         
+
+
                     </select>
                     <div class="text-lg">Filters</div>
                     <div id="filterInputs" class=" border-b-2 pb-4">
-                       
+
                     </div>
                     <div class="text-lg">Specifications</div>
                     <div id="specificationInputs" class="space-y-4">
-                       
+
                     </div>
 
                 </div>
@@ -59,8 +64,8 @@
     <script>
         //for using blade variables in script files
         const phpCategories = {{ Illuminate\Support\Js::from($categories) }};
-        const phpSubcategories = {{Illuminate\Support\Js::from($subcategories)}}
-        const phpProducts = {{Illuminate\Support\Js::from($products)}}
+        const phpSubcategories = {{ Illuminate\Support\Js::from($subcategories) }}
+        const phpProducts = {{ Illuminate\Support\Js::from($products) }}
     </script>
     @pushOnce('scripts')
         <script src="{{ Vite::asset('resources/ts/c_panel/cNewProduct.ts') }}" type="module"></script>
