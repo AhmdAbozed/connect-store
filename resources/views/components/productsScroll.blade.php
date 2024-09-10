@@ -20,11 +20,11 @@
         @foreach ($products as $product)
             <a class="scroll-img w-[50vw] lg:w-[16.7vw] sm:w-[33.3vw] flex-shrink-0 font-medium py-4" id="b02" href="/product/+{{ $product->id }}">
                 <div class="relative flex flex-col h-full border-r-[1px]  border-gray-300  ">
-                    <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id . '/' . '0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain  rounded  -translate-y-0 h-36" />
+                    <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id . '/' . '0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain  rounded  -translate-y-0 h-36 px-4" />
                     <div class="flex flex-col px-4">
                         <div class=" break-words overflow-hidden w-full text-ellipsis leading-[20px] h-[40px] z-10 text-left mx-auto text-sm px-1 line-clamp-2">{{ $product->name }}</div>
                         @if ($product->discounted_price)
-                            <div class="w-full z-10 text-sm text-[.75rem] leading-[0.5rem] font-bold text-red-600 mt-5"> Save {{ number_format($product->price - $product->discounted_price) }} EGP ({{intval((1-($product->discounted_price / $product->price)) * 100)}}%)</div>
+                            <div class="w-full z-10  text-[.83rem] leading-[0.7rem] font-semibold text-red-600 mt-5"> Save {{ number_format($product->price - $product->discounted_price) }} EGP ({{intval((1-($product->discounted_price / $product->price)) * 100)}}%)</div>
     
                             <div class="w-full text-sm text-left flex mb-1">
     

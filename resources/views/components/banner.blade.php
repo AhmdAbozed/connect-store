@@ -1,10 +1,15 @@
 <div class="flex">
     <div class="flex-col flex relative col-span-2 w-11/12 sm:max-w-[48rem] lg:w-[44rem] mx-auto">
-        <button class="h-full flex absolute z-10 scroll-arrow cursor-pointer left-arrow rotate-180">
-            <img class="h-6 w-6 sm:h-8 sm:w-8 m-auto -translate-x-1" src="{{ Vite::asset('resources/images/right-arrow.svg') }}" alt="">
+        <button class="h-full flex absolute z-20 scroll-arrow cursor-pointer left-arrow p-2 ">
+            <div class="h-10 w-10 opacity-60 border-gray-300 border-[1px] flex justify-center m-auto rounded-full bg-white">
+                <img class="h-5 w-5 -translate-x-[2px] m-auto opacity-40  rotate-180" src="{{ Vite::asset('resources/images/right-arrow-dark.svg') }}" alt="">
+
+            </div>
         </button>
-        <button class="h-full flex absolute z-10 scroll-arrow cursor-pointer right-arrow right-0">
-            <img class="h-6 w-6 sm:h-8 sm:w-8 m-auto -translate-x-1" src="{{ Vite::asset('resources/images/right-arrow.svg') }}" alt="">
+        <button class="h-full flex absolute z-20 scroll-arrow cursor-pointer right-arrow  p-2 right-0">
+            <div class="h-10 w-10 opacity-60 border-gray-300 border-[1px] flex justify-center m-auto rounded-full bg-white">
+                <img class="h-5 w-5 translate-x-[1px] m-auto opacity-40" src="{{ Vite::asset('resources/images/right-arrow-dark.svg') }}" alt="">
+            </div>
         </button>
 
         <div class="flex justify-center mt-4 space-x-2 absolute bottom-2 z-20 right-1/2 translate-x-[40%]">
@@ -40,6 +45,6 @@
 </div>
 
 @pushOnce('scripts')
-<script src="{{ Vite::asset('resources/ts/imgScroll.ts') }}"></script>
-<script src="{{ Vite::asset('resources/ts/scrollDots.ts') }}"></script>
+    <script src="{{ Vite::asset('resources/ts/imgScroll.ts') }}"></script>
+    <script src="{{ Vite::asset('resources/ts/scrollDots.ts') }}"></script>
 @endPushOnce

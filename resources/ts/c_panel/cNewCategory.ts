@@ -126,8 +126,8 @@ const addSpecificationInput = function (value?: string) {
 };
 
 
-//@ts-ignore
-const bladeIsSubcategory = phpIsSubcategory;
+//@ts-ignore 
+let bladeIsSubcategory = phpIsSubcategory;
 postCategoryHandler(bladeIsSubcategory);
 if (bladeIsSubcategory) {
     fillFormFromURL()
@@ -136,5 +136,4 @@ if (bladeIsSubcategory) {
         e.preventDefault();
         addSpecificationInput();
     });
-
 }

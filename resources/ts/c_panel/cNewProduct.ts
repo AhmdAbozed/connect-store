@@ -57,7 +57,7 @@ function fillFormFromURL() {
         //once for url encoding and once for json
         const specifications: Array<any> = JSON.parse(specificationsJSON);
 
-        const subcategory = bladeSubcategories[Number(subcategoryId)];
+        const subcategory = bladeSubcategories.find(sub=>sub.id ==Number(subcategoryId));
         console.log(JSON.parse(subcategory.specifications))
         if (subcategory && subcategoryId) {
             const filterSpecs = [];

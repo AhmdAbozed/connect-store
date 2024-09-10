@@ -53,6 +53,6 @@
     </script>
 
     @pushOnce('scripts')
-        <script src="{{ Vite::asset('resources/ts/c_panel/cNewCategory.ts') }}"></script>
+        <script src="{{ Vite::asset('resources/ts/c_panel/cNewCategory.ts') }}" type="module"></script>
     @endPushOnce
 </x-layout>

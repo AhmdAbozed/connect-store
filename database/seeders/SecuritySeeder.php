@@ -67,6 +67,8 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 3,
                 'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+         
             ],
             [
                 'name' => 'Generic SMPS Power supply 12V/10A',
@@ -80,6 +82,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 3,
                 'img_id' => '43e2f845f1',
+                'type' => 'Power supply',
             ],
             [
                 'name' => 'Generic SMPS Power supply 12V/6A',
@@ -93,6 +96,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 3,
                 'img_id' => 'cc231622d2',
+                'type' => 'Power supply',
             ],
             [
                 'name' => '8 Channel DVR 2MP',
@@ -108,6 +112,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 1,
                 'img_id' => 'b6c6a1660c',
+                'type' => 'Video Recorder',
             ],
             [
                 'name' => '4 Channel DVR 4MP',
@@ -122,6 +127,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 1,
                 'img_id' => '8700fc98f8',
+                'type' => 'Video Recorder',
             ],
             [
                 'name' => '8 Channel NVR',
@@ -136,6 +142,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 1,
                 'img_id' => '96cbead589',
+                'type' => 'Video Recorder',
             ],
             [
                 'name' => 'Analog Camera 3MP 12V 1A',
@@ -151,6 +158,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 2,
                 'img_id' => '8915a7b6a4',
+                'type' => 'Analog Camera',
             ],
             [
                 'name' => 'Analog Camera 1MP 12V 0.5A',
@@ -166,6 +174,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 2,
                 'img_id' => '5d7edfe1a1',
+                'type' => 'Analog Camera',
             ],
             [
                 'name' => 'IP Camera 5MP 24V 2A',
@@ -182,6 +191,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 2,
                 'img_id' => '32a9a0e067',
+                'type' => 'IP Camera',
             ],
             [
                 'name' => 'IP Camera 4MP 12V 1A',
@@ -198,6 +208,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 2,
                 'img_id' => '434f818743',
+                'type' => 'IP Camera',
             ],
             [
                 'name' => 'Coaxial Cable 4M',
@@ -211,6 +222,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 4,
                 'img_id' => 'd8e6f8a2f0',
+                'type' => 'Coaxial Cable',
             ],
             [
                 'name' => 'Ethernet Cable 4M',
@@ -224,6 +236,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 4,
                 'img_id' => '81cd1aac82',
+                'type' => 'Ethernet Cable',
             ],
             [
                 'name' => 'Ethernet Cable 8M',
@@ -237,6 +250,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 4,
                 'img_id' => '44e47b0740',
+                'type' => 'Ethernet Cable',
             ],
             [
                 'name' => 'Coaxial Cable 8M',
@@ -250,6 +264,7 @@ class SecuritySeeder extends Seeder
                 'category_id' => 1,
                 'subcategory_id' => 4,
                 'img_id' => '0f12816e1c',
+                'type' => 'Cable',
             ],
         ]);
     }

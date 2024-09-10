@@ -3,14 +3,14 @@
         <x-categoriesPanel />
         <x-banner />
     </div>
-    <div class="flex flex-col max-w-[60rem] justify-center">
+    <div class="flex flex-col justify-center">
         <x-categoriesScroll :categories="$categories" :fileUrl="$fileUrl" :fileToken="$fileToken" />
         <x-productsScroll title="ON SALE" :products="$saleProducts" :fileUrl="$fileUrl" :fileToken="$fileToken" />
         @php
 
             //temporary solution until dynamic homepage is built
             $monitors = $products->filter(function ($product) {
-                return $product->category_id == 2;
+                return $product->category_id == 1;
             });
             $laptops = $products->filter(function ($product) {
                 return $product->category_id == 1;

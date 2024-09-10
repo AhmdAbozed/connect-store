@@ -59,7 +59,7 @@
                     <input type="text" class="m-0 py-3 px-4 flex-grow lg:static hidden  lg:flex lg:w-auto text-[#7f8286] bg-[#f4f5f6e3] bg-clip-border rounded-lg text-base font-normal leading-6 tracking-normal h-12 border-2 border-gray-400 lg:border-0" autocomplete="off" id="search-input" placeholder="Search">
                     <img src="{{ Vite::asset('resources/images/search.svg') }}" class="absolute hidden lg:block right-6 opacity-50 object-contain h-5 top-6 ml-1 my-auto peer-hover:rotate-90 peer-hover/panel:rotate-90 transition-all" />
                     <div class="flex-grow min-h-80  z-40 w-[95vw] lg:w-full  bg-white translate-y-[1.2rem]  shadow-xl  animate-fadeIn transition-all absolute top-11 rounded-lg hidden" id="search-results-wrapper">
-                        <div class="flex  w-full text-black flex-wrap max-h-[70vh] overflow-y-auto" id="search-results">
+                        <div class="flex  w-full text-black flex-wrap max-h-[70vh] overflow-y-auto content-baseline" id="search-results">
 
                         </div>
                         <div class="w-4/12 max-w-20 absolute left-1/2 top-1/2 block" id="search-roller">

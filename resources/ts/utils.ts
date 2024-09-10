@@ -203,6 +203,8 @@ export class mapComponents {
         
         console.log('filtring', products)
         const cameras = Object.values(products).map((item: any) => {
+            console.log(item)
+            console.log(JSON.parse(item.specifications));
             const voltage = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Voltage').specValue.replace(/\D/g, ''));
             const wattage = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Wattage').specValue.replace(/\D/g, ''));
             const resolutionInMP = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Resolution').specValue.replace(/\D/g, ''));
