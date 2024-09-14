@@ -1,4 +1,4 @@
-import{s as S}from"./utils-B3iq3xPc.js";let o=localStorage.getItem("securitySystem")?JSON.parse(localStorage.getItem("securitySystem")):{recorder:[],cameras:[],PDU:[],cables:[]},v=!1;const B=phpFileUrl,I=phpFileToken;phpViteAsset;function h(){function r(l,e){var i,m,u,p;const t=document.getElementById(e);let n="",d=0;return l.forEach(c=>{d+=Number(c.discounted_price?c.discounted_price:c.price),n+=`
+import{s as S}from"./utils-DM3ytNQh.js";let o=localStorage.getItem("securitySystem")?JSON.parse(localStorage.getItem("securitySystem")):{recorder:[],cameras:[],PDU:[],cables:[]},v=!1;const B=phpFileUrl,I=phpFileToken;phpViteAsset;function h(){function r(l,e){var i,m,u,p;const t=document.getElementById(e);let n="",d=0;return l.forEach(c=>{d+=Number(c.discounted_price?c.discounted_price:c.price),n+=`
                 <div class="flex">
                     <div class=" line-clamp-2">${c.name}</div>
                     <div class="w-24 ml-auto text-end">+${c.discounted_price?c.discounted_price:c.price} EGP</div>

@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DbK-LBkZ.css",
+    "file": "assets/app-BzprfwP8.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -32,13 +32,37 @@
     "file": "assets/camera-mini-BrssyyXC.webp",
     "src": "resources/images/camera-mini.webp"
   },
-  "resources/images/cart-plus.svg": {
-    "file": "assets/cart-plus-D5F7zq1y.svg",
-    "src": "resources/images/cart-plus.svg"
+  "resources/images/cart-f-check.svg": {
+    "file": "assets/cart-f-check-DwonAKKs.svg",
+    "src": "resources/images/cart-f-check.svg"
+  },
+  "resources/images/cart-f-plus.svg": {
+    "file": "assets/cart-f-plus-DUmRZaNW.svg",
+    "src": "resources/images/cart-f-plus.svg"
+  },
+  "resources/images/cart-f.svg": {
+    "file": "assets/cart-f-B4DGeJ7f.svg",
+    "src": "resources/images/cart-f.svg"
+  },
+  "resources/images/cart-h-plus.svg": {
+    "file": "assets/cart-h-plus-vSXpa6QY.svg",
+    "src": "resources/images/cart-h-plus.svg"
+  },
+  "resources/images/cart-h.svg": {
+    "file": "assets/cart-h-D0SybZ4Q.svg",
+    "src": "resources/images/cart-h.svg"
   },
   "resources/images/cart.svg": {
     "file": "assets/cart-CJBSIaaQ.svg",
     "src": "resources/images/cart.svg"
+  },
+  "resources/images/cat-h-check.svg": {
+    "file": "assets/cat-h-check-C01UWRSh.svg",
+    "src": "resources/images/cat-h-check.svg"
+  },
+  "resources/images/check.svg": {
+    "file": "assets/check-CYaVDzqY.svg",
+    "src": "resources/images/check.svg"
   },
   "resources/images/facebook.svg": {
     "file": "assets/facebook--kR1Oifl.svg",
@@ -160,7 +184,7 @@
     "isEntry": true
   },
   "resources/ts/builder.ts": {
-    "file": "assets/builder-i-fYnldu.js",
+    "file": "assets/builder-BrwRxrCx.js",
     "name": "builder",
     "src": "resources/ts/builder.ts",
     "isEntry": true,
@@ -181,7 +205,7 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewProduct.ts": {
-    "file": "assets/cNewProduct-ClNalLFr.js",
+    "file": "assets/cNewProduct-1cqBamAm.js",
     "name": "cNewProduct",
     "src": "resources/ts/c_panel/cNewProduct.ts",
     "isEntry": true,
@@ -190,7 +214,7 @@
     ]
   },
   "resources/ts/c_panel/cOrderList.ts": {
-    "file": "assets/cOrderList-CFq8Q3Pp.js",
+    "file": "assets/cOrderList-pU7WH-4O.js",
     "name": "cOrderList",
     "src": "resources/ts/c_panel/cOrderList.ts",
     "isEntry": true
@@ -207,8 +231,14 @@
     "src": "resources/ts/c_panel/cProductList.ts",
     "isEntry": true
   },
+  "resources/ts/cart.ts": {
+    "file": "assets/cart-CgKhjms7.js",
+    "name": "cart",
+    "src": "resources/ts/cart.ts",
+    "isEntry": true
+  },
   "resources/ts/category.ts": {
-    "file": "assets/category-Cio_uRLk.js",
+    "file": "assets/category-Bg5hyFzp.js",
     "name": "category",
     "src": "resources/ts/category.ts",
     "isEntry": true,
@@ -217,22 +247,37 @@
     ]
   },
   "resources/ts/header.ts": {
-    "file": "assets/header-DA6ROM3q.js",
+    "file": "assets/header-DkSBJM9T.js",
     "name": "header",
     "src": "resources/ts/header.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/ts/cart.ts"
+    ]
   },
   "resources/ts/imgScroll.ts": {
-    "file": "assets/imgScroll-CS46AE-c.js",
+    "file": "assets/imgScroll-DxTulGOz.js",
     "name": "imgScroll",
     "src": "resources/ts/imgScroll.ts",
     "isEntry": true
   },
+  "resources/ts/productCard.ts": {
+    "file": "assets/productCard-D9fAy-xy.js",
+    "name": "productCard",
+    "src": "resources/ts/productCard.ts",
+    "isEntry": true,
+    "imports": [
+      "resources/ts/cart.ts"
+    ]
+  },
   "resources/ts/productPage.ts": {
-    "file": "assets/productPage-BwYPpGep.js",
+    "file": "assets/productPage-BXglp7Vc.js",
     "name": "productPage",
     "src": "resources/ts/productPage.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "resources/ts/cart.ts"
+    ]
   },
   "resources/ts/scrollDots.ts": {
     "file": "assets/scrollDots-Db4LkTpD.js",
@@ -253,7 +298,7 @@
     "isEntry": true
   },
   "resources/ts/utils.ts": {
-    "file": "assets/utils-B3iq3xPc.js",
+    "file": "assets/utils-DM3ytNQh.js",
     "name": "utils",
     "src": "resources/ts/utils.ts",
     "isEntry": true

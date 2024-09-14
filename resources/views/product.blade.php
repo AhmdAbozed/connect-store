@@ -1,12 +1,12 @@
 <x-layout :fileUrl="$fileUrl" :fileToken="$fileToken">
 
-    <div id="order-popup" class="hidden">
-        <div id='order-overlay' class="opacity-50 bg-black w-[100vw] fixed h-full z-30 ">
+    <div id="product-order-popup" class="hidden">
+        <div id='product-order-overlay' class="opacity-50 bg-black w-[100vw] h-[100vh] fixed top-0 z-50">
 
         </div>
-        <section class="z-50 fixed flex w-full h-full -translate-y-12 animate-fadeIn">
-            <form class="bg-gray-100 m-auto h-96 w-96 max-w-[90%] p-4 relative text-sm rounded" id="order-form">
-                <button id="close-order" class="absolute -top-1 right-2 text-3xl text-gray-500 hover:text-gray-700">
+        <section class="z-[60] fixed flex w-full h-full -translate-y-12 animate-fadeIn">
+            <form class="bg-gray-100 m-auto h-96 w-96 max-w-[90%] p-4 relative text-sm rounded" id="product-order-form">
+                <button id="product-close-order" class="absolute -top-1 right-2 text-3xl text-gray-500 hover:text-gray-700">
                     &times;
                 </button>
                 <div class="text-base mb-2">
@@ -14,10 +14,10 @@
                         <span class="whitespace-pre">Buying: </span> <span class="text-blue-600 truncate max-w-64 block align-middle">{{ $product->name }}</span>
                     </div>
                     <div class=" font-semibold flex">
-                        <span class="whitespace-pre">Quantity: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="order-count">1</span>
+                        <span class="whitespace-pre">Quantity: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="product-order-count">1</span>
                     </div>
                     <div class=" font-semibold flex">
-                        <span class="whitespace-pre">Price: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="order-price">{{ $product->discounted_price ?? $product->price }}</span>
+                        <span class="whitespace-pre">Price: </span> <span class="text-blue-600 truncate max-w-64 block align-middle" id="product-order-price">{{ $product->discounted_price ?? $product->price }}</span>
                     </div>
 
                 </div>
@@ -116,6 +116,8 @@
                         </button>
                     </div>
                     <button class="bg-blue-500 text-white w-full rounded text-2xl py-1" id="buy-button">Buy Now</button>
+                    <button class="bg-blue-500 text-white w-full rounded text-2xl py-1 ml-2" id="addProductToCartBtn">+ Add To Cart</button>
+
                 </div>
             </div>
         </div>
@@ -143,11 +145,9 @@
     <script>
         //for using blade variables in script files
         const phpProduct = {{ Illuminate\Support\Js::from($product) }};
-        const phpFileToken = {{ Illuminate\Support\Js::from($fileToken) }};
-        const phpFileUrl = {{ Illuminate\Support\Js::from($fileUrl) }};
  
     </script>
     @pushOnce('scripts')
-        <script src="{{ Vite::asset('resources/ts/productPage.ts') }}"></script>
+        <script src="{{ Vite::asset('resources/ts/productPage.ts') }}" type="module"></script>
     @endPushOnce
 </x-layout>

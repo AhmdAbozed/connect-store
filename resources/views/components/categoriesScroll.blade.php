@@ -17,7 +17,7 @@
     </button>
     <div class="relative flex overflow-y-hidden pt-1 overflow-x sm:overflow-x-hidden self-center scroll-smooth snap-x scrollable w-full">
     @foreach ($categories as $category)
-        <a href="/categories/{{$category->id}}" class="scroll-img w-[50vw] lg:w-[16.66vw] sm:w-[33.3vw] px-1 flex-shrink-0" id="b01">
+        <a href="/categories/{{$category->id}}" class="scroll-img w-[50%] lg:w-[16.66%] sm:w-[33.3%] px-1 flex-shrink-0" id="b01">
             <div class="relative">
                 <img src="{{ $fileUrl . '/file/connect-store/product/' . $category->img_id.'/0'.'?Authorization='.$fileToken.'&b2ContentDisposition=attachment' }}" class="col object-contain  rounded h-52 mx-auto -translate-y-0" />
                 <div class="z-10 text-black mx-auto bottom-0 absolute left-1/2 -translate-x-1/2 font-semibold ">{{$category->name}}</div>

@@ -30,13 +30,13 @@ class ProductController extends Controller
         if (intval($request->input('Updating_id'))) {
             error_log('updating product');
             error_log(json_encode($itemData));
-            
+
             if ($request->file('Images')) $itemData['img_id'] = $imgId;
             error_log(json_encode($itemData));
 
             $product = Product::query()->find($request->input('Updating_id'));
             $product->update($itemData);
-        } else { 
+        } else {
             $itemData['img_id'] = $imgId;
             $product = Product::query()->create($itemData);
         }
@@ -52,6 +52,20 @@ class ProductController extends Controller
         } else {
             abort(400, 'Invalid URL product id');
         }
+    }
+
+    public function getProductsByIds(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer'
+        ]);
+
+        // Retrieve the products based on the ids
+        $products = Product::whereIn('id', $validated['ids'])->get();
+
+        // Return the products as JSON
+        return response()->json($products);
     }
 
     public function searchProducts(Request $request)

@@ -1,3 +1,4 @@
+import { addToCartLocalStorage } from "./cart";
 
 
 function setFullscreenImg() {
@@ -5,9 +6,9 @@ function setFullscreenImg() {
     (document.getElementById('fullScreenImage') as HTMLImageElement).src = (document.getElementById('img1') as HTMLImageElement).src;
 }
 function productScrollHandler() {
-    const smallImgs = document.querySelectorAll(
-        ".small-img"
-    ) as NodeListOf<HTMLImageElement>;
+    console.log('err')
+    const smallImgs = document.querySelectorAll<HTMLImageElement>(".small-img")
+    
     document.querySelectorAll(".scrollable").forEach((e) => {
         e.scrollLeft = 0;
     });
@@ -28,8 +29,10 @@ function productScrollHandler() {
     }
     smallImgs.forEach((element) => {
         element.addEventListener("click", (e) => {
+            console.log('hmms')
             resetImgs();
             const target = e.target as HTMLImageElement;
+            console.log(target)
             const imageNumber = target.id[1];
             target.classList.add("small-active");
             target.parentElement!.classList.replace(
@@ -135,13 +138,19 @@ function appendSmallImgs() {
         imgElement.addEventListener('error', (e) => {
             (e.target as HTMLImageElement).parentElement!.classList.add('hidden');
         })
-        imgElement.className = 'aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer opacity-50' + (index==0 ? 'small-active':'0');
+        console.log(index ? 'opacity-50':'small-active')
+        imgElement.id = '0'+index;
+        imgElement.className = 'aspect-square m-auto object-contain product-img small-img transition-opacity duration-400 cursor-pointer ' + (index ? 'opacity-50':'small-active');
         imgElement.src = `${bladeFileUrl}/file/connect-store/product/${bladeProduct.img_id}/${index}?Authorization=${bladeFileToken}&b2ContentDisposition=attachment`
         element.appendChild(imgElement);
     })
 }
 const orderHandler = () => {
-
+    function addToCartHandler(){
+        document.getElementById('addProductToCartBtn')?.addEventListener('click', ()=>[
+            addToCartLocalStorage(Number(bladeProduct.id), count)
+        ])
+    }
     function orderCountHandler() {
         const decrementButton = document.getElementById("decrement")!;
         const incrementButton = document.getElementById("increment")!;
@@ -160,7 +169,7 @@ const orderHandler = () => {
         });
     };
     function sendOrderHandler() {
-        document.getElementById('order-form')?.addEventListener('submit', async (e: SubmitEvent) => {
+        document.getElementById('product-order-form')?.addEventListener('submit', async (e: SubmitEvent) => {
             e.preventDefault();
             const target = e.target as any;
             const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
@@ -207,33 +216,32 @@ const orderHandler = () => {
 
         })
     }
-    const orderWindow = document.getElementById('order-popup')!;
-    //vite build redeclares count causing redeclaration error, 
-    const countCopy = count;
-    document.getElementById('close-order')?.addEventListener('click', () => {
+    const orderWindow = document.getElementById('product-order-popup')!;
+    document.getElementById('product-close-order')?.addEventListener('click', () => {
         orderWindow.classList.add('hidden')
     })
-    document.getElementById('order-overlay')?.addEventListener('click', () => {
+    document.getElementById('product-order-overlay')?.addEventListener('click', () => {
         orderWindow.classList.add('hidden')
     })
     document.getElementById('buy-button')?.addEventListener('click', () => {
-        document.getElementById('order-count')!.innerHTML = JSON.stringify(countCopy)
-        document.getElementById('order-price')!.innerHTML = JSON.stringify((bladeProduct.discounted_price ? bladeProduct.discounted_price : bladeProduct.price) * count);
+        document.getElementById('product-order-count')!.innerHTML = JSON.stringify(count)
+        document.getElementById('product-order-price')!.innerHTML = JSON.stringify((bladeProduct.discounted_price ? bladeProduct.discounted_price : bladeProduct.price) * count);
 
         orderWindow?.classList.remove('hidden')
 
     })
     sendOrderHandler();
     orderCountHandler();
-
+    addToCartHandler();
 }
 //@ts-ignore
 const bladeProduct = phpProduct;
 let count = 1;
 
+appendSmallImgs();
 orderHandler();
 productZoomHandler();
-productScrollHandler();
 TouchZoomHandler();
-appendSmallImgs();
+productScrollHandler();
+
 setFullscreenImg();

@@ -30,6 +30,8 @@ Route::get('/categories', [CategoryController::class, 'getCategories']);
 Route::post('/categories', [CategoryController::class, 'getCategories']);
 Route::get('/brand', [BrandController::class, 'getBrands']);
 Route::get('/product', [ProductController::class, 'getProducts']);
+
+Route::post('/products', [ProductController::class, 'getProductsByIds']);
 Route::post('/product/search', [ProductController::class, 'searchProducts']);
 
 Route::post('/product', [ProductController::class, 'addProduct']);

@@ -1,3 +1,4 @@
+import { fetchProducts, renderCartProducts, updateCartCount } from "./cart";
 import { Item } from "./types";
 
 const resultsWrapper = document.getElementById('search-results-wrapper')!;
@@ -11,9 +12,9 @@ class searchHandler {
     public static handleClickOutsideSearch(event: any) {
 
         if (!searchWrapper.contains(event.target) && !(event.target.id == 'searchBtn') && !(event.target.id == 'searchBtnImg')) {
-            if(window.innerWidth <= 1024) searchWrapper.classList.replace('flex', 'hidden');
+            if (window.innerWidth <= 1024) searchWrapper.classList.replace('flex', 'hidden');
             else resultsWrapper.classList.replace('flex', 'hidden');
-        }else{
+        } else {
             searchWrapper.classList.replace('hidden', 'flex')
         }
     }
@@ -71,8 +72,8 @@ class searchHandler {
 const searchInput = document.getElementById('search-input')!;
 
 document.addEventListener('click', searchHandler.handleClickOutsideSearch)
-document.getElementById('searchBtn')?.addEventListener('click',()=>{
-    searchInput.classList.replace('hidden','flex');
+document.getElementById('searchBtn')?.addEventListener('click', () => {
+    searchInput.classList.replace('hidden', 'flex');
 })
 
 let timeoutId: number;
@@ -87,3 +88,95 @@ searchInput.addEventListener('input', (e) => {
     //@ts-ignore// May fix type error later
     timeoutId = setTimeout(() => searchHandler.fetchSearchResults(e.target.value), 1000);
 });
+
+
+function cartHandler() {
+    const cartWrapper = document.getElementById('cart-wrapper')!;
+    const orderWrapper = document.getElementById('order-popup')
+    const cartBtn = document.getElementById('cartBtn')!;
+    async function handleClickOutsideCart(event: any) {
+
+        if (!event.composedPath().includes(cartWrapper) && !(event.target.id == 'cartBtn') && !(event.target.id == 'cartBtnImg')
+            && !event.target.classList.contains('addToCartBtn') && !event.target.classList.contains('addToCartText')
+            && !event.composedPath().includes(orderWrapper)) {
+            cartWrapper.classList.replace('flex', 'hidden');
+        }
+    }
+
+    function resetCart() {
+        localStorage.setItem('cart_items', JSON.stringify([]));
+        updateCartCount();
+        renderCartProducts([]);
+
+    }
+    async function postCartOrder(e: any) {
+        console.log('what')
+        e.preventDefault();
+        const target = e.target as any;
+        const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Sending Order..';
+
+        try {
+            if (localStorage.getItem('cart_items') && JSON.parse(localStorage.getItem('cart_items')!).length) {
+
+                const submission = new FormData(target);
+                submission.append("Products", localStorage.getItem('cart_items')!);
+                const options: RequestInit = {
+                    method: "POST",
+                    headers: {
+                        "Access-Control-Allow-Credentials": "true",
+                        //without decoding, %3D in token isn't converted to =, which causes token mismatch
+
+                        Accept: "multipart/form-data",
+                    },
+                    credentials: "include",
+                    body: submission,
+                };
+
+                const endpoint = location.protocol + "//" + location.host + "/_api/order/";
+
+                const res = await fetch(endpoint, options);
+                if (res.status === 200) {
+                    submitBtn.innerHTML = 'Order Sent.';
+                    resetCart();
+                    target.reset();
+                } else {
+                    submitBtn.innerHTML = 'Failed to send order: ' + res.status;
+                    submitBtn.disabled = false;
+
+                }
+            }
+        }
+        catch (e) {
+
+            submitBtn.innerHTML = 'Failed to send order: Unknown Error';
+            submitBtn.disabled = false;
+            throw (e);
+        }
+
+
+    }
+    updateCartCount();
+    document.addEventListener('click', handleClickOutsideCart)
+    cartBtn.addEventListener('click', async (e) => {
+        const products = await fetchProducts();
+        renderCartProducts(products);
+
+    }, { once: true })
+
+    cartBtn.addEventListener('click', async (e) => {
+        cartWrapper.classList.replace('hidden', 'flex');
+
+    });
+    document.getElementById('cart-checkout')?.addEventListener('click', () => { document.getElementById('order-popup')?.classList.replace('hidden', 'flex') })
+    document.getElementById('close-order')?.addEventListener('click', () => {
+        document.getElementById('order-popup')!.classList.add('hidden')
+    })
+    document.getElementById('order-overlay')?.addEventListener('click', () => {
+        document.getElementById('order-popup')!.classList.add('hidden')
+    });
+    document.getElementById('cart-order-form')!.addEventListener('submit', postCartOrder);
+            
+}
+cartHandler();
