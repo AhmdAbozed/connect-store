@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BzprfwP8.css",
+    "file": "assets/app-Cgc9H9va.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -184,7 +184,7 @@
     "isEntry": true
   },
   "resources/ts/builder.ts": {
-    "file": "assets/builder-BrwRxrCx.js",
+    "file": "assets/builder-sPSjtQT_.js",
     "name": "builder",
     "src": "resources/ts/builder.ts",
     "isEntry": true,
@@ -205,7 +205,7 @@
     "isEntry": true
   },
   "resources/ts/c_panel/cNewProduct.ts": {
-    "file": "assets/cNewProduct-1cqBamAm.js",
+    "file": "assets/cNewProduct-Cby2XgMu.js",
     "name": "cNewProduct",
     "src": "resources/ts/c_panel/cNewProduct.ts",
     "isEntry": true,
@@ -238,7 +238,7 @@
     "isEntry": true
   },
   "resources/ts/category.ts": {
-    "file": "assets/category-Bg5hyFzp.js",
+    "file": "assets/category-dqPNu6O2.js",
     "name": "category",
     "src": "resources/ts/category.ts",
     "isEntry": true,
@@ -298,7 +298,7 @@
     "isEntry": true
   },
   "resources/ts/utils.ts": {
-    "file": "assets/utils-DM3ytNQh.js",
+    "file": "assets/utils-CTGP1-Zk.js",
     "name": "utils",
     "src": "resources/ts/utils.ts",
     "isEntry": true

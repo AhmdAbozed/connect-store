@@ -1,5 +1,5 @@
 import { filterField, product, productSpec } from "./types";
-import {Item, Recorder, systemSpecs, Camera, filteredItem, Cable, PDU } from "./types"
+import { Item, Recorder, systemSpecs, Camera, filteredItem, Cable, PDU } from "./types"
 export const getFilters = (categorySpecs: Array<any>, products: Array<product>) => {
 
     const specFilters: Array<filterField> = categorySpecs.map((spec) => { return { filterName: spec, filterChildren: [] } })
@@ -25,12 +25,16 @@ export const getFilters = (categorySpecs: Array<any>, products: Array<product>) 
     return specFilters;
 }
 
-export class securityFilters{
-    public static recordersId = 1;  
-    public static camerasId = 2;  
-    public static PDUsId = 3;  
-    public static CablesId = 4;  
-    public static accessoriesId = 5;  
+export class securityFilters {
+    public static recorderName = 'Video Recorders';
+    public static cameraName = 'Security Cameras';
+    public static PDUName = 'Power Supplies';
+    public static cableName = 'Camera Cables';
+    public static accName = 'Surveillance Equipment';
+    public static monitorName = 'Monitors';
+    public static hddName = 'Hard Drives';
+    public static switchesName = 'Network Switches';
+    
     
     public static getSpecsString(item: Item) {
         let specs = '';
@@ -72,7 +76,7 @@ export class securityFilters{
         return filteredItems;
     }
 
-    public static filterCameras(cameras: Array<Camera>, system: systemSpecs) {
+    public static filterCameras(cameras: Array<any>, system: systemSpecs) {
         const filteredItems: Array<filteredItem<Camera>> = [];
         let requiredAmps = 0;
         system.cameras.forEach((camera) => {
@@ -96,17 +100,7 @@ export class securityFilters{
                 }
 
             }
-            if (system.PDU[0]) {
-
-                if (camera.voltage != system.PDU[0]?.voltage) {
-                    filteredItems.push({ item: camera, specs: specs, compatibility: false, message: 'Incompatible voltage with PDU' })
-                    return;
-                }
-                else if (requiredAmps + camera.amp > system.PDU[0]?.amp) {
-                    filteredItems.push({ item: camera, specs: specs, compatibility: false, message: 'Not enough Amps in PDU for more cameras' })
-                    return;
-                }
-            }
+           
             if (system.cables.length) {
                 const incompatibleCableType: Cable | undefined = system.cables.find((cable) => (camera.type == 'Analog' && cable.type == 'Ethernet') || (camera.type == 'IP' && cable.type == 'Coaxial'))
                 if (incompatibleCableType) {
@@ -114,8 +108,8 @@ export class securityFilters{
                     return;
                 }
             }
-            
-            if(system.cameras.length == 8){
+
+            if (system.cameras.length == 8) {
                 filteredItems.push({ item: camera, specs: specs, compatibility: false, message: 'Max 8 cameras' })
                 return;
             }
@@ -126,35 +120,8 @@ export class securityFilters{
         return filteredItems;
     }
 
-    public static filterPDUs(PDUs: Array<PDU>, system: systemSpecs) {
-        const filteredItems: Array<filteredItem<PDU>> = [];
-        let requiredAmps = 0;
-        system.cameras.forEach((camera) => {
-            requiredAmps += camera.amp
-        })
-        PDUs.forEach((PDU: PDU) => {
-
-            const specs = this.getSpecsString(PDU);
-
-            if (system.cameras.length) {
-                const incompatibleCameraVoltage: Camera | undefined = system.cameras.find((camera) => (camera.voltage != PDU.voltage))
-
-                if (incompatibleCameraVoltage) {
-                    filteredItems.push({ item: PDU, specs: specs, compatibility: false, message: 'Incompatible voltage with: ' + incompatibleCameraVoltage.name })
-                    return;
-                }
-                else if (requiredAmps > PDU.amp) {
-                    filteredItems.push({ item: PDU, specs: specs, compatibility: false, message: 'Not enough Amps. ' + requiredAmps + 'A Needed' })
-                    return;
-                }
-            }
-            filteredItems.push({ item: PDU, specs: specs, compatibility: true, message: null })
-            return;
-
-        })
-        return filteredItems;
-    }
-    public static filterCables(cables: Array<Cable>, system: systemSpecs) {
+  
+    public static filterCables(cables: Array<any>, system: systemSpecs) {
         const filteredItems: Array<filteredItem<Cable>> = [];
         cables.forEach((cable: Cable) => {
             const specs = this.getSpecsString(cable);
@@ -166,7 +133,7 @@ export class securityFilters{
                     return;
                 }
             }
-            if(system.cables.length == 8){
+            if (system.cables.length == 8) {
                 filteredItems.push({ item: cable, specs: specs, compatibility: false, message: 'Max 8 cables' })
                 return;
             }
@@ -176,75 +143,85 @@ export class securityFilters{
         })
         return filteredItems;
     }
+    public static noFilters(items: Array<any>, system: systemSpecs) {
+        const filteredItems: Array<filteredItem<Item>> = [];
+        items.forEach((item: Item) => {
+            const specs = this.getSpecsString(item);
+            filteredItems.push({ item: item, specs: specs, compatibility: true, message: null })
+        })
+        return filteredItems;
+    }
 }
 
 export class mapComponents {
 
-    public static mapRecorders(products:Array<any>) {
-        //enum object probably because it's from a collection operation on laravel
+    public static mapRecorders(products: Array<any>) {
         const recorders = Object.values(products).map((item: any) => {
-            const channels = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Channels').specValue.replace(/\D/g, ''));
-            const resolutionInMP = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Resolution').specValue.replace(/\D/g, ''));
-            let type = JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Type').specValue;
-            //DVRs/NVRS => DVR/NVR
+            const specs = JSON.parse(item.specifications);
+            const channelsSpec = specs.find((spec: any) => spec.specName === 'Channel Number');
+            const resolutionSpec = specs.find((spec: any) => spec.specName === 'Resolution');
+            const typeSpec = specs.find((spec: any) => spec.specName === 'Type');
+
+            if (!channelsSpec || !resolutionSpec || !typeSpec) {
+                return null;
+            }
+
+            const channels = Number(channelsSpec.specValue.replace(/\D/g, ''));
+            const resolutionInMP = Number(resolutionSpec.specValue.replace(/\D/g, ''));
+            let type = typeSpec.specValue;
             type = type.slice(0, item.subcategory.name.length - 1);
 
             return {
-                type: type,
-                channels: channels,
-                resolutionInMP: resolutionInMP,
+                type,
+                channels,
+                resolutionInMP,
                 ...item
-            }
-        })
+            };
+        }).filter(item => item !== null);
+
         return recorders;
     }
 
-    public static mapCameras(products:Array<any>) {
-        
-        console.log('filtring', products)
+    public static mapCameras(products: Array<any>) {
         const cameras = Object.values(products).map((item: any) => {
-            console.log(item)
-            console.log(JSON.parse(item.specifications));
-            const voltage = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Voltage').specValue.replace(/\D/g, ''));
-            const wattage = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Wattage').specValue.replace(/\D/g, ''));
-            const resolutionInMP = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Resolution').specValue.replace(/\D/g, ''));
-            let type = JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Type').specValue;
-            //DVRs/NVRS => DVR/NVR
+            const specs = JSON.parse(item.specifications);
+            const resolutionSpec = specs.find((spec: any) => spec.specName === 'Resolution');
+            const typeSpec = specs.find((spec: any) => spec.specName === 'Camera Types');
+
+            if (!resolutionSpec || !typeSpec) {
+                return null;
+            }
+            const resolutionInMP = Number(resolutionSpec.specValue.replace(/\D/g, ''));
+            let type = typeSpec.specValue;
             type = type.slice(0, item.subcategory.name.length - 1);
 
             return {
-                type: type,
-                voltage: voltage,
-                amp: wattage / voltage,
-                resolutionInMP: resolutionInMP,
+                type,
+                resolutionInMP,
                 ...item
-            } as Camera
-        })
-        console.log(cameras)
+            } as Camera;
+        }).filter(item => item !== null);
+
         return cameras;
     }
 
-    public static mapPDUs(products:Array<any>) {
-        const PDUs = Object.values(products).map((item: any) => {
-            const voltage = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Voltage').specValue.replace(/\D/g, ''));
-            const wattage = Number(JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Wattage').specValue.replace(/\D/g, ''));
-            return {
-                voltage: voltage,
-                amp: wattage / voltage,
-                ...item,
-            } as PDU
-        })
-        return PDUs
-    }
-
-    public static  mapCables(products:Array<any>) {
+    public static mapCables(products: Array<any>) {
         const cables = Object.values(products).map((item: any) => {
-            const type = JSON.parse(item.specifications).find((spec: any) => spec.specName == 'Type').specValue;
+            const specs = JSON.parse(item.specifications);
+            const typeSpec = specs.find((spec: any) => spec.specName === 'Cable Type');
+
+            if (!typeSpec) {
+                return null;
+            }
+
+            const type = typeSpec.specValue;
+
             return {
-                type: type,
+                type,
                 ...item,
-            } as Cable
-        })
+            } as Cable;
+        }).filter(item => item !== null);
+
         return cables;
     }
 }

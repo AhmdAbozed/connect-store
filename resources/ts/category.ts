@@ -152,23 +152,22 @@ function createProductCards(products: Array<product>) {
 
     }
     wrapper.id = "products-wrapper";
-    let builderComponents: Array<filteredItem<any>> = [];
+    let builderComponents: Array<filteredItem<any>> | undefined;
 
-    const securitySystem: systemSpecs = localStorage.getItem('securitySystem') ? JSON.parse(localStorage.getItem('securitySystem')!) : { recorder: [], cameras: [], cables: [], PDU: [] };
+    const securitySystem: systemSpecs = localStorage.getItem('securitySystem') ? JSON.parse(localStorage.getItem('securitySystem')!) :{ recorder: [], cameras: [], PDU: [], cables: [], monitor:[], hdd:[], accessories:[]};
     if (bladeBuildingSecSystem) {
-        switch (bladeSubcategory.id) {
-            case securityFilters.recordersId: builderComponents = securityFilters.filterRecorders(mapComponents.mapRecorders(products), securitySystem); break;
-            case securityFilters.camerasId: builderComponents = securityFilters.filterCameras(mapComponents.mapCameras(products), securitySystem); break;
-            case securityFilters.PDUsId: builderComponents = securityFilters.filterPDUs(mapComponents.mapPDUs(products), securitySystem); break;
-            case securityFilters.CablesId: builderComponents = securityFilters.filterCables(mapComponents.mapCables(products), securitySystem); break;
+        switch (bladeSubcategory.name) {
+            case securityFilters.recorderName: builderComponents = securityFilters.filterRecorders(mapComponents.mapRecorders(products), securitySystem); break;
+            case securityFilters.cameraName: builderComponents = securityFilters.filterCameras(mapComponents.mapCameras(products), securitySystem); break;
+            case securityFilters.cableName: builderComponents = securityFilters.filterCables(mapComponents.mapCables(products), securitySystem); break;
+            default: builderComponents = securityFilters.noFilters(products, securitySystem); break;
         }
     }
-    console.log(builderComponents)
     //@ts-ignore 
     const fileToken: Array<string> = phpFileToken;
     //@ts-ignore
     const fileUrl: Array<product> = phpFileUrl;
-    if (builderComponents.length) {
+    if (builderComponents) {
         console.log(builderComponents)
         builderComponents.sort((a: filteredItem<any>, b: filteredItem<any>) => {
             //+ converts boolean to number so ts doesn't complain
@@ -178,50 +177,59 @@ function createProductCards(products: Array<product>) {
         console.log(builderComponents)
         builderComponents.forEach((product) => {
             let specsDiv = '';
-            JSON.parse(product.item.specifications).forEach((spec: any, index:number) => {
-                if (index % 2 === 0) {
-                    specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`
-                } else {
-                    specsDiv += `<div class="mb-1 text-right">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`
+            let visibleSpecsIndex = 0; // To track the filtered index
+
+            JSON.parse(product.item.specifications).forEach((spec: any) => {
+                if (bladeSubcategorySpecs.includes(spec.specName)) {
+                    if (visibleSpecsIndex % 2 === 0) {
+                        specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`;
+                    } else {
+                        specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`;
+                    }
+                    visibleSpecsIndex++; // Increment the index for visible specs
                 }
             });
             let discountPercentage = null;
             if (product.item.discounted_price) {
                 discountPercentage = Math.round((1 - (product.item.discounted_price / product.item.price)) * 100);
             }
-            function getcomponentType(id: number) {
-                switch (id) {
-                    case securityFilters.recordersId: return 'recorder';
-                    case securityFilters.camerasId: return 'cameras';
-                    case securityFilters.PDUsId: return 'PDU';
-                    case securityFilters.CablesId: return 'cables';
+            function getcomponentType(name: string) {
+                switch (name) {
+                    case securityFilters.recorderName: return 'recorder';
+                    case securityFilters.cameraName: return 'cameras';
+                    case securityFilters.PDUName: return 'PDU';
+                    case securityFilters.switchesName: return 'PDU';
+                    case securityFilters.cableName: return 'cables';
+                    case securityFilters.monitorName: return 'monitor';
+                    case securityFilters.accName: return 'accessories';
+                    case securityFilters.hddName: return 'hdd';
 
                 }
             }
-            const disabled = product.compatibility ? '' : 'disabled'; 
-            const priceElement =    product.item.discounted_price ?`
+            const disabled = product.compatibility ? '' : 'disabled';
+            const priceElement = product.item.discounted_price ? `
             <div class="ml-auto my-auto mx-auto text-lg translate-y-1">
                 <div class="z-10   text-center my-auto text-blue-500 ml-auto">${product.item.discounted_price.toLocaleString()} EGP </div>
                 <div class="z-10   text-center text-gray-400 line-through mb-2">${product.item.price.toLocaleString()} EGP </div>
             </div>`:
-            `<div class="ml-auto my-auto mx-auto text-lg text-blue-500">${product.item.price.toLocaleString()} EGP </div>`;
+                `<div class="ml-auto my-auto mx-auto text-lg text-blue-500">${product.item.price.toLocaleString()} EGP </div>`;
             const productCard = `
-            <div class="sm:w-full w-11/12 mx-auto mb-2 flex sm:block border-y-[1px] border-x-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.item.id}">
-                <div class="relative mx-auto flex flex-col sm:flex-row h-full rounded-md p-2 ">
+            <div class="lg:w-full w-11/12 mx-auto mb-2 flex lg:block border-y-[1px] border-x-[1px] border-gray-200  p-1 flex-shrink-0" id="b02" href="/product/${product.item.id}">
+                <div class="relative mx-auto flex flex-col lg:flex-row w-full lg:w-auto h-full rounded-md p-2 ">
                     ${discountPercentage ? `<div class="z-20 text-xs m-1 absolute top-0 rounded-md px-[4px] py-1 bg-blue-400 text-white text-center font-medium">${discountPercentage}% OFF</div>` : ''}
-                    <div class="flex mx-auto  sm:mx-0">
-                        <img  class="object-contain rounded -translate-y-0 h-36 my-auto w-36 lg:ml-4 sm:w-36 mr-4" src="${fileUrl}/file/connect-store/product/${product.item.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" />
-                            <div class="block sm:hidden text-lg my-auto">${priceElement}</div>
+                    <div class="flex mx-auto  lg:mx-0">
+                        <img  class="object-contain rounded -translate-y-0 h-36 my-auto w-36 lg:ml-4 lg:w-36 mr-4" src="${fileUrl}/file/connect-store/product/${product.item.img_id}/0?Authorization=${fileToken}&b2ContentDisposition=attachment" />
+                            <div class="block lg:hidden text-lg my-auto">${priceElement}</div>
                     </div>
-                    <div class="flex flex-col sm:max-w-[12rem] lg:max-w-[20rem] w-full justify-between ">
-                        <div class="z-10 text-gray-800  text-lg px-1 line-clamp-2 mb-4 sm:mb-0">${product.item.name}</div>
-                        <div class="grid grid-cols-2 mb-4  sm:mb-0">
+                    <div class="flex flex-col lg:mx-0 mx-auto max-w-[22rem]  w-full justify-between ">
+                        <div class="z-10 text-gray-800  text-lg px-1 line-clamp-2 mb-4 lg:text-left ">${product.item.name}</div>
+                        <div class="grid grid-cols-2 mb-4  lg:w-full lg:-translate-y-3 lg:max-w-full lg:mx-2 lg:mb-0">
                             ${specsDiv}
                         </div>
-                        <div class="text-red-600 line-clamp-2 w-[20rem] sm:w-auto">${product.compatibility ? '' : product.message}</div>
+                        <div class="text-red-600 line-clamp-2 w-[20rem] lg:w-auto">${product.compatibility ? '' : product.message}</div>
                     </div>
-                    <div class="hidden sm:block sm:my-auto sm:mr-4 sm:ml-auto">${priceElement}</div>
-                    <button class=" rounded-xl  p-2 text-white  text-center mx-auto sm:mx-0 my-auto ${product.compatibility ? 'bg-blue-600' : 'bg-blue-200'} sm:h-9 lg:max-h-12 lg:h-auto w-40 sm:w-20 lg:w-40 selectComponentBtn" ${disabled} data-type="${getcomponentType(product.item.subcategory.id)}" id="${product.item.id}">Select Component</button>
+                    <div class="hidden lg:block lg:my-auto lg:mr-4 lg:ml-auto">${priceElement}</div>
+                    <button class=" rounded-xl  p-2 text-white  text-center mx-auto lg:mx-0 my-auto ${product.compatibility ? 'bg-blue-600' : 'bg-blue-200'}   h-auto w-40 selectComponentBtn" ${disabled} data-type="${getcomponentType(product.item.subcategory.name)}" id="${product.item.id}">Select Component</button>
      
                 </div>
                 
@@ -230,6 +238,7 @@ function createProductCards(products: Array<product>) {
             console.log('err')
             wrapper.insertAdjacentHTML('beforeend', productCard);
         })
+       
     } else {
         products.forEach((product) => {
             let discountPercentage = null;
@@ -256,18 +265,22 @@ function createProductCards(products: Array<product>) {
         })
     }
     document.getElementById('main-content')?.append(wrapper)
+    console.log('hm1')
+    console.log(document.querySelectorAll('.selectComponentBtn'))
     document.querySelectorAll('.selectComponentBtn').forEach((element: any) => {
+        console.log('hmm')
         element.addEventListener('click', (e: any) => {
-            if (e.target.dataset.type == 'cameras' || e.target.dataset.type == 'cables') {
-                securitySystem[e.target.dataset.type as string].push((builderComponents.find(component => component.item.id == e.target.id))!.item)
+            if (e.target.dataset.type == 'cameras' || e.target.dataset.type == 'cables' || e.target.dataset.type == 'accessories')  {
+                securitySystem[e.target.dataset.type as string].push((builderComponents!.find(component => component.item.id == e.target.id))!.item)
             } else {
-                securitySystem[e.target.dataset.type as string] = [builderComponents.find(component => component.item.id == e.target.id)!.item]
+                securitySystem[e.target.dataset.type as string] = [builderComponents!.find(component => component.item.id == e.target.id)!.item]
             }
             console.log(securitySystem)
             localStorage.setItem('securitySystem', JSON.stringify(securitySystem));
             window.location.href = '/builder'
         })
     })
+
 }
 
 function setPrice(e: any) {
@@ -275,7 +288,7 @@ function setPrice(e: any) {
     const newMin = Number((target.parentElement?.querySelector('#min-price') as HTMLInputElement).value)
     const newMax = Number((target.parentElement?.querySelector('#max-price') as HTMLInputElement).value)
     newMin ? minPrice = newMin : minPrice = 0;
-    newMax ? maxPrice = newMax : maxPrice = 9999999;
+    newMax ? maxPrice = newMax : maxPrice = 999999;
     updateProductFilters();
 }
 //@ts-ignore

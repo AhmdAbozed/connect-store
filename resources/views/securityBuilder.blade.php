@@ -38,9 +38,9 @@
                             <div class="noneSelected text-gray-600 ">None selected</div>
                         </div>
 
-                        <div id="previewPDU" class="mb-3">
+                        <div id="previewPDU" class="mb-3 hidden">
                             <div class="flex">
-                                <div class="flex items-center text-lg previewName font-semibold">Power Supply</div>
+                                <div class="flex items-center text-lg previewName font-semibold" id="PDUName">Power Supply</div>
                                 <div class="text-red-500  ml-auto  items-center flex  rounded-full text-base  font-semibold previewRequired">
                                     Required!
                                 </div>
@@ -63,6 +63,45 @@
                             </div>
                             <div class="noneSelected text-gray-600 ">None selected</div>
                         </div>
+
+                        <div id="previewMonitor" class="mb-3">
+                            <div class="flex">
+                                <div class="flex items-center text-lg previewName font-semibold">Monitor</div>
+                                <div class="text-red-500  ml-auto  items-center flex  rounded-full text-base  font-semibold previewRequired">
+                                    Required!
+                                </div>
+                            </div>
+                            <div class=" flex w-full previewItems flex-col">
+
+                            </div>
+                            <div class="noneSelected text-gray-600 ">None selected</div>
+                        </div>
+
+                        <div id="previewHdd" class="mb-3">
+                            <div class="flex">
+                                <div class="flex items-center text-lg previewName font-semibold">Hard Drive</div>
+                                <div class="text-red-500  ml-auto  items-center flex  rounded-full text-base  font-semibold previewRequired">
+                                    Required!
+                                </div>
+                            </div>
+                            <div class=" flex w-full previewItems flex-col">
+
+                            </div>
+                            <div class="noneSelected text-gray-600 ">None selected</div>
+                        </div>
+
+                        <div id="previewAccessories" class="mb-3">
+                            <div class="flex">
+                                <div class="flex items-center text-lg previewName font-semibold">Surveillance Equipment</div>
+                                <div class="text-red-500  ml-auto  items-center flex  rounded-full text-base  font-semibold previewRequired">
+
+                                </div>
+                            </div>
+                            <div class=" flex w-full previewItems flex-col">
+
+                            </div>
+                            <div class="noneSelected text-gray-600 ">None selected</div>
+                        </div>
                     </div>
 
                 </div>
@@ -77,12 +116,16 @@
     </div>
 
     <div class=" max-w-3xl w-full shadow-3xl p-4 mx-auto bg-gray-50">
-        <h2 class="text-2xl p-4 text-center border-b-2 justify-center flex items-center">SECURITY SYSTEM</h2>
+        <h2 class="text-2xl p-4 text-center border-b-2 justify-center flex items-center">Build Your Surveillance System</h2>
         <div class=" font-medium">
-            <x-builderComponent title='Video Recorder' subcategoryId='1' />
-            <x-builderComponent title='Cameras' subcategoryId='2'/>
-            <x-builderComponent title='Power Supply' subcategoryId='3'/>
-            <x-builderComponent title='Cables' subcategoryId='4'/>
+
+            <x-builderComponent title='Video Recorder' :subcategory="$subcategories->get('Video Recorders')" />
+            <x-builderComponent title='Security Cameras' :subcategory="$subcategories->get('Security Cameras')" />
+            <x-builderComponent title='Power Supply' :subcategory="$subcategories->get('Power Supplies')" />
+            <x-builderComponent title='Cables' :subcategory="$subcategories->get('Camera Cables')" />
+            <x-builderComponent title='Monitor' :subcategory="$subcategories->get('Monitors')" />
+            <x-builderComponent title='Hard Drive' :subcategory="$subcategories->get('Hard Drives')" />
+            <x-builderComponent title='Surveillance Equipment' :subcategory="$subcategories->get('Surveillance Equipment')" />
 
             <div class="flex text-lg mt-6 justify-between">
                 <div class="price justify-center flex items-center sm:text-2xl"> Build Cost: <span class="text-gray-700" id='bottomTotal'>0 EGP</span></div>
@@ -95,13 +138,18 @@
     <script>
         //for using blade variables in script files
         const phpPDUs = {{ Illuminate\Support\Js::from($PDUs) }};
-        const phpAccessories = {{ Illuminate\Support\Js::from($accessories) }};
         const phpCameras = {{ Illuminate\Support\Js::from($cameras) }};
         const phpCables = {{ Illuminate\Support\Js::from($cables) }};
         const phpRecorders = {{ Illuminate\Support\Js::from($recorders) }};
-        const phpFileToken = {{ Illuminate\Support\Js::from($fileToken) }};
-        const phpFileUrl = {{ Illuminate\Support\Js::from($fileUrl) }};
         const phpViteAsset = "{{ Vite::asset('resources/images/camera-mini.webp') }}"
+        const phpNetworkSwitches = {{ Illuminate\Support\Js::from($switches) }};
+        const phpHardDrive = {{ Illuminate\Support\Js::from($hardDrives) }};
+        const phpMonitors = {{ Illuminate\Support\Js::from($monitors) }};
+        const phpAccessories = {{ Illuminate\Support\Js::from($accessories) }};
+
+        //used for switching them according to recorder per requirements
+        const phpPDUId = {{ $subcategories->get('Power Supplies')->id }};
+        const phpSwitchesId = {{ $subcategories->get('Network Switches')->id }};
     </script>
 
     @pushOnce('scripts')

@@ -88,8 +88,6 @@
             phpBuilding = {!! Illuminate\Support\Js::from($building) !!};
         @endif
         const phpProducts = {{ Illuminate\Support\Js::from($products) }};
-        const phpFileToken = {{ Illuminate\Support\Js::from($fileToken) }};
-        const phpFileUrl = {{ Illuminate\Support\Js::from($fileUrl) }};
     </script>
 
     @pushOnce('scripts')

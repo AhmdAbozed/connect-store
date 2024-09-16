@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'HP 15s-fq5043ne Laptop',
                 'price' => 40000,
-                'discounted_price' => 35999,
+                'discounted_price' => null,
                 'stock' => 5,
                 'specifications' => json_encode([
                     ['specName' => 'Brand', 'specValue' => 'HP'],

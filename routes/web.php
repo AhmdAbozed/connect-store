@@ -29,31 +29,52 @@ Route::get('/', function (BackBlazeService $BackBlazeService) {
     error_log(json_encode($saleProducts));
     $products = Product::whereIn('category_id', [1, 2])->get();
     $categories = Category::query()->get();
-    return view('home', ['categories' => $categories, 'saleProducts' => $saleProducts, 'products' => $products] );
+    return view('home', ['categories' => $categories, 'saleProducts' => $saleProducts, 'products' => $products]);
 });
 Route::get('/builder', function (BackBlazeService $BackBlazeService) {
 
-    $recorderId = 1;
-    $cameraId = 2;
-    $PDUId = 3;
-    $cableId = 4;
-    $accId = 5;
-    $products = Product::with('subcategory')->whereIn('subcategory_id', [$recorderId, $PDUId, $cameraId, $cableId, $accId])->get();
-    $recorders = $products->whereIn('subcategory_id', [$recorderId]);
-    $PDUs = $products->whereIn('subcategory_id', [$PDUId]);
-    $cameras = $products->whereIn('subcategory_id', [$cameraId]);
-    $cables = $products->whereIn('subcategory_id', [$cableId]);
-    $accessories = $products->whereIn('subcategory_id', [$accId]);
+    $recorderName = 'Video Recorders';
+    $cameraName = 'Security Cameras';
+    $PDUName = 'Power Supplies';
+    $cableName = 'Camera Cables';
+    $accName = 'Surveillance Equipment';
+    $monitorName = 'Monitors';
+    $hddName = 'Hard Drives';
+    $switchesName = 'Network Switches';
+    $subcategoryNames = [$recorderName, $PDUName, $cameraName, $cableName, $accName, $hddName, $switchesName, $monitorName];
 
-    return view('securityBuilder', ['recorders' => $recorders, 'PDUs' => $PDUs, 'cameras' => $cameras, 'cables' => $cables, 'accessories' => $accessories ]);
+    $productsBySubcategory = Product::with('subcategory')->whereHas('subcategory', function ($query) use ($subcategoryNames) {
+        $query->whereIn('name', $subcategoryNames);
+    })->get();
+    $subcategories = Subcategory::whereIn('name', $subcategoryNames)->get()->keyBy('name');
+    $recorders = $productsBySubcategory->get($recorderName) ?? collect();
+    $cameras = $productsBySubcategory->get($cameraName) ?? collect();
+    $PDUs = $productsBySubcategory->get($PDUName) ?? collect();
+    $cables = $productsBySubcategory->get($cableName) ?? collect();
+    $accessories = $productsBySubcategory->get($accName) ?? collect();
+    $hardDrives = $productsBySubcategory->get($hddName) ?? collect();
+    $switches = $productsBySubcategory->get($switchesName) ?? collect();
+    $monitors = $productsBySubcategory->get($monitorName) ?? collect();
+
+    return view('securityBuilder', [
+        'recorders' => $recorders,
+        'PDUs' => $PDUs,
+        'cameras' => $cameras,
+        'cables' => $cables,
+        'accessories' => $accessories,
+        'hardDrives' => $hardDrives,
+        'switches' => $switches,
+        'monitors' => $monitors,
+        'subcategories'=>$subcategories,
+    ]);
 });
 
 Route::get('/product/{id}', function ($product_id, BackBlazeService $BackBlazeService) {
     if (intval($product_id)) {
         $product = Product::query()->findOrFail($product_id);
         $relatedProducts = Product::query()->where('category_id', '=', $product->category_id)->whereNot('id', '=', $product->id)->get();
-      
-        return view('product', ['product' => $product, 'relatedProducts' => $relatedProducts ]);
+
+        return view('product', ['product' => $product, 'relatedProducts' => $relatedProducts]);
     } else {
         abort(400, 'Invalid URL product id');
     }
@@ -63,18 +84,17 @@ Route::get('/categories/{id}', function ($category_id,  BackBlazeService $BackBl
     $category = Category::query()->find($category_id);
     $subcategories = $category->subcategories()->get();
     $products = $category->products()->get();
-    return view('category', ['category' => $category, 'subcategories' => $subcategories, 'products' => $products ]);
+    return view('category', ['category' => $category, 'subcategories' => $subcategories, 'products' => $products]);
 });
 
-Route::get('/categories/{category_id}/subcategories/{subcategory_id}/{builder?}', function ( $category_id, $subcategory_id, $builder = '') {
-    
+Route::get('/categories/{category_id}/subcategories/{subcategory_id}/{builder?}', function ($category_id, $subcategory_id, $builder = '') {
+
     $subcategory = Subcategory::query()->find($subcategory_id);
     $category = Category::query()->find($category_id);
     $products = $subcategory->products()->with('subcategory')->get();
     if ($builder == 'builder') {
         return view('category', ['building' => true, 'category' => $category, 'subcategory' => $subcategory, 'products' => $products]);
-    } 
-    else return view('category', ['category' => $category, 'subcategory' => $subcategory, 'products' => $products]);
+    } else return view('category', ['category' => $category, 'subcategory' => $subcategory, 'products' => $products]);
 });
 
 Route::get('/administrator/products', function () {
@@ -141,7 +161,7 @@ Route::get('/administrator/category/{id}', function ($category_id) {
 
 Route::get('/administrator/subcategory/{id}', function ($subcategory_id) {
     $subcategory = Subcategory::query()->findOrFail($subcategory_id);
-    
+
     $categories = Category::all();
     return view('admin/adminNewCategory', ['isSubcategory' => true, 'updatingItem' => $subcategory,  'categories' => $categories]);
 });

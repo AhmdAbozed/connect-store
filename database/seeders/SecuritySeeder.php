@@ -15,7 +15,7 @@ class SecuritySeeder extends Seeder
                 'name' => 'Surveillance & Security',
                 'img_id' => '537804591c',
             ],
-            
+
         ]);
 
         DB::table('subcategories')->insert([
@@ -23,52 +23,178 @@ class SecuritySeeder extends Seeder
                 'name' => 'Video Recorders',
                 'img_id' => '3ebd7d6597',
                 'category_id' => 1,
-                'specifications' => json_encode([ "Type", "Channels", "Resolution"]),
+                'specifications' => json_encode(["Type", "Channel Number", "Resolution"]),
             ],
             [
                 'name' => 'Security Cameras',
                 'img_id' => '759923d1c7',
                 'category_id' => 1,
-                'specifications' => json_encode([ "Type", "Voltage", "Wattage", "Resolution"]),
+                'specifications' => json_encode(["Camera Types", "Voltage", "Wattage", "Resolution"]),
             ],
             [
-                'name' => 'PDUs',
+                'name' => 'Power Supplies',
                 'img_id' => 'eb9fb76f71',
                 'category_id' => 1,
-                'specifications' => json_encode(["Voltage", "Wattage"])
+                'specifications' => json_encode(["Output Volts", "Output Amps"])
             ],
-           
+
             [
-                'name' => 'Cables',
+                'name' => 'Camera Cables',
                 'img_id' => '184aae9993',
                 'category_id' => 1,
-                'specifications' => json_encode(["Length", "Type"]),
+                'specifications' => json_encode(["Length", "Cable Type"]),
             ],
             [
-                'name' => 'Surveillance Accessories',
+                'name' => 'Surveillance Equipment',
                 'img_id' => '57e0f9914c',
                 'category_id' => 1,
                 'specifications' => json_encode(["Type"]),
+            ],
+            [
+                'name' => 'Monitors',
+                'img_id' => '57e0f9914c',
+                'category_id' => 1,
+                'specifications' => json_encode([]),
+            ],
+            [
+                'name' => 'Hard Drives',
+                'img_id' => '57e0f9914c',
+                'category_id' => 1,
+                'specifications' => json_encode([]),
+            ],
+            [
+                'name' => 'Network Switches',
+                'img_id' => '57e0f9914c',
+                'category_id' => 1,
+                'specifications' => json_encode([]),
             ]
-            
+
         ]);
 
 
         DB::table('products')->insert([
+            [
+                'name' => 'wall stand',
+                'price' => 2000,
+                'discounted_price' => 1100,
+                'stock' => 5,
+                'specifications' => json_encode([
+                ]),
+                'category_id' => 1,
+                'subcategory_id' => 5,
+                'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+
+            ],
+            [
+                'name' => 'wall camera stand',
+                'price' => 2000,
+                'discounted_price' => 1100,
+                'stock' => 5,
+                'specifications' => json_encode([
+                ]),
+                'category_id' => 1,
+                'subcategory_id' => 5,
+                'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+
+            ],
+            [
+                'name' => 'network switch 24V/10A',
+                'price' => 2000,
+                'discounted_price' => 1100,
+                'stock' => 5,
+                'specifications' => json_encode([
+                    ["specName" => "Output Volts", "specValue" => "24V"],
+                    ["specName" => "Output Amps", "specValue" => "10A"]
+                ]),
+                'category_id' => 1,
+                'subcategory_id' => 8,
+                'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+
+            ],
+            [
+                'name' => 'network switch 24V/10A',
+                'price' => 2000,
+                'discounted_price' => 1100,
+                'stock' => 5,
+                'specifications' => json_encode([
+                    ["specName" => "Output Volts", "specValue" => "24V"],
+                    ["specName" => "Output Amps", "specValue" => "10A"]
+                ]),
+                'category_id' => 1,
+                'subcategory_id' => 8,
+                'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+
+            ],
+            [
+                'name' => 'hard drive 1tb',
+                'price' => 2000,
+                'discounted_price' => 1100,
+                'stock' => 5,
+                'specifications' => json_encode([]),
+                'category_id' => 1,
+                'subcategory_id' => 7,
+                'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+
+            ],
+            [
+                'name' => 'hard drive 512gb',
+                'price' => 2000,
+                'discounted_price' => 1100,
+                'stock' => 5,
+                'specifications' => json_encode([]),
+                'category_id' => 1,
+                'subcategory_id' => 7,
+                'img_id' => '6221fc5001',
+                'type' => 'Power supply',
+
+            ],
+            [
+                'name' => 'LG Ultra Gear 27 Inch Gaming Monitor, 144Hz, Black - 27GN65R-B',
+                'price' => 3000,
+                'discounted_price' => 2899,
+                'stock' => 5,
+                'specifications' => json_encode([
+                    ['specName' => 'Brand', 'specValue' => 'LG'],
+                    ['specName' => 'Size', 'specValue' => '27 Inches']
+                ]),
+                'category_id' => 1,
+                'subcategory_id' => 6,
+                'img_id' => 'a043395293',
+                'type' => 'monitor',
+            ],
+            [
+                'name' => 'LG Ultra Gear 27777 Inch Gaming Monitor, 144Hz, Black - 27GN65R-B',
+                'price' => 3000,
+                'discounted_price' => 2899,
+                'stock' => 5,
+                'specifications' => json_encode([
+                    ['specName' => 'Brand', 'specValue' => 'LG'],
+                    ['specName' => 'Size', 'specValue' => '27 Inches']
+                ]),
+                'category_id' => 1,
+                'subcategory_id' => 6,
+                'img_id' => 'a043395293',
+                'type' => 'monitor',
+            ],
             [
                 'name' => 'High-end Power supply 24V/10A',
                 'price' => 2000,
                 'discounted_price' => 1100,
                 'stock' => 5,
                 'specifications' => json_encode([
-                    ["specName" => "Voltage", "specValue" => "24V"],
-                    ["specName" => "Wattage", "specValue" => "240W"]
+                    ["specName" => "Output Volts", "specValue" => "24V"],
+                    ["specName" => "Output Amps", "specValue" => "10A"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 3,
                 'img_id' => '6221fc5001',
                 'type' => 'Power supply',
-         
+
             ],
             [
                 'name' => 'Generic SMPS Power supply 12V/10A',
@@ -76,8 +202,8 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 1111,
                 'stock' => 4,
                 'specifications' => json_encode([
-                    ["specName" => "Voltage", "specValue" => "12V"],
-                    ["specName" => "Wattage", "specValue" => "120W"]
+                    ["specName" => "Output Volts", "specValue" => "12V"],
+                    ["specName" => "Output Amps", "specValue" => "10A"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 3,
@@ -90,8 +216,8 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 1111,
                 'stock' => 4,
                 'specifications' => json_encode([
-                    ["specName" => "Voltage", "specValue" => "12V"],
-                    ["specName" => "Wattage", "specValue" => "72W"]
+                    ["specName" => "Output Volts", "specValue" => "12V"],
+                    ["specName" => "Output Amps", "specValue" => "6A"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 3,
@@ -104,9 +230,9 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 1111,
                 'stock' => 5,
                 'specifications' => json_encode([
-                    ["specName" => "Channels", "specValue" => "8 Channels"],
+                    ["specName" => "Channel Number", "specValue" => "8 Channels"],
                     ["specName" => "Resolution", "specValue" => "2MP"],
-                    
+
                     ["specName" => "Type", "specValue" => "DVR"]
                 ]),
                 'category_id' => 1,
@@ -120,7 +246,7 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 232,
                 'stock' => 5,
                 'specifications' => json_encode([
-                    ["specName" => "Channels", "specValue" => "4 Channels"],
+                    ["specName" => "Channel Number", "specValue" => "4 Channels"],
                     ["specName" => "Resolution", "specValue" => "4MP"],
                     ["specName" => "Type", "specValue" => "DVR"]
                 ]),
@@ -135,7 +261,7 @@ class SecuritySeeder extends Seeder
                 'discounted_price' => 1111,
                 'stock' => 3,
                 'specifications' => json_encode([
-                    ["specName" => "Channels", "specValue" => "8 Channels"],
+                    ["specName" => "Channel Number", "specValue" => "8 Channels"],
                     ["specName" => "Resolution", "specValue" => "6MP"],
                     ["specName" => "Type", "specValue" => "NVR"]
                 ]),
@@ -153,7 +279,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Voltage", "specValue" => "12V"],
                     ["specName" => "Wattage", "specValue" => "12W"],
                     ["specName" => "Resolution", "specValue" => "3MP"],
-                    ["specName" => "Type", "specValue" => "Analog"]
+                    ["specName" => "Camera Types", "specValue" => "Analog"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 2,
@@ -169,7 +295,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Voltage", "specValue" => "12V"],
                     ["specName" => "Wattage", "specValue" => "6W"],
                     ["specName" => "Resolution", "specValue" => "1MP"],
-                    ["specName" => "Type", "specValue" => "Analog"]
+                    ["specName" => "Camera Types", "specValue" => "Analog"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 2,
@@ -185,7 +311,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Voltage", "specValue" => "24V"],
                     ["specName" => "Wattage", "specValue" => "48W"],
                     ["specName" => "Resolution", "specValue" => "5MP"],
-                    ["specName" => "Type", "specValue" => "IP"]
+                    ["specName" => "Camera Types", "specValue" => "IP"]
 
                 ]),
                 'category_id' => 1,
@@ -202,7 +328,7 @@ class SecuritySeeder extends Seeder
                     ["specName" => "Voltage", "specValue" => "12V"],
                     ["specName" => "Wattage", "specValue" => "12W"],
                     ["specName" => "Resolution", "specValue" => "4MP"],
-                    ["specName" => "Type", "specValue" => "IP"]
+                    ["specName" => "Camera Types", "specValue" => "IP"]
 
                 ]),
                 'category_id' => 1,
@@ -217,7 +343,7 @@ class SecuritySeeder extends Seeder
                 'stock' => 5,
                 'specifications' => json_encode([
                     ["specName" => "Length", "specValue" => "4M"],
-                    ["specName" => "Type", "specValue" => "Coaxial"]
+                    ["specName" => "Cable Type", "specValue" => "Coaxial"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 4,
@@ -231,7 +357,7 @@ class SecuritySeeder extends Seeder
                 'stock' => 5,
                 'specifications' => json_encode([
                     ["specName" => "Length", "specValue" => "4M"],
-                    ["specName" => "Type", "specValue" => "Ethernet"]
+                    ["specName" => "Cable Type", "specValue" => "Ethernet"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 4,
@@ -245,7 +371,7 @@ class SecuritySeeder extends Seeder
                 'stock' => 65,
                 'specifications' => json_encode([
                     ["specName" => "Length", "specValue" => "8M"],
-                    ["specName" => "Type", "specValue" => "Ethernet"]
+                    ["specName" => "Cable Type", "specValue" => "Ethernet"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 4,
@@ -259,7 +385,7 @@ class SecuritySeeder extends Seeder
                 'stock' => 4,
                 'specifications' => json_encode([
                     ["specName" => "Length", "specValue" => "8M"],
-                    ["specName" => "Type", "specValue" => "Coaxial"]
+                    ["specName" => "Cable Type", "specValue" => "Coaxial"]
                 ]),
                 'category_id' => 1,
                 'subcategory_id' => 4,
