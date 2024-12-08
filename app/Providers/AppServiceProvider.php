@@ -22,11 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $BackBlazeService = app(BackBlazeService::class);
-        $downloadAuth = $BackBlazeService->getAuthorizationToken();
+        //$BackBlazeService = app(BackBlazeService::class);
+        //$downloadAuth = $BackBlazeService->getAuthorizationToken();
        
         Vite::macro('image', fn (string $asset) => asset("resources/images/{$asset}"));
-        View::share('fileToken', $downloadAuth->authorizationToken);
-        View::share('fileUrl', $downloadAuth->apiUrl);
+        View::share('fileToken', '$downloadAuth->authorizationToken');
+        View::share('fileUrl', '$downloadAuth->apiUrl');
     }
 }

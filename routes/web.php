@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Subcategory;
 use App\Services\BackBlazeService;
 use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,18 +21,58 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/well', function () {
-    return view('welcome');
+
+
+Route::middleware('auth')->get('/orders', function () {
+    $orders = Order::query()->where('user_id', '=', Auth::getUser()->id)->get()->toArray();
+    $products = Order::getOrderProducts($orders);
+    usort($orders, function ($a, $b) {
+        // Place "pending" status first
+        if ($a['status'] === 'pending' && $b['status'] !== 'pending') {
+            return -1; // $a comes before $b
+        }
+        if ($a['status'] !== 'pending' && $b['status'] === 'pending') {
+            return 1; // $b comes before $a
+        }
+        return 0; // Maintain the current order
+    });
+    error_log(json_encode($orders));
+    
+    return view('userOrderList', ['orders' => json_decode(json_encode($orders)), 'products' => $products]);
 });
 
-Route::get('/', function (BackBlazeService $BackBlazeService) {
+Route::get('/login', ['as' => 'login', 'uses' => function () {
+    if (Auth::check()) {
+       return redirect()->route('home');
+    }
+    return view('login');
+}]);
+Route::middleware('auth')->get('/verify', ['as' => 'verify', 'uses' => function () {
+    error_log(json_encode(Auth::user()));
+    return view('verifyNumber', ['number' => Auth::user()->phone_number]);
+}]);
+Route::middleware('auth')->get('/pending', ['as' => 'pendingTrader', 'uses' => function () {
+     if (Auth::getUser()->type != 'pending') {
+        return redirect()->route('home');
+    } else {
+        return view('pendingTrader');
+    }
+}]);
+Route::get('/signup', function () {
+    if (Auth::check()) {
+        return redirect()->route('home');
+    } else {
+        return view('signup');
+    }
+});
+Route::get('/', ['as' => 'home', 'uses' => function (BackBlazeService $BackBlazeService) {
+    error_log('home user is ' . json_encode(Auth::getUser()));
 
     $saleProducts = Product::query()->whereNotNull('discounted_price')->get();
-    error_log(json_encode($saleProducts));
     $products = Product::whereIn('category_id', [1, 2])->get();
     $categories = Category::query()->get();
     return view('home', ['categories' => $categories, 'saleProducts' => $saleProducts, 'products' => $products]);
-});
+}]);
 Route::get('/builder', function (BackBlazeService $BackBlazeService) {
 
     $recorderName = 'Video Recorders';
@@ -65,7 +107,7 @@ Route::get('/builder', function (BackBlazeService $BackBlazeService) {
         'hardDrives' => $hardDrives,
         'switches' => $switches,
         'monitors' => $monitors,
-        'subcategories'=>$subcategories,
+        'subcategories' => $subcategories,
     ]);
 });
 
@@ -96,72 +138,79 @@ Route::get('/categories/{category_id}/subcategories/{subcategory_id}/{builder?}'
         return view('category', ['building' => true, 'category' => $category, 'subcategory' => $subcategory, 'products' => $products]);
     } else return view('category', ['category' => $category, 'subcategory' => $subcategory, 'products' => $products]);
 });
+Route::prefix('admin')->group(function () {
 
-Route::get('/administrator/products', function () {
-    $products = Product::all();
-    return view('admin/adminProductList', ['items' => $products]);
-});
-Route::get('/administrator/categories', function () {
-    $categories = Category::all();
-    return view('admin/adminCategoryList', ['items' => $categories]);
-});
-Route::get('/administrator/subcategories', function () {
-    $subcategories = Subcategory::with('category')->get();
-    return view('admin/adminCategoryList', ['items' => $subcategories]);
-});
-Route::get('/administrator/orders/completed', function () {
-    $orders = Order::all();
-    $products = Order::getOrderProducts($orders);
-    return view('admin/adminOrderList', ['orders' => $orders, 'products' => $products, 'completed' => true]);
-});
-Route::get('/administrator/orders/pending', function () {
-    $orders = Order::all();
-    $products = Order::getOrderProducts($orders);
-    error_log($products);
-    return view('admin/adminOrderList', ['orders' => $orders, 'products' => $products, 'completed' => false]);
-});
+    Route::get('/products', function () {
+        $products = Product::all();
+        return view('admin/adminProductList', ['items' => $products]);
+    });
+    Route::get('/categories', function () {
+        $categories = Category::all();
+        return view('admin/adminCategoryList', ['items' => $categories]);
+    });
+    Route::get('/subcategories', function () {
+        $subcategories = Subcategory::with('category')->get();
+        return view('admin/adminCategoryList', ['items' => $subcategories]);
+    });
+    Route::get('/traders', function () {
+        $traders = User::whereIn('type', ['pending', 'trader'])->get();
 
-Route::get('/administrator/product/{id?}', function ($product_id = null) {
-    $categories = Category::all();
-    $subcategories = Subcategory::all();
-    $products = Product::all(['id', 'category_id', 'specifications', 'name', 'subcategory_id']);
-    if ($product_id) {
-        return view('admin/adminNewProduct', [
-            'categories' => $categories,
-            'subcategories' => $subcategories,
-            'products' => $products,
-            'updatingItem' => $products->find($product_id)
-        ]);
-    } else {
-        return view('admin/adminNewProduct', [
-            'categories' => $categories,
-            'subcategories' => $subcategories,
-            'products' => $products
-        ]);
-    }
-});
-Route::get('/administrator/new-category', function () {
-    $categories = Category::all();
-    return view('admin/adminNewCategory', ['isSubcategory' => false, 'categories' => $categories]);
-});
+        return view('admin/adminTradersList', ['items' => $traders]);
+    });
+    Route::get('/orders/completed', function () {
+        $orders = Order::all();
+        $products = Order::getOrderProducts($orders);
+        return view('admin/adminOrderList', ['orders' => $orders, 'products' => $products, 'completed' => true]);
+    });
+    Route::get('/orders/pending', function () {
+        $orders = Order::all();
+        $products = Order::getOrderProducts($orders);
+        error_log($products);
+        return view('admin/adminOrderList', ['orders' => $orders, 'products' => $products, 'completed' => false]);
+    });
 
-Route::get('/administrator/new-subcategory', function () {
-    $categories = Category::all();
-    return view('admin/adminNewCategory', ['isSubcategory' => true, 'categories' => $categories]);
-});
+    Route::get('/product/{id?}', function ($product_id = null) {
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        $products = Product::all(['id', 'category_id', 'specifications', 'name', 'subcategory_id']);
+        if ($product_id) {
+            return view('admin/adminNewProduct', [
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+                'products' => $products,
+                'updatingItem' => $products->find($product_id)
+            ]);
+        } else {
+            return view('admin/adminNewProduct', [
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+                'products' => $products
+            ]);
+        }
+    });
+    Route::get('/new-category', function () {
+        $categories = Category::all();
+        return view('admin/adminNewCategory', ['isSubcategory' => false, 'categories' => $categories]);
+    });
 
-Route::get('/administrator/new-brand', function () {
-    return view('admin/adminNewBrand');
-});
+    Route::get('/new-subcategory', function () {
+        $categories = Category::all();
+        return view('admin/adminNewCategory', ['isSubcategory' => true, 'categories' => $categories]);
+    });
 
-Route::get('/administrator/category/{id}', function ($category_id) {
-    $category = Category::query()->findOrFail($category_id);
-    return view('admin/adminNewCategory', ['isSubcategory' => false, 'updatingItem' => $category]);
-});
+    Route::get('/new-brand', function () {
+        return view('admin/adminNewBrand');
+    });
 
-Route::get('/administrator/subcategory/{id}', function ($subcategory_id) {
-    $subcategory = Subcategory::query()->findOrFail($subcategory_id);
+    Route::get('/category/{id}', function ($category_id) {
+        $category = Category::query()->findOrFail($category_id);
+        return view('admin/adminNewCategory', ['isSubcategory' => false, 'updatingItem' => $category]);
+    });
 
-    $categories = Category::all();
-    return view('admin/adminNewCategory', ['isSubcategory' => true, 'updatingItem' => $subcategory,  'categories' => $categories]);
+    Route::get('/subcategory/{id}', function ($subcategory_id) {
+        $subcategory = Subcategory::query()->findOrFail($subcategory_id);
+
+        $categories = Category::all();
+        return view('admin/adminNewCategory', ['isSubcategory' => true, 'updatingItem' => $subcategory,  'categories' => $categories]);
+    });
 });

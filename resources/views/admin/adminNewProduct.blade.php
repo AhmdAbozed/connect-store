@@ -25,6 +25,8 @@
                     <input type="text" name="productName" id="" placeholder="Product name" class="w-full p-2 border border-gray-300 rounded-lg" required>
                     <input type="number" name="productPrice" id="" placeholder="Product Price" class="w-full p-2 border border-gray-300 rounded-lg" required>
                     <input type="number" name="discountedPrice" id="" placeholder="Discounted Price (Empty for none)" class="w-full p-2 border border-gray-300 rounded-lg">
+                    <input type="number" name="wholesale" id="" placeholder="Wholesale Price (Empty for none)" class="w-full p-2 border border-gray-300 rounded-lg">
+                    
                     <input type="number" name="stock" id="" placeholder="Available Stock" class="w-full p-2 border border-gray-300 rounded-lg" required>
                     <input type="number" id="updatingId" name="UpdatingId" class="hidden" value="{{ isset($updatingItem) ? $updatingItem->id : 0 }}">
                     <select name="category" id="category-select" class="bg-white block w-full px-3 mt-2 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>

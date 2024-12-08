@@ -1,5 +1,6 @@
 import { fetchProducts, renderCartProducts, updateCartCount } from "./cart";
 import { Item } from "./types";
+import { signout } from "./utils";
 
 const resultsWrapper = document.getElementById('search-results-wrapper')!;
 const searchWrapper = document.getElementById('search-wrapper')!;
@@ -169,14 +170,30 @@ function cartHandler() {
         cartWrapper.classList.replace('hidden', 'flex');
 
     });
+    function closeOrderWindow() {
+        (document.getElementById('submit-btn') as HTMLButtonElement).disabled = false;
+        (document.getElementById('submit-btn') as HTMLButtonElement)!.innerHTML = 'Send Order';
+        document.getElementById('order-popup')!.classList.add('hidden')
+
+    }
     document.getElementById('cart-checkout')?.addEventListener('click', () => { document.getElementById('order-popup')?.classList.replace('hidden', 'flex') })
     document.getElementById('close-order')?.addEventListener('click', () => {
-        document.getElementById('order-popup')!.classList.add('hidden')
+        closeOrderWindow()
     })
     document.getElementById('order-overlay')?.addEventListener('click', () => {
-        document.getElementById('order-popup')!.classList.add('hidden')
+        closeOrderWindow()
     });
     document.getElementById('cart-order-form')!.addEventListener('submit', postCartOrder);
-            
+
 }
 cartHandler();
+document.getElementById('signout')!.addEventListener('click', async () => {
+    await signout();
+})
+function handleClickOutsideProfile(event: any) {
+    const profileWrapper = document.getElementById('profileWrapper')!;
+    if (!profileWrapper.contains(event.target)) {
+        document.getElementById('profilePanel')!.classList.add('hidden');
+    }
+}
+document.addEventListener('click', handleClickOutsideProfile);

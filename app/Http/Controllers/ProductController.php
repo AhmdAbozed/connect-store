@@ -20,6 +20,7 @@ class ProductController extends Controller
             'name' => $request->input('Name'),
             'price' => $request->input('Price'),
             'discounted_price' => $request->input('Discounted_price'),
+            'wholesale' => $request->input('Wholesale'),
             'stock' => $request->input('Stock'),
             'specifications' => $request->input('Specifications'),
             'category_id' => intval($request->input('Category_id')),

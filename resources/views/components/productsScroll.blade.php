@@ -24,11 +24,17 @@
                         <img src="{{ $fileUrl . '/file/connect-store/product/' . $product->img_id . '/' . '0' . '?Authorization=' . $fileToken . '&b2ContentDisposition=attachment' }}" class="object-contain  rounded  -translate-y-0 h-36 " />
 
                         <div class=" break-words overflow-hidden w-full text-ellipsis leading-[20px] h-[40px] z-10 text-left mx-auto text-sm px-1 line-clamp-2">{{ $product->name }}</div>
+                        @if (Auth::check() && Auth::getUser()->type == 'trader')
+                            @if ($product->wholesale)
+                                <div class="z-10 text-sm font-semibold mr-1">Wholesale: {{ number_format($product->wholesale) }} <span class="text-[.83rem]">EGP</span></div>
+                            @else
+                                <div class="z-10 text-sm font-semibold mr-1">Wholesale unavailable</div>
+                            @endif
+                        @endif
                         @if ($product->discounted_price)
                             <div class="w-full z-10  text-[.83rem] leading-[0.7rem] font-semibold text-red-600 mt-5"> Save {{ number_format($product->price - $product->discounted_price) }} EGP ({{ intval((1 - $product->discounted_price / $product->price) * 100) }}%)</div>
 
                             <div class="w-full text-sm text-left flex mb-1">
-
                                 <div class="z-10 text-xl font-semibold mr-1"> {{ number_format($product->discounted_price) }} <span class="text-[.83rem]">EGP</span></div>
                                 <div class="z-10 text-gray-400 line-through flex translate-y-[6px] text-[.83rem]"> {{ number_format($product->price) }} EGP</div>
 
@@ -36,6 +42,7 @@
                         @else
                             <div class="z-10 text-xl font-semibold mr-1 mt-auto"> {{ number_format($product->price) }} <span class="text-[.83rem]">EGP</span></div>
                         @endif
+
                     </a>
                     <button class="h-8 w-[6.5rem] text-sm flex rounded-md mt-auto ml-4 justify-center border-2 border-gray-200 hover:bg-gray-800 hover:text-white addToCartBtn" data-id="{{ $product->id }}">
                         <img class="h-4 w-4 mr-1 translate-x-[1px] hidden check my-auto" src="{{ Vite::asset('resources/images/check.svg') }}" alt="">

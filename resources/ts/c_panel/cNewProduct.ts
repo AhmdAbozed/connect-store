@@ -10,6 +10,8 @@ function fillFormFromURL() {
     const productName: string | null = urlParams.get('name');
     const productPrice: string | null = urlParams.get('price');
     const discountedPrice: string | null = urlParams.get('discounted_price');
+    
+    const wholesale: string | null = urlParams.get('wholesale');
     const stock: string | null = urlParams.get('stock');
     const categoryId: string | null = urlParams.get('category_id');
     const subcategoryId: string | null = urlParams.get('subcategory_id');
@@ -25,6 +27,11 @@ function fillFormFromURL() {
         if (productPriceInput) productPriceInput.value = productPrice;
     }
 
+    
+    if (wholesale) {
+        const wholesaleInput = document.querySelector<HTMLInputElement>('input[name="wholesale"]');
+        if (wholesaleInput) wholesaleInput.value = wholesale;
+    }
     if (discountedPrice) {
         const discountedPriceInput = document.querySelector<HTMLInputElement>('input[name="discountedPrice"]');
         if (discountedPriceInput) discountedPriceInput.value = discountedPrice;
@@ -308,6 +315,7 @@ const postProductHandler = () => {
             submission.append("Name", target.elements.productName.value);
             submission.append("Price", target.elements.productPrice.value);
             submission.append("Discounted_price", target.elements.discountedPrice.value);
+            submission.append("Wholesale", target.elements.wholesale.value);
             submission.append("Stock", target.elements.stock.value);
             submission.append("Category_id", target.elements.category.value);
             submission.append("Subcategory_id", target.elements.subcategory.value);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
@@ -13,9 +14,14 @@ class Order extends Model
         'fullname',
         'address',
         'phone_number',
+        'user_id',
         'status',
         'products'
     ];
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
     static public function getOrderProducts($orders)
     {
         $productIds = [];
@@ -29,7 +35,6 @@ class Order extends Model
             }
         }
         $productIds = array_unique($productIds);
-        error_log(json_encode($productIds));
         $products = Product::whereIn('id', $productIds)->get();
         return $products;
     }

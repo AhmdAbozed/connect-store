@@ -78,10 +78,6 @@ export class securityFilters {
 
     public static filterCameras(cameras: Array<any>, system: systemSpecs) {
         const filteredItems: Array<filteredItem<Camera>> = [];
-        let requiredAmps = 0;
-        system.cameras.forEach((camera) => {
-            requiredAmps += camera.amp
-        })
         cameras.forEach((camera: Camera) => {
 
             const specs = this.getSpecsString(camera);
@@ -223,5 +219,24 @@ export class mapComponents {
         }).filter(item => item !== null);
 
         return cables;
+    }
+}
+
+export async function signout(){
+    
+    const response = await fetch('/_api/user/signout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}) // Sending an empty JSON object
+    });
+
+    const data = await response.text();
+    if (response.status === 200) {
+        window.location.href = '/login'
+    } else {
+        console.error('Error:', response.statusText);
+        return false;
     }
 }

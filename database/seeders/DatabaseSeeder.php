@@ -21,6 +21,22 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        DB::table('users')->insert([
+            'name'=>'trader',
+            'email'=>'trader@gmail.com',
+            'phone_number'=>'01200000000',
+            'password'=>'$2y$12$WIz9OA6Yc/QCmLDMgscV/erV4MupZou6xcP2LSztw/tvwqgafy2Ya',
+            'type'=>'pending'
+        ]);
+        
+        DB::table('users')->insert([
+            'name'=>'trader1',
+            'email'=>'traderApproved@gmail.com',
+            'phone_number'=>'01200000001',
+            'password'=>'$2y$12$WIz9OA6Yc/QCmLDMgscV/erV4MupZou6xcP2LSztw/tvwqgafy2Ya',
+            'type'=>'trader'
+        ]);
+
         DB::table('categories')->insert([
             'name' => 'Laptops',
             'img_id' => '3ba4f5c3a2',

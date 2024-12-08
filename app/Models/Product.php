@@ -21,6 +21,7 @@ class Product extends Model
         'name',
         'price',
         'discounted_price',
+        'wholesale',
         'specifications',
         'stock',
         'img_id',

@@ -1,1 +1,0 @@
-var t;(t=document.getElementById("sidebar-button"))==null||t.addEventListener("click",()=>{console.log("clicky");const e=document.getElementById("sidebar");e!=null&&e.classList.contains("hidden")?document.getElementById("sidebar").classList.replace("hidden","flex"):document.getElementById("sidebar").classList.replace("flex","hidden")});

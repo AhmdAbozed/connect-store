@@ -1,4 +1,4 @@
-<div class="h-[95%] my-auto shadow-md w-56 flex-col xl:flex hidden z-40 rounded-t-lg relative mr-1">
+<div class="h-[95%] my-auto shadow-md w-56 flex-col xl:flex hidden z-30 rounded-t-lg relative mr-1">
     <div class="bg-gray-900 text-white rounded-t-md p-1 pl-2 text-lg flex">
         <img src="{{ Vite::asset('resources/images/menu2.svg') }}" class="object-contain h-[0.9rem] translate-y-[0.05rem] mr-2 ml-1 my-auto" />
 
