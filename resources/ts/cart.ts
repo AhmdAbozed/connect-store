@@ -158,7 +158,7 @@ export function renderCartProducts(products: Array<Item>,) {
 export async function addToCartLocalStorage(item_id: number, quantity?: number) {
 
     let items:Array<{id:number, quantity:number}> = JSON.parse(localStorage.getItem('cart_items') || '[]');
-    const existingItemIndex = items.findIndex((i: any) => {console.log(i.id, ' ', item_id, ' ', i.id === item_id);return i.id === item_id});
+    const existingItemIndex = items.findIndex((i: any) => {return i.id === item_id});
     
     if (existingItemIndex > -1) {
     

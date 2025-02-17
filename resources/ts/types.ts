@@ -40,7 +40,7 @@ export type Recorder = Item & {
 };
 
 export type Camera = Item & {
-    type: 'Analog' | 'IP';
+    type: 'HD' | 'IP';
     resolutionInMP: number;
     voltage: number;
     amp: number;

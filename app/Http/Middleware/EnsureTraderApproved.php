@@ -27,8 +27,6 @@ class EnsureTraderApproved
             error_log('pending next');
             return $next($request);
         }
-        //error_log('user'.json_encode($request->user()));
-        //error_log('user check'.Auth::check());
         
         //user is pending, and not at /pending
         if ($request->user() && $request->user()->type =='pending' && !$request->is(['pending'])) {

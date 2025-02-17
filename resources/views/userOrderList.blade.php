@@ -1,5 +1,4 @@
 <x-layout>
-    <x-adminHeader />
     <div class="flex pt-4">
         <div class="flex flex-col max-w-3xl w-11/12  mx-auto ">
 

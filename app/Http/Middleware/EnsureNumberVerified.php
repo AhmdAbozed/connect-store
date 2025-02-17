@@ -27,6 +27,6 @@ class EnsureNumberVerified
             return redirect()->route('verify');
         }
 
-        return $next($request);
+        //return $next($request);
     }
 }

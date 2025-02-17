@@ -45,7 +45,9 @@
 
                             <div class="ml-auto my-auto" id="{{ $item->id }}">
                                 <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-blue-400 completeBtn hidden">Fulfill</button>
-                                <button class="bg-red-500 text-white py-2  px-4 rounded-lg ml-1 hover:bg-red-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-red-400 removeBtn" data-type="category">Delete</button>
+                                <button @if (config('app.demo_mode'))
+                                    disabled
+                                    @endif  class="disabled:bg-red-300bg-red-500 text-white py-2  px-4 rounded-lg ml-1 hover:bg-red-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-red-400 removeBtn" data-type="category">Delete</button>
                             </div>
                         </div>
                     @endif

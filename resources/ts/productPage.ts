@@ -147,9 +147,23 @@ function appendSmallImgs() {
 }
 const orderHandler = () => {
     function addToCartHandler(){
-        document.getElementById('addProductToCartBtn')?.addEventListener('click', ()=>[
-            addToCartLocalStorage(Number(bladeProduct.id), count)
-        ])
+        document.getElementById('addProductToCartBtn')?.addEventListener('click', async (e)=>{
+            const button = e.currentTarget! as HTMLButtonElement
+            button.innerHTML='Adding';
+            button.disabled = true;
+        
+            if(await addToCartLocalStorage(Number(bladeProduct.id), count)){
+                button.innerHTML='Added!';
+                
+                setTimeout(() => {
+                    button.innerHTML='+ Add to Cart';
+                    button.disabled = false;
+    
+                }, 1000);
+        
+            }
+            
+    })
     }
     function orderCountHandler() {
         const decrementButton = document.getElementById("decrement")!;

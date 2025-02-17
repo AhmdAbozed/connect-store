@@ -16,9 +16,7 @@ return new class extends Migration
             $table->text('fullname');
             $table->text('address');
             $table->string('phone_number', 20);
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            
+          
             $table->text('products');
             $table->text('status');
             $table->timestamps();

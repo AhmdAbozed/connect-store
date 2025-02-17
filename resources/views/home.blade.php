@@ -7,21 +7,21 @@
         <div class="mx-auto flex flex-col max-w-[80rem]">
 
             <x-categoriesScroll :categories="$categories" :fileUrl="$fileUrl" :fileToken="$fileToken" />
-            <x-productsScroll title="ON SALE" :products="$saleProducts" :fileUrl="$fileUrl" :fileToken="$fileToken" />
+            <x-productsScroll title="ON SALE" :products="$saleProducts" :fileUrl="$fileUrl" :fileToken="$fileToken" :href="false"/>
             @php
 
                 //temporary solution until dynamic homepage is built
-                $monitors = $products->filter(function ($product) {
-                    return $product->category_id == 1;
-                });
                 $laptops = $products->filter(function ($product) {
-                    return $product->category_id == 1;
+                    return $product->subcategory_id == 11;
+                });
+                $cameras = $products->filter(function ($product) {
+                    return $product->subcategory_id == 2;
                 });
 
             @endphp
-            <x-productsScroll title="MONITORS" :products="$monitors" :fileUrl="$fileUrl" :fileToken="$fileToken" />
+            <x-productsScroll title="LAPTOPS" :products="$laptops" :fileUrl="$fileUrl" :fileToken="$fileToken" :href="true"/>
             <img src="{{ Vite::asset('resources/images/slim-banner.webp') }}" class="object-contain w-full lg:w-11/12 mx-auto  mt-1 cursor-pointer" />
-            <x-productsScroll title="LAPTOPS" :products="$laptops" :fileUrl="$fileUrl" :fileToken="$fileToken" />
+            <x-productsScroll title="CAMERAS" :products="$cameras" :fileUrl="$fileUrl" :fileToken="$fileToken" :href="true"/>
 
         </div>
     </div>

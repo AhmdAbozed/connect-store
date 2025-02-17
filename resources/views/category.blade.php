@@ -72,8 +72,6 @@
     </section>
 
     <script>
-        //for using blade variables in script files
-        //const phpCategorySpecs = {{ Illuminate\Support\Js::from($category->specifications) }};
         let phpSubcategories;
         let phpSubcategory;
         let phpSubcategorySpecs;

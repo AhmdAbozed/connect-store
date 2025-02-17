@@ -69,9 +69,12 @@ Route::get('/', ['as' => 'home', 'uses' => function (BackBlazeService $BackBlaze
     error_log('home user is ' . json_encode(Auth::getUser()));
 
     $saleProducts = Product::query()->whereNotNull('discounted_price')->get();
-    $products = Product::whereIn('category_id', [1, 2])->get();
-    $categories = Category::query()->get();
-    return view('home', ['categories' => $categories, 'saleProducts' => $saleProducts, 'products' => $products]);
+    $products = Product::whereIn('subcategory_id', [11, 2])->get();
+    $subcategories = Subcategory::query()->get();
+    $subcategories = $subcategories->sortByDesc(function ($subcategory) {
+        return $subcategory->id === 11 ? 1 : 0;
+    })->values();    
+    return view('home', ['categories' => $subcategories, 'saleProducts' => $saleProducts, 'products' => $products]);
 }]);
 Route::get('/builder', function (BackBlazeService $BackBlazeService) {
 

@@ -5,6 +5,8 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    //disables admin dashboard post endpoints
+    'demo_mode' => env('DEMO_MODE', false),
     /*
     |--------------------------------------------------------------------------
     | Application Name

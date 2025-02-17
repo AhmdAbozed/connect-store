@@ -1,4 +1,5 @@
 <x-layout>
+    
     <x-adminHeader />
     <div class="flex pt-4">
         <div class="flex flex-col max-w-3xl w-11/12  mx-auto ">
@@ -22,13 +23,35 @@
                         <div class="flex border-b-2 p-3">
                             <div class="flex flex-col mx-1 min-w-40 w-full ">
                                 <div>
-                                    Name: <span class="text-blue-500">{{ $order->fullname }}</span>
+                                    Name: 
+                                    <span class="text-blue-500">
+                                        @if (config('app.demo_mode'))
+                                        {{ '[HIDDEN]' }}
+                                        @else
+                                        {{ $order->fullname }}
+                                        
+                                        @endif
+                                    </span>
                                 </div>
                                 <div>
-                                    Address: <span class="text-blue-500">{{ $order->address }}</span>
+                                    Address: <span class="text-blue-500">
+                                        @if (config('app.demo_mode'))
+                                        {{ '[HIDDEN]' }}
+                                        @else
+                                        {{ $order->address }}
+                                        
+                                        @endif
+                                    </span>
                                 </div>
                                 <div>
-                                    Number: <span class="text-blue-500">{{ $order->phone_number }}</span>
+                                    Number: <span class="text-blue-500">
+                                        @if (config('app.demo_mode'))
+                                        {{ '[HIDDEN]' }}
+                                        @else
+                                        {{ $order->phone_number }}
+                                        
+                                        @endif
+                                    </span></span>
                                 </div>
                                 
                                 <div>
@@ -39,8 +62,12 @@
                                 </div>
                             </div>
                             <div class="ml-auto my-auto justify-end flex-col flex" id="{{ $order->id }}">
-                                <button class="bg-blue-500 text-white py-2 px-4 w-20 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-blue-400 completeBtn {{ $completed ? 'hidden' : '' }}">Fulfill</button>
-                                <button class="bg-red-500 text-white py-2 px-4 w-20 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-red-400 removeBtn {{ $completed ? 'hidden' : '' }}" data-type="category" >Delete</button>
+                                <button @if (config('app.demo_mode'))
+                                    disabled
+                                    @endif  class="disabled:bg-blue-300 bg-blue-500 text-white py-2 px-4 w-20 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-blue-400 completeBtn {{ $completed ? 'hidden' : '' }}">Fulfill</button>
+                                <button @if (config('app.demo_mode'))
+                                    disabled
+                                    @endif  class="disabled:bg-red-300 bg-red-500 text-white py-2 px-4 w-20 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 max-h-12 focus:ring-red-400 removeBtn {{ $completed ? 'hidden' : '' }}" data-type="category" >Delete</button>
                             </div>
                         </div>
 
@@ -75,7 +102,7 @@
                                                 <span class="font-semibold text-black">Quantity:</span> {{ $product['quantity'] }}
                                             </div>
                                             <div class="sm:text-right text-blue-500 sm:h-12">
-                                                <span class="font-semibold text-black">Price:</span> {{ number_format($product['product']->discounted_price ?: $product->price) }}
+                                                <span class="font-semibold text-black">Price:</span> {{ number_format($product['product']->discounted_price ?: $product['product']->price) }}
                                             </div>
                                         </div>
                                         @endif
@@ -96,7 +123,7 @@
                                                             <span class="font-semibold text-black">Quantity:</span> {{ $product['quantity'] }}
                                                         </div>
                                                         <div class="sm:text-right text-blue-500">
-                                                            <span class="font-semibold text-black">Price:</span> {{ number_format($product['product']->discounted_price ?: $product->price) }}
+                                                            <span class="font-semibold text-black">Price:</span> {{ number_format($product['product']->discounted_price ?: $product['product']->price) }}
                                                         </div>
                                                     </div>
                                                 @endif
@@ -104,7 +131,7 @@
                                         </div>
                                     </div>
                                     <div class="flex">
-                                        <button class="bg-gray-300 text-gray-800 py-1 px-2 rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 showMoreBtn  @if (!(count($foundProducts) > 3)) hidden @endif">
+                                        <button class="text-blue-500 py-1 px-2 rounded-lg hover:bg-blue-500 hover:text-white focus:outline-none border-2 border-blue-400 mt-2 showMoreBtn  @if (!(count($foundProducts) > 3)) hidden @endif">
                                             Show More
                                         </button>
                                         @if ($totalPrice > 0)

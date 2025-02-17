@@ -1,11 +1,11 @@
 <x-layout :fileUrl="$fileUrl" :fileToken="$fileToken">
-    <div id="order-popup" class="hidden">
-        <section class="z-50 fixed flex w-full h-full -translate-y-12 animate-fadeIn" id='order-wrapper'>
+    <div id="builder-order-popup" class="hidden">
+        <section class="z-50 fixed flex w-full h-full  animate-fadeIn" id='order-wrapper'>
 
-            <div id='order-overlay' class="opacity-50 bg-black w-[100vw] fixed h-full translate-y-2 z-30 ">
+            <div id='order-overlay' class="opacity-50 bg-black w-[100vw] fixed h-full top-0 z-30 ">
 
             </div>
-            <form class="z-40 bg-gray-100 m-auto min-h-96 w-96  max-w-[95%] max-h-[85%]   p-4 relative text-sm rounded flex flex-col pt-8" id="order-form">
+            <form class="z-40 bg-gray-100 m-auto -translate-y-12 min-h-96 w-96  max-w-[95%] max-h-[85%]   p-4 relative text-sm rounded flex flex-col pt-8" id="order-form">
                 <button id="close-order" class="absolute -top-1 right-2 text-3xl text-gray-500 hover:text-gray-700">
                     &times;
                 </button>
@@ -109,7 +109,7 @@
                     <div class="text-xl">Total: </div>
                     <div id="popupTotal" class="ml-auto text-xl">0 EGP</div>
                 </div>
-                <button class="bg-blue-500 text-white rounded-xl py-1 px-3 w-full sendOrder mt-auto">Send Order</button>
+                <button class="bg-blue-500 text-white rounded-xl py-1 px-3 w-full sendOrder mt-auto" id="previewCartBtn">Add To Cart</button>
 
             </form>
         </section>

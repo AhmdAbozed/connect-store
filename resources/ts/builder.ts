@@ -1,13 +1,8 @@
 
-import { Item, Recorder, systemSpecs, Camera, filteredItem, Cable, PDU } from "./types"
-import { securityFilters, mapComponents } from "./utils";
-/*
-let recorders: Array<Recorder> = mapComponents.mapRecorders(phpRecorders);
-let cameras: Array<Camera> = mapComponents.mapRecorders(phpCameras);
-let PDUs: Array<PDU> = mapComponents.mapRecorders(phpPDUs);
-let cables: Array<Cable> = mapComponents.mapRecorders(phpCables);
-let accessories: Array<any> = mapComponents.mapRecorders(phpAccessories);
-*/
+import { addToCartLocalStorage } from "./cart";
+import { Item, systemSpecs } from "./types"
+import { securityFilters } from "./utils";
+addToCartLocalStorage
 let securitySystem: systemSpecs = localStorage.getItem('securitySystem') ? JSON.parse(localStorage.getItem('securitySystem')!) : { recorder: [], cameras: [], PDU: [], cables: [], monitor: [], hdd: [], accessories: [] }
 let fadeIn = false;
 //@ts-ignore
@@ -47,10 +42,26 @@ function setPowerType() {
     } else {
         powerElement.classList.replace('block', 'hidden')
         securitySystem.PDU = [];
-        
+
     }
 }
 setPowerType()
+function addBuildToCart() {
+
+    Object.entries(securitySystem).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+            value.forEach(item => {
+                if (item.id !== undefined) {
+                    addToCartLocalStorage(item.id)
+                    const orderWindow = document.getElementById('builder-order-popup')!;
+                    orderWindow.classList.add('hidden')
+                }
+            });
+        }
+    });
+}
+document.getElementById('previewCartBtn')?.addEventListener('click', addBuildToCart);
+document.getElementById('order-form')?.addEventListener('submit', (e) => { e.preventDefault() });
 function systemPreview() {
     function appendPreviewItems(items: Array<Item>, previewId: string): number {
         const previewElement = document.getElementById(previewId)!;
@@ -73,7 +84,6 @@ function systemPreview() {
             document.getElementById(previewId)!.querySelector('.previewRequired')?.classList.remove('hidden')
             document.getElementById(previewId)!.querySelector('.noneSelected')?.classList.remove('hidden')
         }
-        console.log('price isssss', price)
         return price;
     }
 
@@ -94,7 +104,7 @@ function renderComponents() {
 
     function selectedItemHtml(selectedItem: any, index: number, length: number) {
 
-       
+
 
         return `
             <div class="flex text-base sm:text-lg py-2 selectedItem ${(index != length - 1) || fadeIn ? '' : 'animate-fadeIn'} cursor-pointer border-white border-2 " >
@@ -108,21 +118,19 @@ function renderComponents() {
                     <div class="ml-auto selectedItemPrice w-[5.5rem] sm:w-auto text-black flex items-center sm:mr-6 sm:my-0 my-auto" > +${selectedItem.discounted_price ? selectedItem.discounted_price : selectedItem.price} EGP</div>
                     
                 </div>
-                <button class='selectedItemRemove bg-red-600 font-semibold text-white w-8 h-8 my-auto rounded-full text-2xl' data-index="${index}"><span class="-translate-y-[3px] block">x</span></button>
+                <button class='selectedItemRemove bg-red-600 font-semibold text-white w-8 h-8 my-auto rounded-full text-xl flex items-center justify-center pb-[1px]' data-index="${index}">x</button>
             </div>
         `
     }
-    function renderSelectedItems(componentId: string, selectedItems: Array<Item>) {
-        console.log(componentId);
-        const itemsBody = document.getElementById(componentId)!
-        console.log(componentId);
+    function renderSelectedItems(componentElementId: string, selectedItems: Array<Item>, multipleParts: boolean) {
+
+        const itemsBody = document.getElementById(componentElementId)!
         if (selectedItems.length) {
             itemsBody.querySelector('.noneSelected')?.classList.add('hidden')
             itemsBody.querySelector('.requiredAlert')?.classList.add('hidden')
             itemsBody.querySelector('.titleSelectBtn')!.classList.remove('hidden')
-            if (componentId == 'Cameras' || componentId == 'Cables' || componentId == 'Surveillance Equipment') {
+            if (multipleParts) {
                 itemsBody.querySelector('.titleSelectBtn')!.innerHTML = 'Add More';
-
             }
             else {
                 itemsBody.querySelector('.titleSelectBtn')!.innerHTML = 'Change Component';
@@ -141,15 +149,8 @@ function renderComponents() {
             //add eventlisteners for remove selected button
             itemsBody.querySelectorAll('.selectedItemRemove')!.forEach(item => {
                 item.addEventListener('click', (e) => {
-
-                    console.log(selectedItems)
-
-                    console.log((item as HTMLElement).dataset.index)
                     selectedItems.splice(Number((item as HTMLElement).dataset.index), 1);
                     localStorage.setItem('securitySystem', JSON.stringify(securitySystem));
-                    console.log(selectedItems)
-
-                    console.log(securitySystem)
                     const scrollX = window.scrollX;
                     const scrollY = window.scrollY;
                     (e.currentTarget as HTMLElement).parentElement!.remove();
@@ -171,19 +172,19 @@ function renderComponents() {
     }
     console.log(securitySystem)
     //this function assumes an element with provided id exists, fills it with the corresponding item in securitySystem
-    renderSelectedItems(securityFilters.recorderName, securitySystem.recorder);
-    renderSelectedItems(securityFilters.cameraName, securitySystem.cameras);
-    renderSelectedItems(securityFilters.PDUName, securitySystem.PDU);
-    renderSelectedItems(securityFilters.cableName, securitySystem.cables);
-    renderSelectedItems(securityFilters.accName, securitySystem.accessories)
-    renderSelectedItems(securityFilters.monitorName, securitySystem.monitor)
-    renderSelectedItems(securityFilters.hddName, securitySystem.hdd)
+    renderSelectedItems(securityFilters.recorderName, securitySystem.recorder, false);
+    renderSelectedItems(securityFilters.cameraName, securitySystem.cameras, true);
+    renderSelectedItems(securityFilters.PDUName, securitySystem.PDU, false);
+    renderSelectedItems(securityFilters.cableName, securitySystem.cables, true);
+    renderSelectedItems(securityFilters.accName, securitySystem.accessories, true)
+    renderSelectedItems(securityFilters.monitorName, securitySystem.monitor, false)
+    renderSelectedItems(securityFilters.hddName, securitySystem.hdd, false)
 
     systemPreview();
 
 }
 
-const orderWindow = document.getElementById('order-popup')!;
+const orderWindow = document.getElementById('builder-order-popup')!;
 document.getElementById('close-order')?.addEventListener('click', (e) => {
     e.preventDefault()
     orderWindow.classList.add('hidden')

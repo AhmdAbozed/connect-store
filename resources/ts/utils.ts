@@ -26,6 +26,7 @@ export const getFilters = (categorySpecs: Array<any>, products: Array<product>) 
 }
 
 export class securityFilters {
+    //these must equal the subcategory name on the database
     public static recorderName = 'Video Recorders';
     public static cameraName = 'Security Cameras';
     public static PDUName = 'Power Supplies';
@@ -48,7 +49,7 @@ export class securityFilters {
         recorders.forEach((recorder: Recorder) => {
             const specs = this.getSpecsString(recorder);
             if (system.cameras?.length) {
-                const incompatibleCameraType: Camera | undefined = system.cameras.find((camera) => (camera.type == 'Analog' && recorder.type == 'NVR') || (camera.type == 'IP' && recorder.type == 'DVR'))
+                const incompatibleCameraType: Camera | undefined = system.cameras.find((camera) => (camera.type == 'HD' && recorder.type == 'NVR') || (camera.type == 'IP' && recorder.type == 'DVR'))
                 const incompatibleCameraResolution = system.cameras.find((camera) => (camera.resolutionInMP > recorder.resolutionInMP))
 
                 if (incompatibleCameraType) {
@@ -78,15 +79,16 @@ export class securityFilters {
 
     public static filterCameras(cameras: Array<any>, system: systemSpecs) {
         const filteredItems: Array<filteredItem<Camera>> = [];
+        console.log('filtering builder cameras')
         cameras.forEach((camera: Camera) => {
-
             const specs = this.getSpecsString(camera);
             if (system.recorder[0]) {
                 if (system.cameras?.length >= system.recorder[0].channels) {
                     filteredItems.push({ item: camera, specs: specs, compatibility: false, message: 'Not enough camera channels in recorder' })
                     return;
                 }
-                else if ((camera.type == 'Analog' && system.recorder[0].type == 'NVR') || (camera.type == 'IP' && system.recorder[0].type == 'DVR')) {
+                else if ((camera.type == 'HD' && system.recorder[0].type == 'NVR') || (camera.type == 'IP' && system.recorder[0].type == 'DVR')) {
+                    console.log('incompat')
                     filteredItems.push({ item: camera, specs: specs, compatibility: false, message: 'Incompatible type with recorder' })
                     return;
                 }
@@ -98,7 +100,7 @@ export class securityFilters {
             }
            
             if (system.cables.length) {
-                const incompatibleCableType: Cable | undefined = system.cables.find((cable) => (camera.type == 'Analog' && cable.type == 'Ethernet') || (camera.type == 'IP' && cable.type == 'Coaxial'))
+                const incompatibleCableType: Cable | undefined = system.cables.find((cable) => (camera.type == 'HD' && cable.type == 'Ethernet') || (camera.type == 'IP' && cable.type == 'Coaxial'))
                 if (incompatibleCableType) {
                     filteredItems.push({ item: camera, specs: specs, compatibility: false, message: 'Incompatible type with cable: ' + incompatibleCableType.name })
                     return;
@@ -122,7 +124,7 @@ export class securityFilters {
         cables.forEach((cable: Cable) => {
             const specs = this.getSpecsString(cable);
             if (system.cameras.length) {
-                const incompatibleCameraType: Camera | undefined = system.cameras.find((camera) => (camera.type == 'Analog' && cable.type == 'Ethernet') || (camera.type == 'IP' && cable.type == 'Coaxial'))
+                const incompatibleCameraType: Camera | undefined = system.cameras.find((camera) => (camera.type == 'HD' && cable.type == 'Ethernet') || (camera.type == 'IP' && cable.type == 'Coaxial'))
 
                 if (incompatibleCameraType) {
                     filteredItems.push({ item: cable, specs: specs, compatibility: false, message: 'Incompatible type with: ' + incompatibleCameraType.name })
@@ -152,12 +154,13 @@ export class securityFilters {
 export class mapComponents {
 
     public static mapRecorders(products: Array<any>) {
+        console.log(products)
         const recorders = Object.values(products).map((item: any) => {
             const specs = JSON.parse(item.specifications);
             const channelsSpec = specs.find((spec: any) => spec.specName === 'Channel Number');
             const resolutionSpec = specs.find((spec: any) => spec.specName === 'Resolution');
             const typeSpec = specs.find((spec: any) => spec.specName === 'Type');
-
+            console.log('recorder type: ',typeSpec)
             if (!channelsSpec || !resolutionSpec || !typeSpec) {
                 return null;
             }
@@ -166,12 +169,12 @@ export class mapComponents {
             const resolutionInMP = Number(resolutionSpec.specValue.replace(/\D/g, ''));
             let type = typeSpec.specValue;
             type = type.slice(0, item.subcategory.name.length - 1);
-
+            console.log(type);
             return {
-                type,
                 channels,
                 resolutionInMP,
-                ...item
+                ...item, 
+                type: type,
             };
         }).filter(item => item !== null);
 
@@ -192,9 +195,9 @@ export class mapComponents {
             type = type.slice(0, item.subcategory.name.length - 1);
 
             return {
-                type,
                 resolutionInMP,
-                ...item
+                ...item,
+                type: type
             } as Camera;
         }).filter(item => item !== null);
 
@@ -213,8 +216,8 @@ export class mapComponents {
             const type = typeSpec.specValue;
 
             return {
-                type,
                 ...item,
+                type: type,
             } as Cable;
         }).filter(item => item !== null);
 

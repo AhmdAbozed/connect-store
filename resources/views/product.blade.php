@@ -116,13 +116,13 @@
                         </button>
                     </div>
                     <button class="bg-blue-500 text-white w-full rounded text-2xl py-1" id="buy-button">Buy Now</button>
-                    <button class="bg-blue-500 text-white w-full rounded text-2xl py-1 ml-2" id="addProductToCartBtn">+ Add To Cart</button>
+                    <button class="bg-blue-500 disabled:bg-blue-400 text-white w-full rounded text-2xl py-1 ml-2" id="addProductToCartBtn">+ Add To Cart</button>
 
                 </div>
             </div>
         </div>
         <section class="mx-2 ">
-            <h2 class="text-xl  px-1 ">Specification</h2>
+            <h2 class="text-xl  px-1 ">Specifications</h2>
 
             @foreach (json_decode($product->specifications) as $specification)
                 <div class="grid grid-cols-3 px-8 py-3   border-b-[1px] border-gray-300">
@@ -141,7 +141,7 @@
             </button>
         </div>
     </section>
-    <x-productsScroll title="Related Products" :fileUrl="$fileUrl" :fileToken="$fileToken" :products="$relatedProducts"></x-productsScroll>
+    <x-productsScroll title="Related Products" :fileUrl="$fileUrl" :fileToken="$fileToken" :products="$relatedProducts" :href="false"></x-productsScroll>
     <script>
         //for using blade variables in script files
         const phpProduct = {{ Illuminate\Support\Js::from($product) }};

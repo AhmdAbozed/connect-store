@@ -62,10 +62,8 @@ class ProductController extends Controller
             'ids.*' => 'integer'
         ]);
 
-        // Retrieve the products based on the ids
         $products = Product::whereIn('id', $validated['ids'])->get();
 
-        // Return the products as JSON
         return response()->json($products);
     }
 

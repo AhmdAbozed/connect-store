@@ -3,7 +3,6 @@ import { getFilters, mapComponents, securityFilters } from "./utils";
 const filterPanelHandler = () => {
     const sidebar = document.getElementById('filters-sidebar-wrapper')!;
     document.getElementById('filters-button')?.addEventListener('click', () => {
-        console.log('clicky')
         if (sidebar.classList.contains('hidden')) {
             sidebar.classList.replace('hidden', 'flex');
         } else {
@@ -149,44 +148,39 @@ function createProductCards(products: Array<product>) {
         wrapper.className = "flex flex-col p-1"
     } else {
         wrapper.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 p-1 pr-0";
-
     }
     wrapper.id = "products-wrapper";
     let builderComponents: Array<filteredItem<any>> | undefined;
 
-    const securitySystem: systemSpecs = localStorage.getItem('securitySystem') ? JSON.parse(localStorage.getItem('securitySystem')!) :{ recorder: [], cameras: [], PDU: [], cables: [], monitor:[], hdd:[], accessories:[]};
+    const securitySystem: systemSpecs = localStorage.getItem('securitySystem') ? JSON.parse(localStorage.getItem('securitySystem')!) : { recorder: [], cameras: [], PDU: [], cables: [], monitor: [], hdd: [], accessories: [] };
+    //@ts-ignore 
+    const fileToken: Array<string> = phpFileToken;
+    //@ts-ignore
+    const fileUrl: Array<product> = phpFileUrl;
+
     if (bladeBuildingSecSystem) {
+        //picking a builder component, builder display
+
+        console.log(bladeSubcategory.name == securityFilters.cameraName)
         switch (bladeSubcategory.name) {
             case securityFilters.recorderName: builderComponents = securityFilters.filterRecorders(mapComponents.mapRecorders(products), securitySystem); break;
             case securityFilters.cameraName: builderComponents = securityFilters.filterCameras(mapComponents.mapCameras(products), securitySystem); break;
             case securityFilters.cableName: builderComponents = securityFilters.filterCables(mapComponents.mapCables(products), securitySystem); break;
             default: builderComponents = securityFilters.noFilters(products, securitySystem); break;
         }
-    }
-    //@ts-ignore 
-    const fileToken: Array<string> = phpFileToken;
-    //@ts-ignore
-    const fileUrl: Array<product> = phpFileUrl;
-    if (builderComponents) {
-        console.log(builderComponents)
+
+        //sort incompatible to bottom
         builderComponents.sort((a: filteredItem<any>, b: filteredItem<any>) => {
             //+ converts boolean to number so ts doesn't complain
             return +b.compatibility - +a.compatibility;
         });
-        console.log(builderComponents)
-        console.log(builderComponents)
         builderComponents.forEach((product) => {
             let specsDiv = '';
-            let visibleSpecsIndex = 0; // To track the filtered index
 
             JSON.parse(product.item.specifications).forEach((spec: any) => {
                 if (bladeSubcategorySpecs.includes(spec.specName)) {
-                    if (visibleSpecsIndex % 2 === 0) {
-                        specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`;
-                    } else {
-                        specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-medium">${spec.specValue}</span></div>`;
-                    }
-                    visibleSpecsIndex++; // Increment the index for visible specs
+                    specsDiv += `<div class="mb-1">${spec.specName}: <span class="font-normal">${spec.specValue}</span></div>`;
+
                 }
             });
             let discountPercentage = null;
@@ -235,11 +229,10 @@ function createProductCards(products: Array<product>) {
                 
             </div>
         `;
-            console.log('err')
             wrapper.insertAdjacentHTML('beforeend', productCard);
         })
-       
     } else {
+        //not picking a builder component, normal display
         products.forEach((product) => {
             let discountPercentage = null;
             if (product.discounted_price) {
@@ -265,17 +258,15 @@ function createProductCards(products: Array<product>) {
         })
     }
     document.getElementById('main-content')?.append(wrapper)
-    console.log('hm1')
-    console.log(document.querySelectorAll('.selectComponentBtn'))
     document.querySelectorAll('.selectComponentBtn').forEach((element: any) => {
-        console.log('hmm')
         element.addEventListener('click', (e: any) => {
-            if (e.target.dataset.type == 'cameras' || e.target.dataset.type == 'cables' || e.target.dataset.type == 'accessories')  {
+            if (e.target.dataset.type == 'cameras' || e.target.dataset.type == 'cables' || e.target.dataset.type == 'accessories') {
                 securitySystem[e.target.dataset.type as string].push((builderComponents!.find(component => component.item.id == e.target.id))!.item)
             } else {
                 securitySystem[e.target.dataset.type as string] = [builderComponents!.find(component => component.item.id == e.target.id)!.item]
+
             }
-            console.log(securitySystem)
+            console.log(securitySystem[e.target.dataset.type as string]);
             localStorage.setItem('securitySystem', JSON.stringify(securitySystem));
             window.location.href = '/builder'
         })

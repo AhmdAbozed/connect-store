@@ -9,13 +9,35 @@
                 <div class="flex border-y-2 p-2" id="{{ 'p' . $item->id }}">
                     <div class="flex flex-col mx-1">
                         <div>
-                            Name: <span class="text-blue-500">{{ $item->name }}</span>
+                            Name: <span class="text-blue-500">
+                            @if (config('app.demo_mode'))
+                            {{ '[HIDDEN]' }}
+                            @else
+                            {{ $item->name }}    
+                            @endif
+                            </span>
                         </div>
                         <div>
-                            Number: <span class="text-blue-500">{{ $item->phone_number }}</span>
+                            Number: <span class="text-blue-500">
+                            @if (config('app.demo_mode'))
+                            {{ '[HIDDEN]' }}
+                            @else
+                            {{ $item->phone_number }}
+                            
+                            @endif
+                        
+                            </span>
                         </div>
                         <div>
-                            email: <span class="text-blue-500">{{ $item->email }}</span>
+                            email: <span class="text-blue-500">
+                            @if (config('app.demo_mode'))
+                            {{ '[HIDDEN]' }}
+                            @else
+                            {{ $item->email }}
+                            
+                            @endif
+                                    
+                        </span>
                         </div>
                     </div>
                     <div class="ml-auto my-auto" id="{{ $item->id }}">

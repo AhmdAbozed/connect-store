@@ -61,7 +61,6 @@ function fillFormFromURL() {
         }
     }
     if (specificationsJSON) {
-        //once for url encoding and once for json
         const specifications: Array<any> = JSON.parse(specificationsJSON);
 
         const subcategory = bladeSubcategories.find(sub=>sub.id ==Number(subcategoryId));
@@ -73,6 +72,7 @@ function fillFormFromURL() {
 
             //backwards so splice doesnt affect index
             for (let i = specifications.length - 1; i >= 0; i--) {
+                //seperate subcategory filters from specifications, to be added seperately to filters ection
                 if (subcategorySpecs.includes(specifications[i].specName)) {
                     filterSpecs.push(specifications.splice(i, 1));
                 }
